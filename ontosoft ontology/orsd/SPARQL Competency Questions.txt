@@ -1,0 +1,343 @@
+BASE <http://ontosoft.org/software>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX sw: <http://ontosoft.org/software#>
+
+# $$$$$$$$$$$$$$$$ SOFTWARE $$$$$$$$$$$$$$$$
+
+###########
+# What software is in the repository?
+##########
+SELECT ?software
+WHERE {
+  ?software a sw:Software .
+}
+LIMIT 25
+
+###########
+# What is the software name?
+##########
+
+# Alternative 1
+SELECT ?software ?name
+WHERE {
+  ?software a sw:Software .
+  ?software rdfs:label ?name .
+}
+LIMIT 25
+
+# Alternative 2
+SELECT ?software ?name
+WHERE {
+  ?software a sw:Software .
+  ?software sw:hasShortDescription ?sfDescription .
+  ?sfDescription sw:hasTextValue ?name .
+}
+LIMIT 25
+
+###########
+# What software versions does this software have?
+##########
+SELECT ?software ?version ?description
+WHERE {
+  ?software a sw:Software ;
+  			sw:hasSoftwareVersion ?version .
+  ?version 	a sw:SoftwareVersion .
+  OPTIONAL { ?version dc:description ?description . }
+}
+LIMIT 25
+
+
+###########
+# What is the latest version of this software?
+##########
+SELECT ?software ?version ?description
+WHERE {
+  ?software a sw:Software ;
+  			sw:hasLatestSoftwareVersion ?version .
+  ?version 	a sw:SoftwareVersion .
+  OPTIONAL { ?version dc:description ?description . }
+}
+LIMIT 25
+
+###########
+# What functions does this software have?
+##########
+SELECT ?software ?version ?function ?description
+WHERE {
+  ?software a sw:Software ;
+  			sw:hasSoftwareVersion ?version .
+  ?version 	a sw:SoftwareVersion ;
+  			sw:hasFunction ?function .
+  OPTIONAL { ?function dc:description ?description . }
+}
+LIMIT 25
+
+# $$$$$$$$$$$$$$$$ FUNCTIONALITY $$$$$$$$$$$$$$$$
+
+###########
+# What functionality does this function have?
+##########
+SELECT ?software ?version ?function ?funcdesc ?functionality ?description
+WHERE {
+  ?software a sw:Software ;
+  			sw:hasSoftwareVersion ?version .
+  ?version 	a sw:SoftwareVersion ;
+  			sw:hasFunction ?function .
+  ?function 	a sw:Function ;
+  			sw:hasFunctionality ?functionality .
+  OPTIONAL { ?function dc:description ?funcdesc . }
+  OPTIONAL { ?functionality dc:description ?description . }
+}
+LIMIT 25
+
+###########
+# What functions have this functionality?
+##########
+SELECT ?software ?version ?function ?funcdesc ?functionality ?description
+WHERE {
+  ?functionality a sw:Functionality .
+  ?function sw:hasFunctionality ?functionality .
+  			a sw:Function .
+  ?version 	a sw:SoftwareVersion ;
+  			sw:hasFunction ?function .
+  ?software a sw:Software ;
+  			sw:hasSoftwareVersion ?version .
+  OPTIONAL { ?function dc:description ?funcdesc . }
+  OPTIONAL { ?functionality dc:description ?description . }
+}
+LIMIT 25
+
+
+# $$$$$$$$$$$$$$$$ Software Version $$$$$$$$$$$$$$$$
+
+
+###########
+# What functions does this software version have?
+##########
+SELECT ?version ?function ?description
+WHERE {
+  ?version 	a sw:SoftwareVersion ;
+  			sw:hasFunction ?function .
+  ?function a sw:Function.
+  OPTIONAL { ?function dc:description ?description . }
+}
+LIMIT 25
+
+###########
+# What is the software maturity of this version?
+##########
+SELECT ?version ?maturity
+WHERE {
+  ?version 	a sw:SoftwareVersion ;
+  			a ?maturity .
+}
+LIMIT 25
+
+###########
+# What are the major versions of this software?
+##########
+
+
+
+# $$$$$$$$$$$$$$$$ Function $$$$$$$$$$$$$$$$
+
+##########
+# What is the function name?
+##########
+SELECT ?function
+WHERE {
+  ?function a sw:Function .
+}
+LIMIT 25
+
+##########
+# What is the function description?
+##########
+SELECT ?function
+WHERE {
+  ?function a sw:Function .
+  OPTIONAL { ?function dc:description ?description . }
+}
+LIMIT 25
+
+##########
+# What inputs/outputs does this function have?
+# What is the description of this input/output?
+##########
+SELECT ?function ?input ?description
+WHERE {
+  ?function a sw:Function ;
+  sw:hasInput ?input .
+  ?input a sw:Input .
+  OPTIONAL { ?input dc:description ?description . }
+}
+LIMIT 25
+
+# output
+SELECT ?function ?output ?description
+WHERE {
+  ?function a sw:Function ;
+  sw:hasOutput ?output .
+  ?output a sw:Output .
+  OPTIONAL { ?output dc:description ?description . }
+}
+LIMIT 25
+
+##########
+# What is data type of this input/output?
+##########
+
+
+##########
+# What is the data format of an input/output file?
+##########
+SELECT ?function ?input ?dataFormat
+WHERE {
+  ?function a sw:Function ;
+  sw:hasInput ?input .
+  ?input a sw:Input .
+  ?input a sw:File .
+  OPTIONAL { ?input sw:hasDataFormat ?dataFormat . }
+}
+LIMIT 25
+
+#output
+SELECT ?function ?output ?dataFormat
+WHERE {
+  ?function a sw:Function ;
+  sw:hasOutput ?output .
+  ?output a sw:Output .
+  ?output a sw:File .
+  OPTIONAL { ?output sw:hasDataFormat ?dataFormat . }
+}
+LIMIT 25
+
+##########
+# What is the order of this input?
+##########
+SELECT ?function ?input ?inputOrder
+WHERE {
+  ?function a sw:Function ;
+  sw:hasInput ?input .
+  ?input a sw:Input ;
+  		 sw:hasInputOrder ?inputOrder .
+}
+LIMIT 25
+
+##########
+# What parameters does this function have?
+##########
+SELECT ?function ?inputParameter ?description
+WHERE {
+  ?function a sw:Function ;
+  sw:hasInput ?inputParameter .
+  ?inputParameter a sw:InputParameter.
+  OPTIONAL { ?inputParameter dc:description ?description . }
+}
+LIMIT 25
+
+##########
+# What input files does this function have?
+##########
+SELECT ?function ?inputFile ?description
+WHERE {
+  ?function a sw:Function ;
+  sw:hasInput ?inputFile .
+  ?inputFile a sw:Input;
+  			 a sw:File.
+  OPTIONAL { ?inputFile dc:description ?description . }
+}
+LIMIT 25
+
+##########
+# What is the function call signature?
+##########
+SELECT ?function ?input ?output
+WHERE {
+  ?function a sw:Function ;
+  sw:hasInput ?input;
+  sw:hasOutput ?output .
+  ?input a sw:Input .
+  ?output a sw:Output .
+}
+LIMIT 25
+
+##########
+# What inputs does this software require?
+##########
+SELECT ?function ?input ?description
+WHERE {
+  ?function a sw:Function ;
+  sw:hasInput ?input .
+  ?input a sw:Input ;
+  		 a sw:RequiredInput .
+  OPTIONAL { ?input dc:description ?description . }
+}
+LIMIT 25
+
+##########
+# What optional inputs does this software have?
+##########
+SELECT ?function ?input ?description
+WHERE {
+  ?function a sw:Function ;
+  sw:hasInput ?input .
+  ?input a sw:Input ;
+  		 a sw:OptionalInput .
+  OPTIONAL { ?input dc:description ?description . }
+}
+LIMIT 25
+
+##########
+# What is the default value of this input parameter?
+##########
+SELECT ?function ?input ?description ?defaultValue
+WHERE {
+  ?function a sw:Function ;
+  sw:hasInput ?input .
+  ?input a sw:Input ;
+  		 a sw:InputParameter ;
+  		 sw:hasDefaultValue ?defaultValue . 
+  OPTIONAL { ?input dc:description ?description . }
+}
+LIMIT 25
+
+###########
+# What functionality does this function have?
+##########
+SELECT ?function ?funcdesc ?functionality ?description
+WHERE {
+  ?function a sw:Function ;
+  			sw:hasFunctionality ?functionality .
+  OPTIONAL { ?function dc:description ?funcdesc . }
+  OPTIONAL { ?functionality dc:description ?description . }
+}
+LIMIT 25
+
+# $$$$$$$$$$$$$$$$ Changes $$$$$$$$$$$$$$$$$$$
+
+###########
+# What changes does this software version have?
+##########
+SELECT ?version ?change ?description
+WHERE {
+  ?version 	a sw:SoftwareVersion ;
+  			sw:hasChange ?change .
+  ?change a sw:Change .
+  OPTIONAL { ?change dc:description ?description . }
+}
+LIMIT 25
+
+###########
+# What changes affected this function?
+##########
+SELECT ?function ?change ?description
+WHERE {
+  ?function a sw:Function;
+  			a sw:SoftwarePart .
+  ?change  sw:modifiedSoftwarePart ?function ;
+  			a sw:Change .
+  OPTIONAL { ?change dc:description ?description . }
+}
+LIMIT 25
