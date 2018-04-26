@@ -2,38 +2,9 @@ BASE <http://ontosoft.org/software>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dc: <http://purl.org/dc/elements/1.1/>
 PREFIX sw: <http://ontosoft.org/software#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
 
 # $$$$$$$$$$$$$$$$ SOFTWARE $$$$$$$$$$$$$$$$
-
-###########
-# What software is in the repository?
-##########
-SELECT ?software
-WHERE {
-  ?software a sw:Software .
-}
-LIMIT 25
-
-###########
-# What is the software name?
-##########
-
-# Alternative 1
-SELECT ?software ?name
-WHERE {
-  ?software a sw:Software .
-  ?software rdfs:label ?name .
-}
-LIMIT 25
-
-# Alternative 2
-SELECT ?software ?name
-WHERE {
-  ?software a sw:Software .
-  ?software sw:hasShortDescription ?sfDescription .
-  ?sfDescription sw:hasTextValue ?name .
-}
-LIMIT 25
 
 ###########
 # What software versions does this software have?
@@ -45,8 +16,19 @@ WHERE {
   ?version 	a sw:SoftwareVersion .
   OPTIONAL { ?version dc:description ?description . }
 }
-LIMIT 25
 
+###########
+# What is the DOI or any other unique identifier for this software version
+##########
+SELECT ?software ?version ?uniqueId
+WHERE {
+  ?software a sw:Software ;
+  			sw:hasSoftwareVersion ?version .
+  ?version 	a sw:SoftwareVersion ;
+  		sw:hasVersionId ?tmpVariable .
+  ?tmpVariable a sw:Identifier ;
+  		sw:hasTextValue ?uniqueId .
+}
 
 ###########
 # What is the latest version of this software?
@@ -58,7 +40,7 @@ WHERE {
   ?version 	a sw:SoftwareVersion .
   OPTIONAL { ?version dc:description ?description . }
 }
-LIMIT 25
+
 
 ###########
 # What functions does this software have?
@@ -71,7 +53,16 @@ WHERE {
   			sw:hasFunction ?function .
   OPTIONAL { ?function dc:description ?description . }
 }
-LIMIT 25
+
+# $$$$$$$$$$$$$$$$ Algorithm $$$$$$$$$$$$$$$$$
+# What is the algorithm used in this function?
+SELECT ?function ?algorithm ?name
+WHERE {
+  ?function a sw:Function ;
+  			sw:usesAlgorithm ?algorithm .
+  ?algorithm rdfs:label ?name .
+}
+
 
 # $$$$$$$$$$$$$$$$ FUNCTIONALITY $$$$$$$$$$$$$$$$
 
@@ -89,7 +80,7 @@ WHERE {
   OPTIONAL { ?function dc:description ?funcdesc . }
   OPTIONAL { ?functionality dc:description ?description . }
 }
-LIMIT 25
+
 
 ###########
 # What functions have this functionality?
@@ -106,7 +97,7 @@ WHERE {
   OPTIONAL { ?function dc:description ?funcdesc . }
   OPTIONAL { ?functionality dc:description ?description . }
 }
-LIMIT 25
+
 
 
 # $$$$$$$$$$$$$$$$ Software Version $$$$$$$$$$$$$$$$
@@ -122,21 +113,53 @@ WHERE {
   ?function a sw:Function.
   OPTIONAL { ?function dc:description ?description . }
 }
-LIMIT 25
 
-###########
-# What is the software maturity of this version?
-##########
-SELECT ?version ?maturity
-WHERE {
-  ?version 	a sw:SoftwareVersion ;
-  			a ?maturity .
-}
-LIMIT 25
 
 ###########
 # What are the major versions of this software?
 ##########
+SELECT ?software ?version
+WHERE {
+  ?software a sw:Software;
+  		sw:hasSoftwareVersion ?version.
+  ?version a sw:SoftwareVersion ;
+  		a sw:MajorSoftwareVersion .
+}
+
+
+###########
+# What are the stable versions of this software?
+##########
+SELECT ?software ?version
+WHERE {
+  ?software a sw:Software;
+  		sw:hasSoftwareVersion ?version.
+  ?version a sw:SoftwareVersion ;
+  		a sw:StableSoftwareVersion .
+}
+
+###########
+# What version was superseded by this software version?
+##########
+SELECT ?software ?previousVersion ?newerVersion
+WHERE {
+  ?software a sw:Software;
+  		sw:hasSoftwareVersion ?previousVersion.
+  ?previousVersion a sw:SoftwareVersion ;
+  		sw:supersededBy ?newerVersion .
+}
+
+
+###########
+# What version supersedes this software version?
+##########
+SELECT ?software ?previousVersion ?newerVersion
+WHERE {
+  ?software a sw:Software;
+  		sw:hasSoftwareVersion ?previousVersion.
+  ?newerVersion a sw:SoftwareVersion ;
+  		sw:supersedes ?previousVersion .
+}
 
 
 
@@ -145,11 +168,14 @@ LIMIT 25
 ##########
 # What is the function name?
 ##########
-SELECT ?function
+SELECT ?function ?name
 WHERE {
-  ?function a sw:Function .
+  ?function a sw:Function ;
+  			sw:hasName ?funcName .
+  ?funcName a sw:TextEntity;
+  			sw:hasTextValue ?name .
 }
-LIMIT 25
+
 
 ##########
 # What is the function description?
@@ -159,7 +185,7 @@ WHERE {
   ?function a sw:Function .
   OPTIONAL { ?function dc:description ?description . }
 }
-LIMIT 25
+
 
 ##########
 # What inputs/outputs does this function have?
@@ -172,7 +198,7 @@ WHERE {
   ?input a sw:Input .
   OPTIONAL { ?input dc:description ?description . }
 }
-LIMIT 25
+
 
 # output
 SELECT ?function ?output ?description
@@ -182,10 +208,10 @@ WHERE {
   ?output a sw:Output .
   OPTIONAL { ?output dc:description ?description . }
 }
-LIMIT 25
+
 
 ##########
-# What is data type of this input/output?
+# TODO: What is data type of this input/output?
 ##########
 
 
@@ -200,7 +226,7 @@ WHERE {
   ?input a sw:File .
   OPTIONAL { ?input sw:hasDataFormat ?dataFormat . }
 }
-LIMIT 25
+
 
 #output
 SELECT ?function ?output ?dataFormat
@@ -211,7 +237,7 @@ WHERE {
   ?output a sw:File .
   OPTIONAL { ?output sw:hasDataFormat ?dataFormat . }
 }
-LIMIT 25
+
 
 ##########
 # What is the order of this input?
@@ -223,7 +249,7 @@ WHERE {
   ?input a sw:Input ;
   		 sw:hasInputOrder ?inputOrder .
 }
-LIMIT 25
+
 
 ##########
 # What parameters does this function have?
@@ -235,7 +261,7 @@ WHERE {
   ?inputParameter a sw:InputParameter.
   OPTIONAL { ?inputParameter dc:description ?description . }
 }
-LIMIT 25
+
 
 ##########
 # What input files does this function have?
@@ -248,33 +274,41 @@ WHERE {
   			 a sw:File.
   OPTIONAL { ?inputFile dc:description ?description . }
 }
-LIMIT 25
+
 
 ##########
 # What is the function call signature?
 ##########
-SELECT ?function ?input ?output
+SELECT ?function ?name ?input ?output
 WHERE {
   ?function a sw:Function ;
   sw:hasInput ?input;
-  sw:hasOutput ?output .
+  sw:hasOutput ?output ;
+  sw:hasName ?funcName .
+  ?funcName a sw:TextEntity ;
+  		sw:hasTextValue ?name .
   ?input a sw:Input .
   ?output a sw:Output .
 }
-LIMIT 25
+
 
 ##########
 # What inputs does this software require?
 ##########
-SELECT ?function ?input ?description
+SELECT ?function ?input ?name ?description
 WHERE {
   ?function a sw:Function ;
   sw:hasInput ?input .
   ?input a sw:Input ;
   		 a sw:RequiredInput .
+  OPTIONAL { 
+  			?input sw:hasName ?inputName . 
+  			?inputName a sw:TextEntity ;
+  				sw:hasTextValue ?name .
+  }
   OPTIONAL { ?input dc:description ?description . }
 }
-LIMIT 25
+
 
 ##########
 # What optional inputs does this software have?
@@ -287,7 +321,7 @@ WHERE {
   		 a sw:OptionalInput .
   OPTIONAL { ?input dc:description ?description . }
 }
-LIMIT 25
+
 
 ##########
 # What is the default value of this input parameter?
@@ -301,7 +335,7 @@ WHERE {
   		 sw:hasDefaultValue ?defaultValue . 
   OPTIONAL { ?input dc:description ?description . }
 }
-LIMIT 25
+
 
 ###########
 # What functionality does this function have?
@@ -313,7 +347,7 @@ WHERE {
   OPTIONAL { ?function dc:description ?funcdesc . }
   OPTIONAL { ?functionality dc:description ?description . }
 }
-LIMIT 25
+
 
 # $$$$$$$$$$$$$$$$ Changes $$$$$$$$$$$$$$$$$$$
 
@@ -327,17 +361,302 @@ WHERE {
   ?change a sw:Change .
   OPTIONAL { ?change dc:description ?description . }
 }
-LIMIT 25
+
 
 ###########
 # What changes affected this function?
 ##########
 SELECT ?function ?change ?description
 WHERE {
-  ?function a sw:Function;
+  ?function a sw:Function ;
   			a sw:SoftwarePart .
   ?change  sw:modifiedSoftwarePart ?function ;
   			a sw:Change .
   OPTIONAL { ?change dc:description ?description . }
 }
-LIMIT 25
+
+
+###########
+# What software part did this software version add?
+##########
+SELECT ?change ?swPart ?description ?swPartType
+WHERE {
+  ?version 	a sw:SoftwareVersion ;
+  			sw:hasChange ?change .
+  ?change  sw:addedSoftwarePart ?swPart ;
+  			a sw:Change , sw:Addition .
+  ?swPart a ?swPartType .
+  OPTIONAL { ?swPart dc:description ?description . }
+}
+
+###########
+# What software part was removed in this software version?
+##########
+SELECT ?change ?swPart ?description ?swPartType
+WHERE {
+  ?version 	a sw:SoftwareVersion ;
+  			sw:hasChange ?change .
+  ?change  sw:removedSoftwarePart ?swPart ;
+  			a sw:Change , sw:Removal .
+  ?swPart a ?swPartType .
+  OPTIONAL { ?swPart dc:description ?description . }
+}
+
+###########
+# What software part was renamed in this software version?
+##########
+SELECT ?change ?oldSwPart ?newSwPart ?description ?swPartType
+WHERE {
+  ?version 	a sw:SoftwareVersion ;
+  			sw:hasChange ?change .
+  ?change  sw:removedSoftwarePart ?oldSwPart ;
+  			sw:addedSoftwarePart ?newSwPart ;
+  			a sw:Change , sw:Deprecation .
+  ?newSwPart prov:wasRevisionOf ?oldSwPart .
+  ?oldSwPart a ?swPartType .
+  OPTIONAL { ?oldSwPart dc:description ?description . }
+}
+
+###########
+# What software versions have this function?
+##########
+SELECT ?function ?description ?version ?originalFunction
+WHERE {
+  ?function a sw:Function .
+  ?version sw:hasFunction ?function .
+  OPTIONAL { ?function prov:wasRevisionOf ?originalFunction . }
+  OPTIONAL { ?function dc:description ?description . }
+}
+
+
+###########
+# What changes have affected this function through several software versions?
+##########
+SELECT ?function ?description ?version ?originalFunction
+WHERE {
+  ?function a sw:Function .
+  ?version sw:hasFunction ?function .
+  OPTIONAL { ?function prov:wasRevisionOf ?originalFunction . }
+  OPTIONAL { ?function dc:description ?description . }
+}
+
+# $$$$$$$$$$$$$$$$$$$$$ Bug Fixes & Known Issues (Bug) $$$$$$$$$$$$$$$$$$$$$$
+
+# What are the known issues which affect a specific software version?
+# What is the description of a specific known issue?
+SELECT ?version ?knownIssue ?description
+WHERE {
+  ?version a sw:SoftwareVersion ;
+  		sw:hasKnownIssue ?knownIssue .
+  ?knownIssue a sw:KnownIssue .
+  OPTIONAL { ?knownIssue dc:description ?description . }
+}
+
+# What is the part of a software version affected by a specific known issue?
+SELECT ?version ?knownIssue ?swPart
+WHERE {
+  ?version a sw:SoftwareVersion ;
+  		sw:hasKnownIssue ?knownIssue .
+  ?knownIssue a sw:KnownIssue ;
+  		sw:affectsSoftwarePart ?swPart .
+  OPTIONAL { ?knownIssue dc:description ?description . }
+}
+
+# What are the software versions affected by a specific known issue? 
+SELECT ?knownIssue ?version
+WHERE {
+  ?knownIssue a sw:KnownIssue .
+  ?version sw:hasKnownIssue ?knownIssue ;
+  		a sw:SoftwareVersion .
+}
+
+# What bug fix fixed a specific known issue?
+SELECT ?knownIssue ?bugFix
+WHERE {
+  ?knownIssue a sw:KnownIssue .
+  ?bugFix a sw:BugFix, sw:Change ;
+  		sw:fixedKnownIssue ?knownIssue .
+}
+
+# What are the bug fixes released in a specific software version?
+SELECT ?version ?bugFix
+WHERE {
+  ?version a sw:SoftwareVersion ;
+  		sw:hasChange ?bugFix .
+  ?bugFix a sw:Change, sw:BugFix .
+}
+
+# What is the software part fixed by a specific bug fix?
+SELECT ?bugFix ?swPart
+WHERE {
+  ?bugFix a sw:Change, sw:BugFix ;
+  		sw:modifiedSoftwarePart ?swPart .
+}
+
+
+# $$$$$$$$$$$$$$$$$$ Existing OntoSoft classes and properties $$$$$$$$$$$$$$$$$$$$$$$
+
+###########
+# What software are in the repository?
+##########
+SELECT ?software
+WHERE {
+  ?software a sw:Software .
+}
+
+
+###########
+# What is the software name?
+##########
+
+# Alternative 1
+SELECT ?software ?name
+WHERE {
+  ?software a sw:Software .
+  ?software rdfs:label ?name .
+}
+
+
+# Alternative 2
+SELECT ?software ?name
+WHERE {
+  ?software a sw:Software .
+  ?software sw:hasName ?swName .
+  ?swName a sw:TextEntity ;
+  			sw:hasTextValue ?name .
+}
+
+
+###########
+# What is the software description?
+##########
+SELECT ?software ?description
+WHERE {
+  ?software a sw:Software ;
+  			sw:hasShortDescription ?swDescription .
+  ?swDescription a sw:SoftwareDescription ; 
+  			sw:hasTextValue ?description .
+}
+
+
+# How is the software being developed or maintained ?
+SELECT ?software ?activeDevelopment
+WHERE {
+  ?software a sw:Software ;
+  			sw:hasActiveDevelopment ?tmpVariable .
+  ?tmpVariable a sw:TextEntity ; 
+  			sw:hasTextValue ?activeDevelopment .
+}
+
+
+# What is the URL for the code of this version?
+SELECT ?software ?urlCode
+WHERE {
+  ?version a sw:SoftwareVersion ;
+  			sw:hasCodeLocation ?tmpVariable .
+  ?tmpVariable a sw:Location ; 
+  			sw:hasURI ?urlCode .
+}
+
+
+# TODO: What other software version can this software version be composed with (in a workflow) ? (hasCompatibleSoftware)
+# Is this software version typically used with other software version in a workflow ? (hasCompositionDescription)
+# Describe the workflow ? (hasWorkflowDescription)
+SELECT ?version ?version2 ?version3
+WHERE {
+  ?version a sw:SoftwareVersion ;
+  			sw:hasCompositionDescription ?tmpVariable .
+  ?tmpVariable a sw:Composition ;
+  			sw:hasCompatibleSoftware ?tmpVariable2 . 
+  			sw:hasWorkflowDescription ?tmpVariable3 .
+  ?tmpVariable2 a sw:SoftwareDescription ;
+  			sw:hasTextValue ?version2 .
+  ?tmpVariable3 a sw:SoftwareDescription ;
+  			sw:hasTextValue ?version3 .
+}
+
+
+# What languages is the program written in ?
+SELECT ?version ?language ?langName
+WHERE {
+  ?version a sw:SoftwareVersion ;
+  			sw:hasImplementationLanguage ?language .
+  ?language a sw:ProgrammingLanguage ; 
+  			rdfs:label ?langName
+}
+
+
+# Who created this software ?
+SELECT ?software ?person ?personName
+WHERE {
+  ?software a sw:Software ;
+  			sw:hasCreator ?person .
+  ?person a prov:Agent, sw:Person ; 
+  			rdfs:label ?personName
+}
+
+
+# What license is the code released under ?
+SELECT ?version ?license ?licenseName
+WHERE {
+  ?version a sw:SoftwareVersion ;
+  			sw:hasLicense ?license .
+  ?license a sw:License ; 
+  			rdfs:label ?licenseName
+}
+
+# What other software version does the software require to be installed ?
+SELECT ?softwareVersion ?dependency
+WHERE {
+  ?softwareVersion a sw:SoftwareVersion ;
+  			sw:hasDependency ?dependency .
+  ?dependency a sw:SoftwareVersion .
+}
+
+# What other useful features of this software version are worth highlighting ?
+SELECT ?softwareVersion ?qualities
+WHERE {
+  ?softwareVersion a sw:SoftwareVersion ;
+  			sw:hasSalientQualities ?tmpVariable .
+  ?tmpVariable a sw:TextEntity ;
+  			sw:hasTextValue ?qualities
+}
+
+# What category tags are associated with the software version?
+# What categories are associated to the software version?
+SELECT ?softwareVersion ?category
+WHERE {
+  ?softwareVersion a sw:SoftwareVersion ;
+  			sw:hasSoftwareCategory ?tmpVariable .
+  ?tmpVariable a sw:SoftwareCategory , sw:EnumerationEntity ;
+  			rdfs:label ?category
+}
+
+# TODO: What are the recommended uses and assumptions for the software ?
+
+
+# Is there any other similar software that you know of ?
+SELECT ?softwareVersion ?similar
+WHERE {
+  ?softwareVersion a sw:SoftwareVersion ;
+  			sw:similarSoftware ?similar .
+  ?similar a sw:SoftwareVersion .
+}
+
+# What Operating Systems can the program run on ?
+SELECT ?softwareVersion ?os ?name
+WHERE {
+  ?softwareVersion a sw:SoftwareVersion ;
+  			sw:supportsOperatingSystem ?os .
+  ?os a sw:OperatingSystem ;
+  			rdfs:label ?name .
+}
+
+# What are the keywords used to describe this software version?
+SELECT ?softwareVersion ?keyword
+WHERE {
+  ?softwareVersion a sw:SoftwareVersion ;
+  			sw:hasDomainKeyword ?tmpVariable .
+  ?tmpVariable a sw:keywords , sw:TextEntity ;
+  			sw:hasTextValue ?keyword .
+}
