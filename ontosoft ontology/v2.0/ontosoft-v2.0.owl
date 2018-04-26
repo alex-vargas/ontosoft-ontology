@@ -133,7 +133,7 @@
     <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasAdopter">
         <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
         <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
-        <rdfs:range rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Adopter"/>
         <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
         <uiConfig>{position: 3}</uiConfig>
         <dc:description>Has the software been adopted in a project, organization or by a person?</dc:description>
@@ -614,7 +614,7 @@
     <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasPublisher">
         <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
         <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
-        <rdfs:range rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Publisher"/>
         <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
         <uiConfig>{position: 1}</uiConfig>
         <dc:description>Who is the publisher of this software?</dc:description>
@@ -1181,6 +1181,16 @@
     
 
 
+    <!-- http://ontosoft.org/software#Adopter -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#Adopter">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <rdfs:comment xml:lang="en">An agent that adopts software</rdfs:comment>
+        <rdfs:label xml:lang="en">Software Adopter</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://ontosoft.org/software#Algorithm -->
 
     <owl:Class rdf:about="http://ontosoft.org/software#Algorithm">
@@ -1518,6 +1528,16 @@
     
 
 
+    <!-- http://ontosoft.org/software#Publisher -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#Publisher">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <rdfs:comment xml:lang="en">An agent that publishes software.</rdfs:comment>
+        <rdfs:label xml:lang="en">Software Publisher</rdfs:label>
+    </owl:Class>
+    
+
+
     <!-- http://ontosoft.org/software#Rating -->
 
     <owl:Class rdf:about="http://ontosoft.org/software#Rating">
@@ -1727,7 +1747,7 @@
     <!-- http://www.w3.org/ns/prov#Agent -->
 
     <owl:Class rdf:about="http://www.w3.org/ns/prov#Agent">
-        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
         <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/prov#"/>
     </owl:Class>
     
