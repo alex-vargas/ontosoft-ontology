@@ -1,1757 +1,2480 @@
-@prefix : <http://ontosoft.org/software#> .
-@prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix xml: <http://www.w3.org/XML/1998/namespace> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix vann: <http://purl.org/vocab/vann/> .
-@prefix terms: <http://purl.org/dc/terms/> .
-@prefix software: <http://ontosoft.org/software#> .
-@base <http://ontosoft.org/software> .
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://ontosoft.org/software#"
+     xml:base="http://ontosoft.org/software"
+     xmlns:software="http://ontosoft.org/software#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:terms="http://purl.org/dc/terms/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:prov="http://www.w3.org/ns/prov#"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="http://ontosoft.org/software">
+        <owl:imports rdf:resource="http://ontosoft.org/softwareCategories"/>
+        <terms:title xml:lang="en">The Ontosoft ontology</terms:title>
+        <terms:description xml:lang="en">Ontosoft is an ontology to describe software.</terms:description>
+        <terms:modified>2018-04-21</terms:modified>
+        <vann:preferredNamespaceUri>http://ontosoft.org/software#</vann:preferredNamespaceUri>
+        <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string">2.0</owl:versionInfo>
+        <vann:preferredNamespacePrefix>osw</vann:preferredNamespacePrefix>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2015-03-12</terms:created>
+        <rdfs:comment xml:lang="en">Ontosoft is an ontology to describe software</rdfs:comment>
+    </owl:Ontology>
+    
 
-<http://ontosoft.org/software> rdf:type owl:Ontology ;
-                                owl:imports <http://ontosoft.org/softwareCategories> ;
-                                terms:title "The Ontosoft ontology"@en ;
-                                terms:description "Ontosoft is an ontology to describe software."@en ;
-                                terms:modified "2018-04-21" ;
-                                vann:preferredNamespaceUri "http://ontosoft.org/software#" ;
-                                owl:versionInfo "2.0"^^xsd:string ;
-                                vann:preferredNamespacePrefix "osw" ;
-                                terms:created "2015-03-12"^^xsd:date ;
-                                rdfs:comment "Ontosoft is an ontology to describe software"@en .
 
-#################################################################
-#    Annotation properties
-#################################################################
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
 
-###  http://ontosoft.org/software#category
-software:category rdf:type owl:AnnotationProperty ;
-                  rdfs:comment "Category of software metadata properties"@en .
+    
 
 
-###  http://ontosoft.org/software#isRequired
-software:isRequired rdf:type owl:AnnotationProperty ;
-                    rdfs:comment "This property annotation indicates if a property is a required property or not"@en .
+    <!-- http://ontosoft.org/software#category -->
 
-
-###  http://ontosoft.org/software#searchConfig
-software:searchConfig rdf:type owl:AnnotationProperty ;
-                      rdfs:comment "This property annotation provides information to be handed over to search engines (like Solr) to explain how to tokenize and index the property values"@en .
+    <owl:AnnotationProperty rdf:about="http://ontosoft.org/software#category">
+        <rdfs:comment xml:lang="en">Category of software metadata properties</rdfs:comment>
+    </owl:AnnotationProperty>
+    
 
 
-###  http://ontosoft.org/software#uiConfig
-software:uiConfig rdf:type owl:AnnotationProperty ;
-                  rdfs:comment "This property annotation provides UI specific information for the property like positioning, special UI interface, etc"@en .
-
-
-###  http://purl.org/dc/elements/1.1/description
-dc:description rdf:type owl:AnnotationProperty .
-
-
-###  http://www.w3.org/2000/01/rdf-schema#description
-rdfs:description rdf:type owl:AnnotationProperty .
-
-
-#################################################################
-#    Object Properties
-#################################################################
-
-###  http://ontosoft.org/software#addedSoftwarePart
-software:addedSoftwarePart rdf:type owl:ObjectProperty ;
-                           rdfs:subPropertyOf software:modifiedSoftwarePart ;
-                           rdfs:domain software:Addition .
-
-
-###  http://ontosoft.org/software#affectsSoftwarePart
-software:affectsSoftwarePart rdf:type owl:ObjectProperty .
-
-
-###  http://ontosoft.org/software#fixedKnownIssue
-software:fixedKnownIssue rdf:type owl:ObjectProperty ;
-                         rdfs:domain software:BugFix ;
-                         rdfs:range software:KnownIssue .
-
-
-###  http://ontosoft.org/software#hasActiveDevelopment
-software:hasActiveDevelopment rdf:type owl:ObjectProperty ,
-                                       owl:FunctionalProperty ;
-                              rdfs:domain software:Software ;
-                              rdfs:range software:DevelopmentInformation ;
-                              software:category <http://ontosoft.org/softwareCategories#Contribute> ;
-                              software:uiConfig "{position:1}" ;
-                              dc:description "How is the software being developed or maintained ?"@en .
-
-
-###  http://ontosoft.org/software#hasAdopter
-software:hasAdopter rdf:type owl:ObjectProperty ;
-                    rdfs:domain software:Software ,
-                                software:SoftwareVersion ;
-                    rdfs:range prov:Agent ;
-                    software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                    software:uiConfig "{position: 3}" ;
-                    dc:description "Has the software been adopted in a project, organization or by a person?" .
-
-
-###  http://ontosoft.org/software#hasAverageRunTime
-software:hasAverageRunTime rdf:type owl:ObjectProperty ,
-                                    owl:FunctionalProperty ;
-                           rdfs:domain software:SoftwareVersion ;
-                           rdfs:range software:MeasurementEntity ;
-                           software:category <http://ontosoft.org/softwareCategories#Install> ;
-                           software:uiConfig "{position:1}" ;
-                           dc:description "Do you know how long it takes to run this software on average ?"@en .
-
-
-###  http://ontosoft.org/software#hasBenchmarkInformation
-software:hasBenchmarkInformation rdf:type owl:ObjectProperty ;
-                                 rdfs:domain software:Software ;
-                                 rdfs:range software:BenchmarkInformation ;
-                                 software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                                 software:uiConfig "{position:7}" ;
-                                 dc:description "Is there any benchmark information about the software ?"@en .
-
-
-###  http://ontosoft.org/software#hasChange
-software:hasChange rdf:type owl:ObjectProperty ;
-                   rdfs:domain software:SoftwareVersion ;
-                   rdfs:range software:Change ;
-                   software:category <http://ontosoft.org/softwareCategories#Track> ;
-                   dc:description "Is there any change that affects this software version?"@en .
-
-
-###  http://ontosoft.org/software#hasCitationLocation
-software:hasCitationLocation rdf:type owl:ObjectProperty ,
-                                      owl:FunctionalProperty ;
-                             rdfs:domain software:Citation ;
-                             rdfs:range software:Location ;
-                             software:category <http://ontosoft.org/softwareCategories#Cite> ;
-                             dc:description "What is the URL for the citation ?"@en .
-
-
-###  http://ontosoft.org/software#hasCitationText
-software:hasCitationText rdf:type owl:ObjectProperty ,
-                                  owl:FunctionalProperty ;
-                         rdfs:domain software:Citation ;
-                         rdfs:range software:CitationText ;
-                         software:category <http://ontosoft.org/softwareCategories#Cite> ;
-                         dc:description "What is the text associated with the Citation ?"@en .
-
-
-###  http://ontosoft.org/software#hasCodeLocation
-software:hasCodeLocation rdf:type owl:ObjectProperty ,
-                                  owl:FunctionalProperty ;
-                         rdfs:domain software:SoftwareVersion ;
-                         rdfs:range software:Location ;
-                         software:category <http://ontosoft.org/softwareCategories#Access> ;
-                         software:isRequired "true"^^xsd:boolean ;
-                         software:uiConfig "{position: 1}" ;
-                         dc:description "What is the URL for the code ?"@en .
-
-
-###  http://ontosoft.org/software#hasCommitmentOfSupport
-software:hasCommitmentOfSupport rdf:type owl:ObjectProperty ,
-                                         owl:FunctionalProperty ;
-                                rdfs:domain software:Software ;
-                                rdfs:range software:TextEntity ;
-                                software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                                software:uiConfig "{position:2}" ;
-                                dc:description "How can a user get support for the software ? (eg. Report bugs, request features and extensions, etc)"@en .
-
-
-###  http://ontosoft.org/software#hasCompatibleSoftware
-software:hasCompatibleSoftware rdf:type owl:ObjectProperty ,
-                                        owl:FunctionalProperty ;
-                               rdfs:domain software:Composition ;
-                               rdfs:range software:SoftwareDescription ;
-                               software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                               dc:description "What software can this software be composed with in a workflow ?"@en .
-
-
-###  http://ontosoft.org/software#hasCompositionDescription
-software:hasCompositionDescription rdf:type owl:ObjectProperty ,
-                                            owl:FunctionalProperty ;
-                                   rdfs:domain software:SoftwareVersion ;
-                                   rdfs:range software:Composition ;
-                                   software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                                   software:uiConfig "{position:1}" ;
-                                   dc:description "Is this software typically used with other software in a workflow ? (eg: for visualization, preprocessing, postprocessing, etc)"@en .
-
-
-###  http://ontosoft.org/software#hasCreator
-software:hasCreator rdf:type owl:ObjectProperty ;
-                    rdfs:subPropertyOf terms:creator ;
-                    rdfs:domain software:Software ;
-                    rdfs:range prov:Agent ;
-                    software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                    software:isRequired "true"^^xsd:boolean ;
-                    software:uiConfig "{position:1}" ;
-                    dc:description "Who created this software? (Project, Organization, Person, Initiative, etc.)"@en .
-
-
-###  http://ontosoft.org/software#hasDataFormat
-software:hasDataFormat rdf:type owl:ObjectProperty ;
-                       rdfs:domain software:File ;
-                       rdfs:range software:DataFormat .
-
-
-###  http://ontosoft.org/software#hasDefaultValue
-software:hasDefaultValue rdf:type owl:ObjectProperty ;
-                         rdfs:subPropertyOf software:hasTextValue ;
-                         rdfs:domain software:Input .
-
-
-###  http://ontosoft.org/software#hasDependency
-software:hasDependency rdf:type owl:ObjectProperty ;
-                       rdfs:domain software:SoftwareVersion ;
-                       rdfs:range software:SoftwareVersion ;
-                       software:category <http://ontosoft.org/softwareCategories#Install> ;
-                       software:isRequired "true"^^xsd:boolean ;
-                       software:uiConfig "{position:5}" ;
-                       dc:description "What other software does the software require to be installed ?"@en .
-
-
-###  http://ontosoft.org/software#hasDocumentation
-software:hasDocumentation rdf:type owl:ObjectProperty ,
-                                   owl:FunctionalProperty ;
-                          rdfs:domain software:SoftwareVersion ;
-                          rdfs:range software:Location ;
-                          software:category <http://ontosoft.org/softwareCategories#Install> ;
-                          software:isRequired "true"^^xsd:boolean ;
-                          software:uiConfig "{position: 1}" ;
-                          dc:description "Is there any on-line documentation about the software ?"@en .
-
-
-###  http://ontosoft.org/software#hasDomainKeywords
-software:hasDomainKeywords rdf:type owl:ObjectProperty ,
-                                    owl:FunctionalProperty ;
-                           rdfs:domain software:Software ,
-                                       software:SoftwareVersion ;
-                           rdfs:range software:Keywords ;
-                           software:category <http://ontosoft.org/softwareCategories#Relate> ;
-                           software:isRequired "true"^^xsd:boolean ;
-                           software:uiConfig "{position:1}" ;
-                           dc:description "What are the domain specific keywords for this software"@en .
-
-
-###  http://ontosoft.org/software#hasEmailContact
-software:hasEmailContact rdf:type owl:ObjectProperty ;
-                         rdfs:domain software:Software ,
-                                     software:SoftwareVersion ;
-                         rdfs:range software:TextEntity ;
-                         software:category <http://ontosoft.org/softwareCategories#Discuss> ;
-                         software:uiConfig "{position: 2}" ;
-                         dc:description "What is the e-mail contact for this software?" .
-
-
-###  http://ontosoft.org/software#hasExecutableLocation
-software:hasExecutableLocation rdf:type owl:ObjectProperty ,
-                                        owl:FunctionalProperty ;
-                               rdfs:domain software:SoftwareVersion ;
-                               rdfs:range software:Location ;
-                               software:category <http://ontosoft.org/softwareCategories#Access> ;
-                               software:uiConfig "{position: 1}" ;
-                               dc:description "What is the URL for the executable ?"@en .
-
-
-###  http://ontosoft.org/software#hasFileId
-software:hasFileId rdf:type owl:ObjectProperty ,
-                            owl:FunctionalProperty ;
-                   rdfs:domain software:File ;
-                   rdfs:range software:Identifier ;
-                   software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                   dc:description """What is the id for the File I/O ?
-"""@en .
-
-
-###  http://ontosoft.org/software#hasFileType
-software:hasFileType rdf:type owl:ObjectProperty ,
-                              owl:FunctionalProperty ;
-                     rdfs:domain software:File ;
-                     rdfs:range software:TextEntity ;
-                     software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                     dc:description "What is the File I/O type ?"@en .
-
-
-###  http://ontosoft.org/software#hasFunction
-software:hasFunction rdf:type owl:ObjectProperty ;
-                     rdfs:domain software:SoftwareVersion ;
-                     rdfs:range software:Function ;
-                     software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                     software:isRequired "true"^^xsd:boolean .
-
-
-###  http://ontosoft.org/software#hasFunctionality
-software:hasFunctionality rdf:type owl:ObjectProperty ;
-                          rdfs:domain software:Function ;
-                          rdfs:range software:Functionality .
-
-
-###  http://ontosoft.org/software#hasFundingSources
-software:hasFundingSources rdf:type owl:ObjectProperty ;
-                           rdfs:domain software:Software ,
-                                       software:SoftwareVersion ;
-                           rdfs:range software:TextEntity ;
-                           software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                           software:uiConfig "{position: 8}" ;
-                           dc:description "What are the funding sources for this software?" .
-
-
-###  http://ontosoft.org/software#hasImplementationLanguage
-software:hasImplementationLanguage rdf:type owl:ObjectProperty ;
-                                   rdfs:domain software:Software ,
-                                               software:SoftwareVersion ;
-                                   rdfs:range software:ProgrammingLanguage ;
-                                   software:category <http://ontosoft.org/softwareCategories#Install> ;
-                                   software:isRequired "true"^^xsd:boolean ;
-                                   software:uiConfig "{position:2}" ;
-                                   dc:description "What language(s) is the software written in ?"@en .
-
-
-###  http://ontosoft.org/software#hasInput
-software:hasInput rdf:type owl:ObjectProperty ;
-                  rdfs:domain software:Function ;
-                  rdfs:range software:Input ;
-                  software:category <http://ontosoft.org/softwareCategories#Experiment> ;
-                  software:isRequired "true"^^xsd:boolean ;
-                  software:uiConfig "{position:1}" ;
-                  dc:description "What input files does the software require ?"@en .
-
-
-###  http://ontosoft.org/software#hasInputParameter
-software:hasInputParameter rdf:type owl:ObjectProperty ;
-                           rdfs:domain software:Function ;
-                           rdfs:range terms:Parameter ;
-                           software:category <http://ontosoft.org/softwareCategories#Experiment> ;
-                           software:isRequired "true"^^xsd:boolean ;
-                           software:uiConfig "{position: 2}" ;
-                           dc:description "What are the input parameters used for this software?" .
-
-
-###  http://ontosoft.org/software#hasInstallationInstructions
-software:hasInstallationInstructions rdf:type owl:ObjectProperty ,
-                                              owl:FunctionalProperty ;
-                                     rdfs:domain software:SoftwareVersion ;
-                                     rdfs:range software:TextEntity ;
-                                     software:category <http://ontosoft.org/softwareCategories#Install> ;
-                                     software:isRequired "true"^^xsd:boolean ;
-                                     software:uiConfig "{position:4}" ;
-                                     dc:description "How can one install the software ?"@en .
-
-
-###  http://ontosoft.org/software#hasInteroperableSoftware
-software:hasInteroperableSoftware rdf:type owl:ObjectProperty ;
-                                  rdfs:domain software:SoftwareVersion ;
-                                  rdfs:range software:SoftwareDescription ;
-                                  software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                                  software:isRequired "true"^^xsd:boolean ;
-                                  software:uiConfig "{position: 1}" ;
-                                  dc:description "What other software can interoperate with this one?" .
-
-
-###  http://ontosoft.org/software#hasKnownIssue
-software:hasKnownIssue rdf:type owl:ObjectProperty ;
-                       rdfs:subPropertyOf owl:topObjectProperty ;
-                       rdfs:domain software:SoftwareVersion ;
-                       rdfs:range software:KnownIssue .
-
-
-###  http://ontosoft.org/software#hasLatestSoftwareVersion
-software:hasLatestSoftwareVersion rdf:type owl:ObjectProperty ;
-                                  rdfs:subPropertyOf software:hasSoftwareVersion ;
-                                  rdfs:domain software:Software ;
-                                  rdfs:range software:SoftwareVersion .
-
-
-###  http://ontosoft.org/software#hasLicense
-software:hasLicense rdf:type owl:ObjectProperty ;
-                    rdfs:subPropertyOf terms:license ;
-                    rdfs:domain software:Software ,
-                                software:SoftwareVersion ;
-                    rdfs:range software:License ;
-                    software:category <http://ontosoft.org/softwareCategories#Access> ;
-                    software:isRequired "true"^^xsd:boolean ;
-                    software:uiConfig "{position: 3}" ;
-                    dc:description "What license is the code released under ?"@en .
-
-
-###  http://ontosoft.org/software#hasMajorContributor
-software:hasMajorContributor rdf:type owl:ObjectProperty ;
-                             rdfs:subPropertyOf terms:contributor ;
-                             rdfs:domain software:SoftwareVersion ;
-                             rdfs:range prov:Agent ;
-                             software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                             software:isRequired "true"^^xsd:boolean ;
-                             software:uiConfig "{position:2}" ;
-                             dc:description "Are there any major contributors of note for this software ?"@en .
-
-
-###  http://ontosoft.org/software#hasName
-software:hasName rdf:type owl:ObjectProperty ,
-                          owl:FunctionalProperty ;
-                 rdfs:domain software:Software ,
-                             software:SoftwarePart ;
-                 rdfs:range software:TextEntity ;
-                 software:category <http://ontosoft.org/softwareCategories#Locate> ;
-                 software:isRequired "true"^^xsd:boolean ;
-                 software:uiConfig "{position: 1}" ;
-                 dc:description "What is the software called ?"@en .
-
-
-###  http://ontosoft.org/software#hasOtherImplementationDetails
-software:hasOtherImplementationDetails rdf:type owl:ObjectProperty ,
-                                                owl:FunctionalProperty ;
-                                       rdfs:domain software:SoftwareVersion ;
-                                       rdfs:range software:ImplementationDetails ;
-                                       software:category <http://ontosoft.org/softwareCategories#Install> ;
-                                       software:uiConfig "{position:3}" ;
-                                       dc:description "Are there any other important details about the implementation of this code (parallelization, special hardware, etc) ?"@en .
-
-
-###  http://ontosoft.org/software#hasOutput
-software:hasOutput rdf:type owl:ObjectProperty ;
-                   rdfs:domain software:Function ;
-                   rdfs:range software:Output ;
-                   software:category <http://ontosoft.org/softwareCategories#Experiment> ;
-                   software:isRequired "true"^^xsd:boolean ;
-                   software:uiConfig "{position:3}" ;
-                   dc:description "What output files does the software produce ?"@en .
-
-
-###  http://ontosoft.org/software#hasPersonIdentifier
-software:hasPersonIdentifier rdf:type owl:ObjectProperty ;
-                             rdfs:domain software:Person ;
-                             rdfs:range software:Identifier ;
-                             software:category <http://ontosoft.org/softwareCategories#Identify> ;
-                             software:isRequired "true" ;
-                             dc:description "Provide a Twitter handle, ORCID Id, email address, github URL, home page, or any other unique identifier for this person"@en .
-
-
-###  http://ontosoft.org/software#hasPreferredCitation
-software:hasPreferredCitation rdf:type owl:ObjectProperty ,
-                                       owl:FunctionalProperty ;
-                              rdfs:domain software:Software ,
-                                          software:SoftwareVersion ;
-                              rdfs:range software:Citation ;
-                              software:category <http://ontosoft.org/softwareCategories#Cite> ;
-                              software:isRequired "true"^^xsd:boolean ;
-                              software:uiConfig "{position:1}" ;
-                              dc:description "Is there a preferred publication or citation for this software ?"@en .
-
-
-###  http://ontosoft.org/software#hasProjectWebsite
-software:hasProjectWebsite rdf:type owl:ObjectProperty ,
-                                    owl:FunctionalProperty ;
-                           rdfs:domain software:Software ;
-                           rdfs:range software:Location ;
-                           software:category <http://ontosoft.org/softwareCategories#Locate> ;
-                           software:isRequired "true"^^xsd:boolean ;
-                           software:uiConfig "{position: 4}" ;
-                           dc:description "Is there a project website for the software ?"@en .
-
-
-###  http://ontosoft.org/software#hasPublisher
-software:hasPublisher rdf:type owl:ObjectProperty ,
-                               owl:FunctionalProperty ;
-                      rdfs:domain software:Software ;
-                      rdfs:range prov:Agent ;
-                      software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                      software:uiConfig "{position: 1}" ;
-                      dc:description "Who is the publisher of this software?" .
-
-
-###  http://ontosoft.org/software#hasRating
-software:hasRating rdf:type owl:ObjectProperty ,
-                            owl:FunctionalProperty ;
-                   rdfs:domain software:SoftwareVersion ;
-                   rdfs:range software:Rating ;
-                   software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                   software:uiConfig "{position: -1}" ;
-                   dc:description "What are the ratings for this software?" .
-
-
-###  http://ontosoft.org/software#hasRelevantDataSources
-software:hasRelevantDataSources rdf:type owl:ObjectProperty ;
-                                rdfs:domain software:SoftwareVersion ;
-                                rdfs:range software:TextEntity ;
-                                software:category <http://ontosoft.org/softwareCategories#Experiment> ;
-                                software:uiConfig "{position: 1}" ;
-                                dc:description "Are there any relevant data catalogs that can be used with this software ?"@en .
-
-
-###  http://ontosoft.org/software#hasSalientQualities
-software:hasSalientQualities rdf:type owl:ObjectProperty ;
-                             rdfs:domain software:SoftwareVersion ;
-                             rdfs:range software:TextEntity ;
-                             software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                             software:isRequired "true"^^xsd:boolean ;
-                             software:uiConfig "{position:3}" ;
-                             dc:description "What other useful features of this software are worth highlighting ?"@en .
-
-
-###  http://ontosoft.org/software#hasShortDescription
-software:hasShortDescription rdf:type owl:ObjectProperty ,
-                                      owl:FunctionalProperty ;
-                             rdfs:domain software:Change ,
-                                         software:Function ,
-                                         software:Input ,
-                                         software:KnownIssue ,
-                                         software:Output ,
-                                         software:Software ,
-                                         software:SoftwareVersion ;
-                             rdfs:range software:TextEntity ;
-                             software:category <http://ontosoft.org/softwareCategories#Locate> ;
-                             software:isRequired "true"^^xsd:boolean ;
-                             software:uiConfig "{position: 2}" ;
-                             dc:description "Would you like to provide a short description for this software ?"@en .
-
-
-###  http://ontosoft.org/software#hasSoftwareCategory
-software:hasSoftwareCategory rdf:type owl:ObjectProperty ;
-                             rdfs:domain software:Software ,
-                                         software:SoftwareVersion ;
-                             rdfs:range software:SoftwareCategory ;
-                             software:category <http://ontosoft.org/softwareCategories#Locate> ;
-                             software:isRequired "true"^^xsd:boolean ;
-                             software:uiConfig "{position: 2}" ;
-                             dc:description "What are the general categories (keywords, labels) associated with the software ?"@en .
-
-
-###  http://ontosoft.org/software#hasSoftwareCommunity
-software:hasSoftwareCommunity rdf:type owl:ObjectProperty ;
-                              rdfs:domain software:Software ;
-                              rdfs:range software:CommunityInformation ;
-                              software:category <http://ontosoft.org/softwareCategories#Contribute> ;
-                              software:uiConfig "{position:2}" ;
-                              dc:description "Is there any on-line resource for accessing the software community ? (eg. Mailing-list, discussion board, wiki, etc)"@en .
-
-
-###  http://ontosoft.org/software#hasSoftwareCreatedDate
-software:hasSoftwareCreatedDate rdf:type owl:ObjectProperty ;
-                                rdfs:subPropertyOf terms:date ;
-                                rdfs:domain software:Software ;
-                                rdfs:range software:DateEntity ;
-                                software:category <http://ontosoft.org/softwareCategories#Locate> ;
-                                dc:description "When was the software created?"@en .
-
-
-###  http://ontosoft.org/software#hasSoftwareSupport
-software:hasSoftwareSupport rdf:type owl:ObjectProperty ,
-                                     owl:FunctionalProperty ;
-                            rdfs:domain software:Software ;
-                            rdfs:range software:TextEntity ;
-                            software:category <http://ontosoft.org/softwareCategories#Discuss> ;
-                            software:uiConfig "{position: 1}" ;
-                            dc:description "What is the support offered for this software?" .
-
-
-###  http://ontosoft.org/software#hasSoftwareVersion
-software:hasSoftwareVersion rdf:type owl:ObjectProperty ;
-                            rdfs:domain software:Software ;
-                            rdfs:range software:SoftwareVersion ;
-                            software:category <http://ontosoft.org/softwareCategories#Track> ;
-                            software:isRequired "true"^^xsd:boolean ;
-                            dc:description "What versions does the software have ?"@en .
-
-
-###  http://ontosoft.org/software#hasSoftwareVersionLimitDateOfSupport
-software:hasSoftwareVersionLimitDateOfSupport rdf:type owl:ObjectProperty ;
-                                              rdfs:subPropertyOf terms:date ;
-                                              rdfs:domain software:SoftwareVersion ;
-                                              rdfs:range software:DateEntity ;
-                                              software:category <http://ontosoft.org/softwareCategories#Track> ;
-                                              dc:description "When is the limit date of support for this version?"@en .
-
-
-###  http://ontosoft.org/software#hasTestData
-software:hasTestData rdf:type owl:ObjectProperty ;
-                     rdfs:domain software:SoftwareVersion ;
-                     rdfs:range software:TestData ;
-                     software:category <http://ontosoft.org/softwareCategories#Run> ;
-                     software:isRequired "true"^^xsd:boolean ;
-                     software:uiConfig "{position:1}" ;
-                     dc:description "Do you have any test data for the software ?"@en .
-
-
-###  http://ontosoft.org/software#hasTestDataDescription
-software:hasTestDataDescription rdf:type owl:ObjectProperty ,
-                                         owl:FunctionalProperty ;
-                                rdfs:domain software:TestData ;
-                                rdfs:range software:TestDataDescription ;
-                                software:category <http://ontosoft.org/softwareCategories#Run> ;
-                                software:uiConfig "{position:2}" ;
-                                dc:description "Can you describe the test data ?"@en .
-
-
-###  http://ontosoft.org/software#hasTestDataLocation
-software:hasTestDataLocation rdf:type owl:ObjectProperty ,
-                                      owl:FunctionalProperty ;
-                             rdfs:domain software:TestData ;
-                             rdfs:range software:Location ;
-                             software:category <http://ontosoft.org/softwareCategories#Run> ;
-                             software:isRequired "true"^^xsd:boolean ;
-                             software:uiConfig "{position:1}" ;
-                             dc:description "What is the URL for test data ?"@en .
-
-
-###  http://ontosoft.org/software#hasTestInstructions
-software:hasTestInstructions rdf:type owl:ObjectProperty ,
-                                      owl:FunctionalProperty ;
-                             rdfs:domain software:SoftwareVersion ;
-                             rdfs:range software:TestInstructions ;
-                             software:category <http://ontosoft.org/softwareCategories#Run> ;
-                             software:uiConfig "{position:1}" ;
-                             dc:description "Are there any specific instructions for testing the software ?"@en .
-
-
-###  http://ontosoft.org/software#hasTextValue
-software:hasTextValue rdf:type owl:ObjectProperty ,
-                               owl:FunctionalProperty ;
-                      rdfs:domain software:TextEntity .
-
-
-###  http://ontosoft.org/software#hasUniqueId
-software:hasUniqueId rdf:type owl:ObjectProperty ,
-                              owl:FunctionalProperty ;
-                     rdfs:domain software:Software ;
-                     rdfs:range software:Identifier ;
-                     software:category <http://ontosoft.org/softwareCategories#Locate> ;
-                     software:uiConfig "{position:3}" ;
-                     dc:description "What is the DOI or any other unique identifier for this software ?"@en .
-
-
-###  http://ontosoft.org/software#hasUsageInformation
-software:hasUsageInformation rdf:type owl:ObjectProperty ,
-                                      owl:FunctionalProperty ;
-                             rdfs:domain software:Software ;
-                             rdfs:range software:UsageInformation ;
-                             software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                             software:uiConfig "{position:4}" ;
-                             dc:description "Is there any information about uses of this software (paper dois, research labs, etc) ?"@en .
-
-
-###  http://ontosoft.org/software#hasUseLimitations
-software:hasUseLimitations rdf:type owl:ObjectProperty ,
-                                    owl:FunctionalProperty ;
-                           rdfs:domain software:Function ,
-                                       software:SoftwareVersion ;
-                           rdfs:range software:UseLimitations ;
-                           software:category <http://ontosoft.org/softwareCategories#Relate> ;
-                           software:uiConfig "{position:3}" ;
-                           dc:description "Are there any constraints on use, situations it is not designed for, simplifications ?"@en .
-
-
-###  http://ontosoft.org/software#hasUseStatistics
-software:hasUseStatistics rdf:type owl:ObjectProperty ,
-                                   owl:FunctionalProperty ;
-                          rdfs:domain software:Software ,
-                                      software:SoftwareVersion ;
-                          rdfs:range software:UsageStatistics ;
-                          software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                          software:uiConfig "{position:5}" ;
-                          dc:description "Are there any statistics ?"@en .
-
-
-###  http://ontosoft.org/software#hasUsesAndAssumptions
-software:hasUsesAndAssumptions rdf:type owl:ObjectProperty ,
-                                        owl:FunctionalProperty ;
-                               rdfs:domain software:Function ,
-                                           software:SoftwareVersion ;
-                               rdfs:range software:UsesAndAssumptions ;
-                               software:category <http://ontosoft.org/softwareCategories#Relate> ;
-                               software:uiConfig "{position:2}" ;
-                               dc:description "What are the recommended uses and assumptions for the software ?"@en .
-
-
-###  http://ontosoft.org/software#hasVersionId
-software:hasVersionId rdf:type owl:ObjectProperty ,
-                               owl:FunctionalProperty ;
-                      rdfs:domain software:SoftwareVersion ;
-                      rdfs:range software:Identifier ;
-                      software:category <http://ontosoft.org/softwareCategories#Locate> ;
-                      software:isRequired "true"^^xsd:boolean ;
-                      software:uiConfig "{position:1}" ;
-                      dc:description "What is the software version id ?"@en .
-
-
-###  http://ontosoft.org/software#hasVersionReleaseDate
-software:hasVersionReleaseDate rdf:type owl:ObjectProperty ;
-                               rdfs:subPropertyOf terms:date ;
-                               rdf:type owl:FunctionalProperty ;
-                               rdfs:domain software:SoftwareVersion ;
-                               rdfs:range software:DateEntity ;
-                               software:category <http://ontosoft.org/softwareCategories#Locate> ;
-                               software:uiConfig "{position:2}" ;
-                               dc:description "When was this version released ?"@en .
-
-
-###  http://ontosoft.org/software#hasWorkflowDescription
-software:hasWorkflowDescription rdf:type owl:ObjectProperty ,
-                                         owl:FunctionalProperty ;
-                                rdfs:domain software:Composition ;
-                                rdfs:range software:WorkflowDescription ;
-                                software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                                dc:description "Describe the workflow ?"@en .
-
-
-###  http://ontosoft.org/software#modifiedSoftwarePart
-software:modifiedSoftwarePart rdf:type owl:ObjectProperty ;
-                              rdfs:domain software:Change ;
-                              rdfs:range software:SoftwarePart .
-
-
-###  http://ontosoft.org/software#removedSoftwarePart
-software:removedSoftwarePart rdf:type owl:ObjectProperty ;
-                             rdfs:subPropertyOf software:modifiedSoftwarePart ;
-                             rdfs:domain software:Removal .
-
-
-###  http://ontosoft.org/software#requiresAverageMemory
-software:requiresAverageMemory rdf:type owl:ObjectProperty ,
-                                        owl:FunctionalProperty ;
-                               rdfs:domain software:SoftwareVersion ;
-                               rdfs:range software:MeasurementEntity ;
-                               software:category <http://ontosoft.org/softwareCategories#Install> ;
-                               software:uiConfig "{position:2}" ;
-                               dc:description "Are there any memory requirements for this software ?"@en .
-
-
-###  http://ontosoft.org/software#similarSoftware
-software:similarSoftware rdf:type owl:ObjectProperty ,
-                                  owl:SymmetricProperty ;
-                         rdfs:domain software:Software ,
-                                     software:SoftwareVersion ;
-                         rdfs:range software:Software ,
-                                    software:SoftwareVersion ;
-                         software:category <http://ontosoft.org/softwareCategories#Relate> ;
-                         software:uiConfig "{position:1}" ;
-                         dc:description "Is there any other similar software that you know of ?"@en .
-
-
-###  http://ontosoft.org/software#supersededBy
-software:supersededBy rdf:type owl:ObjectProperty ;
-                      owl:inverseOf software:supersedes ;
-                      rdf:type owl:FunctionalProperty ;
-                      rdfs:domain software:SoftwareVersion ;
-                      rdfs:range software:SoftwareVersion ;
-                      software:category <http://ontosoft.org/softwareCategories#Track> ;
-                      dc:description "Which versions replace  the current version?" .
-
-
-###  http://ontosoft.org/software#supersededByMajorVersion
-software:supersededByMajorVersion rdf:type owl:ObjectProperty ;
-                                  rdfs:subPropertyOf software:supersededBy ;
-                                  rdfs:domain software:MajorSoftwareVersion ;
-                                  rdfs:range software:MajorSoftwareVersion .
-
-
-###  http://ontosoft.org/software#supersedes
-software:supersedes rdf:type owl:ObjectProperty ,
-                             owl:FunctionalProperty ;
-                    rdfs:domain software:SoftwareVersion ;
-                    rdfs:range software:SoftwareVersion ;
-                    software:category <http://ontosoft.org/softwareCategories#Track> ;
-                    dc:description "What version does this software version supersede ?"@en .
-
-
-###  http://ontosoft.org/software#supportsOperatingSystem
-software:supportsOperatingSystem rdf:type owl:ObjectProperty ;
-                                 rdfs:domain software:SoftwareVersion ;
-                                 rdfs:range software:OperatingSystem ;
-                                 software:category <http://ontosoft.org/softwareCategories#Install> ;
-                                 software:isRequired "true"^^xsd:boolean ;
-                                 software:uiConfig "{position:3}" ;
-                                 dc:description "What Operating Systems can the software run on ?"@en .
-
-
-###  http://ontosoft.org/software#usedInPublication
-software:usedInPublication rdf:type owl:ObjectProperty ;
-                           rdfs:domain software:SoftwareVersion ;
-                           rdfs:range software:Citation ;
-                           software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                           software:uiConfig "{position: 6}" ;
-                           rdfs:description "Are there any publications where the software is used ?"@en .
-
-
-###  http://ontosoft.org/software#usesAlgorithm
-software:usesAlgorithm rdf:type owl:ObjectProperty ;
-                       rdfs:domain software:Function ;
-                       rdfs:range software:Algorithm ;
-                       dc:description "What is the algorithm used in this function?"@en .
-
-
-###  http://purl.org/dc/terms/contributor
-terms:contributor rdf:type owl:ObjectProperty ;
-                  rdfs:isDefinedBy terms: .
-
-
-###  http://purl.org/dc/terms/creator
-terms:creator rdf:type owl:ObjectProperty ;
-              rdfs:subPropertyOf owl:topObjectProperty ;
-              rdfs:isDefinedBy terms: .
-
-
-###  http://purl.org/dc/terms/date
-terms:date rdf:type owl:ObjectProperty ;
-           rdfs:isDefinedBy terms: .
-
-
-###  http://purl.org/dc/terms/license
-terms:license rdf:type owl:ObjectProperty ;
-              rdfs:isDefinedBy terms: .
-
-
-###  http://www.w3.org/ns/prov#wasRevisionOf
-prov:wasRevisionOf rdf:type owl:ObjectProperty ;
-                   dc:description "A revision is a derivation for which the resulting entity is a revised version of some original. The implication here is that the resulting entity contains substantial content from the original. Revision is a particular case of derivation."@en ;
-                   rdfs:isDefinedBy prov: .
-
-
-#################################################################
-#    Data properties
-#################################################################
-
-###  http://ontosoft.org/software#hasDateValue
-software:hasDateValue rdf:type owl:DatatypeProperty ,
-                               owl:FunctionalProperty ;
-                      rdfs:domain software:DateEntity ;
-                      rdfs:range xsd:dateTime ;
-                      rdfs:label "has Date Value" .
-
-
-###  http://ontosoft.org/software#hasDefaultValue
-software:hasDefaultValue rdf:type owl:DatatypeProperty .
-
-
-###  http://ontosoft.org/software#hasInputOrder
-software:hasInputOrder rdf:type owl:DatatypeProperty ;
-                       rdfs:subPropertyOf software:hasNumericValue ;
-                       rdfs:domain software:Input .
-
-
-###  http://ontosoft.org/software#hasNumericValue
-software:hasNumericValue rdf:type owl:DatatypeProperty ,
-                                  owl:FunctionalProperty ;
-                         rdfs:domain software:NumericEntity ;
-                         rdfs:range xsd:float ;
-                         rdfs:label "has Numeric Value" .
-
-
-###  http://ontosoft.org/software#hasTextValue
-software:hasTextValue rdf:type owl:DatatypeProperty ,
-                               owl:FunctionalProperty ;
-                      rdfs:range xsd:string .
-
-
-###  http://ontosoft.org/software#hasURI
-software:hasURI rdf:type owl:DatatypeProperty ,
-                         owl:FunctionalProperty ;
-                rdfs:domain software:Location ;
-                rdfs:range xsd:anyURI ;
-                rdfs:label "has URI"@en .
-
-
-###  http://ontosoft.org/software#hasUnits
-software:hasUnits rdf:type owl:DatatypeProperty ,
-                           owl:FunctionalProperty ;
-                  rdfs:domain software:MeasurementEntity ;
-                  rdfs:range xsd:string ;
-                  rdfs:label "has Units" .
-
-
-#################################################################
-#    Classes
-#################################################################
-
-###  http://ontosoft.org/software#Addition
-software:Addition rdf:type owl:Class ;
-                  rdfs:subClassOf software:Change .
-
-
-###  http://ontosoft.org/software#Algorithm
-software:Algorithm rdf:type owl:Class ;
-                   rdfs:subClassOf software:EnumerationEntity .
-
-
-###  http://ontosoft.org/software#BenchmarkInformation
-software:BenchmarkInformation rdf:type owl:Class ;
-                              rdfs:subClassOf software:TextEntity ;
-                              rdfs:comment "Software benchmarking information"@en ;
-                              rdfs:label "Benchmark Information"@en .
-
-
-###  http://ontosoft.org/software#BugFix
-software:BugFix rdf:type owl:Class ;
-                rdfs:subClassOf software:Change .
-
-
-###  http://ontosoft.org/software#Change
-software:Change rdf:type owl:Class ;
-                rdfs:subClassOf software:ComplexEntity .
-
-
-###  http://ontosoft.org/software#Citation
-software:Citation rdf:type owl:Class ;
-                  rdfs:subClassOf software:ComplexEntity ;
-                  rdfs:comment "Used for citing publications with citation next and a citation location"@en ;
-                  rdfs:label "Citation"@en .
-
-
-###  http://ontosoft.org/software#CitationText
-software:CitationText rdf:type owl:Class ;
-                      rdfs:subClassOf software:TextEntity ;
-                      rdfs:comment "Text associated with a citation"@en ;
-                      rdfs:label "Citation Text"@en .
-
-
-###  http://ontosoft.org/software#CommunityInformation
-software:CommunityInformation rdf:type owl:Class ;
-                              rdfs:subClassOf software:TextEntity ;
-                              rdfs:comment "Information about any on-line resource for accessing the software community (Mailing-list, discussion board, wiki, etc)"@en ;
-                              rdfs:label "Community Information" .
-
-
-###  http://ontosoft.org/software#ComplexEntity
-software:ComplexEntity rdf:type owl:Class ;
-                       rdfs:subClassOf prov:Entity ;
-                       rdfs:comment "An entity composed of multiple entities"@en ;
-                       rdfs:label "Complex Entity"@en .
-
-
-###  http://ontosoft.org/software#Composition
-software:Composition rdf:type owl:Class ;
-                     rdfs:subClassOf software:ComplexEntity ;
-                     rdfs:comment "Describes composition of a software with others in a workflow"@en ;
-                     rdfs:label "Composition"@en .
-
-
-###  http://ontosoft.org/software#DataFormat
-software:DataFormat rdf:type owl:Class ;
-                    rdfs:subClassOf software:EnumerationEntity .
-
-
-###  http://ontosoft.org/software#DataType
-software:DataType rdf:type owl:Class ;
-                  rdfs:subClassOf software:EnumerationEntity .
-
-
-###  http://ontosoft.org/software#DateEntity
-software:DateEntity rdf:type owl:Class ;
-                    rdfs:subClassOf prov:Entity ;
-                    dc:description "A date entity"@en ;
-                    rdfs:label "Date Entity"@en .
-
-
-###  http://ontosoft.org/software#DevelopmentInformation
-software:DevelopmentInformation rdf:type owl:Class ;
-                                rdfs:subClassOf software:TextEntity ;
-                                rdfs:comment "Software development/maintenance description"@en ;
-                                rdfs:label "Development Information"@en .
-
-
-###  http://ontosoft.org/software#DevelopmentSoftwareVersion
-software:DevelopmentSoftwareVersion rdf:type owl:Class ;
-                                    rdfs:subClassOf software:SoftwareVersion .
-
-
-###  http://ontosoft.org/software#EnumerationEntity
-software:EnumerationEntity rdf:type owl:Class ;
-                           rdfs:subClassOf prov:Entity ;
-                           rdfs:comment "An entity that provides enumeration instances"@en ;
-                           rdfs:label "Enumeration Entity"@en .
-
-
-###  http://ontosoft.org/software#File
-software:File rdf:type owl:Class ;
-              rdfs:subClassOf software:ComplexEntity ;
-              rdfs:comment "Indicates a file based input to, or file based output from a software"@en ;
-              rdfs:label "File I/O"@en .
-
-
-###  http://ontosoft.org/software#Function
-software:Function rdf:type owl:Class ;
-                  rdfs:subClassOf software:SoftwarePart .
-
-
-###  http://ontosoft.org/software#Functionality
-software:Functionality rdf:type owl:Class ;
-                       rdfs:subClassOf software:EnumerationEntity .
-
-
-###  http://ontosoft.org/software#Identifier
-software:Identifier rdf:type owl:Class ;
-                    rdfs:subClassOf software:TextEntity ;
-                    rdfs:comment "A text based identifier"@en ;
-                    rdfs:label "Identifier"@en .
-
-
-###  http://ontosoft.org/software#ImplementationDetails
-software:ImplementationDetails rdf:type owl:Class ;
-                               rdfs:subClassOf software:TextEntity ;
-                               rdfs:comment "Details about implementation of the code (parallelization, etc)"@en ;
-                               rdfs:label "Implementation Details"@en .
-
-
-###  http://ontosoft.org/software#Input
-software:Input rdf:type owl:Class ;
-               rdfs:subClassOf software:SoftwarePart .
-
-
-###  http://ontosoft.org/software#InputFlag
-software:InputFlag rdf:type owl:Class ;
-                   rdfs:subClassOf software:Input .
-
-
-###  http://ontosoft.org/software#InputParameter
-software:InputParameter rdf:type owl:Class ;
-                        rdfs:subClassOf software:Input .
-
-
-###  http://ontosoft.org/software#Keywords
-software:Keywords rdf:type owl:Class ;
-                  rdfs:subClassOf software:TextEntity ;
-                  rdfs:comment "Comma separated keywords associated with the software"@en ;
-                  rdfs:label "Keywords"@en .
-
-
-###  http://ontosoft.org/software#KnownIssue
-software:KnownIssue rdf:type owl:Class ;
-                    rdfs:subClassOf software:ComplexEntity ;
-                    rdfs:label "Known Issue" .
-
-
-###  http://ontosoft.org/software#License
-software:License rdf:type owl:Class ;
-                 rdfs:subClassOf software:EnumerationEntity ;
-                 rdfs:comment "A class of licenses that the software is released under"@en ;
-                 rdfs:label "License"@en .
-
-
-###  http://ontosoft.org/software#Location
-software:Location rdf:type owl:Class ;
-                  rdfs:subClassOf prov:Entity ;
-                  rdfs:comment "A Location URL"@en ;
-                  rdfs:label "Location"@en .
-
-
-###  http://ontosoft.org/software#LongTermRelease
-software:LongTermRelease rdf:type owl:Class ;
-                         rdfs:subClassOf software:SoftwareVersion .
-
-
-###  http://ontosoft.org/software#MajorSoftwareVersion
-software:MajorSoftwareVersion rdf:type owl:Class ;
-                              rdfs:subClassOf software:SoftwareVersion .
-
-
-###  http://ontosoft.org/software#MeasurementEntity
-software:MeasurementEntity rdf:type owl:Class ;
-                           rdfs:subClassOf software:NumericEntity ;
-                           rdfs:comment "A numeric value with units"@en ;
-                           rdfs:label "Measurement Entity"@en .
-
-
-###  http://ontosoft.org/software#MinorSoftwareVersion
-software:MinorSoftwareVersion rdf:type owl:Class ;
-                              rdfs:subClassOf software:SoftwareVersion .
-
-
-###  http://ontosoft.org/software#NumericEntity
-software:NumericEntity rdf:type owl:Class ;
-                       rdfs:subClassOf prov:Entity ;
-                       rdfs:comment "A numeric entity"@en ;
-                       rdfs:label "Numeric Entity"@en .
+    <!-- http://ontosoft.org/software#isRequired -->
 
-
-###  http://ontosoft.org/software#OperatingSystem
-software:OperatingSystem rdf:type owl:Class ;
-                         rdfs:subClassOf software:EnumerationEntity ;
-                         rdfs:comment "Operating Systems that the software runs on"@en ;
-                         rdfs:label "Operating System"@en .
+    <owl:AnnotationProperty rdf:about="http://ontosoft.org/software#isRequired">
+        <rdfs:comment xml:lang="en">This property annotation indicates if a property is a required property or not</rdfs:comment>
+    </owl:AnnotationProperty>
+    
 
 
-###  http://ontosoft.org/software#OptionalInput
-software:OptionalInput rdf:type owl:Class ;
-                       rdfs:subClassOf software:Input .
+    <!-- http://ontosoft.org/software#searchConfig -->
 
+    <owl:AnnotationProperty rdf:about="http://ontosoft.org/software#searchConfig">
+        <rdfs:comment xml:lang="en">This property annotation provides information to be handed over to search engines (like Solr) to explain how to tokenize and index the property values</rdfs:comment>
+    </owl:AnnotationProperty>
+    
 
-###  http://ontosoft.org/software#Output
-software:Output rdf:type owl:Class ;
-                rdfs:subClassOf software:SoftwarePart .
 
+    <!-- http://ontosoft.org/software#uiConfig -->
 
-###  http://ontosoft.org/software#Person
-software:Person rdf:type owl:Class ;
-                rdfs:subClassOf prov:Agent ;
-                rdfs:comment "A Person identifier class"@en ;
-                rdfs:label "Person"@en .
+    <owl:AnnotationProperty rdf:about="http://ontosoft.org/software#uiConfig">
+        <rdfs:comment xml:lang="en">This property annotation provides UI specific information for the property like positioning, special UI interface, etc</rdfs:comment>
+    </owl:AnnotationProperty>
+    
 
 
-###  http://ontosoft.org/software#ProgrammingLanguage
-software:ProgrammingLanguage rdf:type owl:Class ;
-                             rdfs:subClassOf software:EnumerationEntity ;
-                             rdfs:comment "The class of programming languages"@en ;
-                             rdfs:label "Programming Language"@en .
+    <!-- http://purl.org/dc/elements/1.1/description -->
 
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/description"/>
+    
 
-###  http://ontosoft.org/software#Rating
-software:Rating rdf:type owl:Class ;
-                rdfs:subClassOf software:TextEntity ;
-                rdfs:comment "Rating of a software" ;
-                rdfs:label "Rating" .
 
+    <!-- http://www.w3.org/2000/01/rdf-schema#description -->
 
-###  http://ontosoft.org/software#Removal
-software:Removal rdf:type owl:Class ;
-                 rdfs:subClassOf software:Change .
+    <owl:AnnotationProperty rdf:about="http://www.w3.org/2000/01/rdf-schema#description"/>
+    
 
 
-###  http://ontosoft.org/software#RequiredInput
-software:RequiredInput rdf:type owl:Class ;
-                       rdfs:subClassOf software:Input .
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
 
+    
 
-###  http://ontosoft.org/software#RevisionSoftwareVersion
-software:RevisionSoftwareVersion rdf:type owl:Class ;
-                                 rdfs:subClassOf software:SoftwareVersion .
 
+    <!-- http://ontosoft.org/software#addedSoftwarePart -->
 
-###  http://ontosoft.org/software#ShortTermRelease
-software:ShortTermRelease rdf:type owl:Class ;
-                          rdfs:subClassOf software:SoftwareVersion .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#addedSoftwarePart">
+        <rdfs:subPropertyOf rdf:resource="http://ontosoft.org/software#modifiedSoftwarePart"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Addition"/>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#Software
-software:Software rdf:type owl:Class ;
-                  rdfs:subClassOf software:EnumerationEntity ;
-                  rdfs:comment "A Software is any piece of code that is described in Ontosoft. This could some visualisation software, software package, library, componentised scripts, etc. This can be subclassed if software categories with extra properties are required, otherwise one should use SoftwareTag to categorise software."@en ;
-                  rdfs:label "Software"@en .
+    <!-- http://ontosoft.org/software#affectsSoftwarePart -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#affectsSoftwarePart"/>
+    
 
-###  http://ontosoft.org/software#SoftwareCategory
-software:SoftwareCategory rdf:type owl:Class ;
-                          rdfs:subClassOf software:EnumerationEntity ;
-                          rdfs:comment "A software can be tagged with multiple categories. Multiple instances can be created of this, and it can also be subclassed to have hierarchical categories"@en ;
-                          rdfs:label "SoftwareCategory"@en .
 
+    <!-- http://ontosoft.org/software#fixedKnownIssue -->
 
-###  http://ontosoft.org/software#SoftwareDescription
-software:SoftwareDescription rdf:type owl:Class ;
-                             rdfs:subClassOf software:TextEntity ;
-                             rdfs:comment "An informal text-based description of software"@en ;
-                             rdfs:label "Software Description"@en .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#fixedKnownIssue">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#BugFix"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#KnownIssue"/>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#SoftwarePart
-software:SoftwarePart rdf:type owl:Class ;
-                      rdfs:subClassOf software:ComplexEntity .
+    <!-- http://ontosoft.org/software#hasActiveDevelopment -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasActiveDevelopment">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#DevelopmentInformation"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Contribute"/>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">How is the software being developed or maintained ?</dc:description>
+    </owl:ObjectProperty>
+    
 
-###  http://ontosoft.org/software#SoftwareVersion
-software:SoftwareVersion rdf:type owl:Class ;
-                         rdfs:subClassOf software:EnumerationEntity ;
-                         rdfs:comment "A version of a piece of software described by ontosoft"@en ;
-                         rdfs:label "Software Version"@en .
 
+    <!-- http://ontosoft.org/software#hasAdopter -->
 
-###  http://ontosoft.org/software#StableSoftwareVersion
-software:StableSoftwareVersion rdf:type owl:Class ;
-                               rdfs:subClassOf software:SoftwareVersion .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasAdopter">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <uiConfig>{position: 3}</uiConfig>
+        <dc:description>Has the software been adopted in a project, organization or by a person?</dc:description>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#Stdout
-software:Stdout rdf:type owl:Class ;
-                rdfs:subClassOf software:Output .
+    <!-- http://ontosoft.org/software#hasAverageRunTime -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasAverageRunTime">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#MeasurementEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Install"/>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">Do you know how long it takes to run this software on average ?</dc:description>
+    </owl:ObjectProperty>
+    
 
-###  http://ontosoft.org/software#TestData
-software:TestData rdf:type owl:Class ;
-                  rdfs:subClassOf software:ComplexEntity ;
-                  rdfs:comment "TestData is used to describe test datasets for the software"@en ;
-                  rdfs:label "Test Data"@en .
 
+    <!-- http://ontosoft.org/software#hasBenchmarkInformation -->
 
-###  http://ontosoft.org/software#TestDataDescription
-software:TestDataDescription rdf:type owl:Class ;
-                             rdfs:subClassOf software:TextEntity ;
-                             rdfs:comment "Description of the Test Data provided"@en ;
-                             rdfs:label "TestData Description"@en .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasBenchmarkInformation">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#BenchmarkInformation"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <uiConfig>{position:7}</uiConfig>
+        <dc:description xml:lang="en">Is there any benchmark information about the software ?</dc:description>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#TestInstructions
-software:TestInstructions rdf:type owl:Class ;
-                          rdfs:subClassOf software:TextEntity ;
-                          rdfs:comment "Instructions on how to run the test with the provided test data including test cases, setup instructions, etc."@en ;
-                          rdfs:label "Test Instructions"@en .
+    <!-- http://ontosoft.org/software#hasChange -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasChange">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Change"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Track"/>
+        <dc:description xml:lang="en">Is there any change that affects this software version?</dc:description>
+    </owl:ObjectProperty>
+    
 
-###  http://ontosoft.org/software#TextEntity
-software:TextEntity rdf:type owl:Class ;
-                    rdfs:subClassOf prov:Entity ;
-                    rdfs:comment "A text entity"@en ;
-                    rdfs:label "Text Entity"@en .
 
+    <!-- http://ontosoft.org/software#hasCitationLocation -->
 
-###  http://ontosoft.org/software#UsageInformation
-software:UsageInformation rdf:type owl:Class ;
-                          rdfs:subClassOf software:TextEntity ;
-                          rdfs:comment "Information about uses of this software (paper dois, research labs, etc)"@en ;
-                          rdfs:label "Usage Information"@en .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasCitationLocation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Citation"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Location"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Cite"/>
+        <dc:description xml:lang="en">What is the URL for the citation ?</dc:description>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#UsageStatistics
-software:UsageStatistics rdf:type owl:Class ;
-                         rdfs:subClassOf software:TextEntity ;
-                         rdfs:comment "Statistics about software use (downloads, frequency of use, etc)"@en ;
-                         rdfs:label "Usage Statistics"@en .
+    <!-- http://ontosoft.org/software#hasCitationText -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasCitationText">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Citation"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#CitationText"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Cite"/>
+        <dc:description xml:lang="en">What is the text associated with the Citation ?</dc:description>
+    </owl:ObjectProperty>
+    
 
-###  http://ontosoft.org/software#UseLimitations
-software:UseLimitations rdf:type owl:Class ;
-                        rdfs:subClassOf software:TextEntity ;
-                        rdfs:comment "Constraints on use of the software, any simplifications, situations it isn't designed for"@en ;
-                        rdfs:label "Use Limitations"@en .
 
+    <!-- http://ontosoft.org/software#hasCodeLocation -->
 
-###  http://ontosoft.org/software#UsesAndAssumptions
-software:UsesAndAssumptions rdf:type owl:Class ;
-                            rdfs:subClassOf software:TextEntity ;
-                            rdfs:comment "Description of how the software is used, and any assumptions made for using the software"@en ;
-                            rdfs:label "Uses and Assumptions"@en .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasCodeLocation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Location"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Access"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position: 1}</uiConfig>
+        <dc:description xml:lang="en">What is the URL for the code ?</dc:description>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#WorkflowDescription
-software:WorkflowDescription rdf:type owl:Class ;
-                             rdfs:subClassOf software:TextEntity ;
-                             rdfs:comment "Describes use of the software with other software in a workflow"@en ;
-                             rdfs:label "Workflow Description"@en .
+    <!-- http://ontosoft.org/software#hasCommitmentOfSupport -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasCommitmentOfSupport">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <uiConfig>{position:2}</uiConfig>
+        <dc:description xml:lang="en">How can a user get support for the software ? (eg. Report bugs, request features and extensions, etc)</dc:description>
+    </owl:ObjectProperty>
+    
 
-###  http://purl.org/dc/terms/Parameter
-terms:Parameter rdf:type owl:Class ;
-                rdfs:subClassOf software:TextEntity ;
-                rdfs:comment "Indicates a parameter used by a software" ;
-                rdfs:label "Parameter" .
 
+    <!-- http://ontosoft.org/software#hasCompatibleSoftware -->
 
-###  http://www.w3.org/ns/prov#Agent
-prov:Agent rdf:type owl:Class ;
-           rdfs:subClassOf prov:Entity ;
-           rdfs:isDefinedBy prov: .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasCompatibleSoftware">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Composition"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwareDescription"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Compose"/>
+        <dc:description xml:lang="en">What software can this software be composed with in a workflow ?</dc:description>
+    </owl:ObjectProperty>
+    
 
 
-###  http://www.w3.org/ns/prov#Entity
-prov:Entity rdf:type owl:Class ;
-            rdfs:isDefinedBy prov: .
+    <!-- http://ontosoft.org/software#hasCompositionDescription -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasCompositionDescription">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Composition"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Compose"/>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">Is this software typically used with other software in a workflow ? (eg: for visualization, preprocessing, postprocessing, etc)</dc:description>
+    </owl:ObjectProperty>
+    
+
 
-#################################################################
-#    Individuals
-#################################################################
+    <!-- http://ontosoft.org/software#hasCreator -->
 
-###  http://creativecommons.org/licenses/by/4.0/
-<http://creativecommons.org/licenses/by/4.0/> rdf:type owl:NamedIndividual .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasCreator">
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/creator"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">Who created this software? (Project, Organization, Person, Initiative, etc.)</dc:description>
+    </owl:ObjectProperty>
+    
 
 
-###  http://delicias.dia.fi.upm.es/members/DGarijo#me
-<http://delicias.dia.fi.upm.es/members/DGarijo#me> rdf:type owl:NamedIndividual .
+    <!-- http://ontosoft.org/software#hasDataFormat -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasDataFormat">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#File"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#DataFormat"/>
+    </owl:ObjectProperty>
+    
 
-###  http://ontosoft.org/software
-<http://ontosoft.org/software> rdf:type owl:NamedIndividual ;
-                               terms:contributor <http://delicias.dia.fi.upm.es/members/DGarijo#me> ;
-                               terms:creator <http://www.isi.edu/~gil/> ,
-                                             <http://www.isi.edu/~varunr/> ;
-                               terms:license <http://creativecommons.org/licenses/by/4.0/> .
+
+    <!-- http://ontosoft.org/software#hasDefaultValue -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasDefaultValue">
+        <rdfs:subPropertyOf rdf:resource="http://ontosoft.org/software#hasTextValue"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Input"/>
+    </owl:ObjectProperty>
+    
 
-###  http://ontosoft.org/software#
-software: rdf:type owl:NamedIndividual ,
-                   software:DateEntity ,
-                   software:Identifier .
 
+    <!-- http://ontosoft.org/software#hasDependency -->
 
-###  http://ontosoft.org/software#AGPL
-software:AGPL rdf:type owl:NamedIndividual ,
-                       software:License ;
-              rdfs:label "AGPL"@en .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasDependency">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Install"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:5}</uiConfig>
+        <dc:description xml:lang="en">What other software does the software require to be installed ?</dc:description>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#ALv2
-software:ALv2 rdf:type owl:NamedIndividual ,
-                       software:License ;
-              rdfs:label "Apache v2"@en .
+    <!-- http://ontosoft.org/software#hasDocumentation -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasDocumentation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Location"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Install"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position: 1}</uiConfig>
+        <dc:description xml:lang="en">Is there any on-line documentation about the software ?</dc:description>
+    </owl:ObjectProperty>
+    
 
-###  http://ontosoft.org/software#ARFF
-software:ARFF rdf:type owl:NamedIndividual ,
-                       software:DataFormat .
 
+    <!-- http://ontosoft.org/software#hasDomainKeywords -->
 
-###  http://ontosoft.org/software#BSD
-software:BSD rdf:type owl:NamedIndividual ,
-                      software:License ;
-             rdfs:label "BSD"@en .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasDomainKeywords">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Keywords"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Relate"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">What are the domain specific keywords for this software</dc:description>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#C
-software:C rdf:type owl:NamedIndividual ,
-                    software:ProgrammingLanguage ;
-           rdfs:label "C"@en .
+    <!-- http://ontosoft.org/software#hasEmailContact -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasEmailContact">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Discuss"/>
+        <uiConfig>{position: 2}</uiConfig>
+        <dc:description>What is the e-mail contact for this software?</dc:description>
+    </owl:ObjectProperty>
+    
 
-###  http://ontosoft.org/software#CDDL
-software:CDDL rdf:type owl:NamedIndividual ,
-                       software:License ;
-              rdfs:label "CDDL"@en .
 
+    <!-- http://ontosoft.org/software#hasExecutableLocation -->
 
-###  http://ontosoft.org/software#CSS
-software:CSS rdf:type owl:NamedIndividual ,
-                      software:ProgrammingLanguage ;
-             rdfs:label "CSS"@en .
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasExecutableLocation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Location"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Access"/>
+        <uiConfig>{position: 1}</uiConfig>
+        <dc:description xml:lang="en">What is the URL for the executable ?</dc:description>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#CSV
-software:CSV rdf:type owl:NamedIndividual ,
-                      software:DataFormat .
+    <!-- http://ontosoft.org/software#hasFileId -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasFileId">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#File"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Identifier"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Compose"/>
+        <dc:description xml:lang="en">What is the id for the File I/O ?
+</dc:description>
+    </owl:ObjectProperty>
+    
+
 
-###  http://ontosoft.org/software#Classification
-software:Classification rdf:type owl:NamedIndividual ,
-                                 software:Functionality .
+    <!-- http://ontosoft.org/software#hasFileType -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasFileType">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#File"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Compose"/>
+        <dc:description xml:lang="en">What is the File I/O type ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasFunction -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasFunction">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Function"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Compose"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+    </owl:ObjectProperty>
+    
+
 
-###  http://ontosoft.org/software#Clustering
-software:Clustering rdf:type owl:NamedIndividual ,
-                             software:Keywords ,
-                             software:TextEntity ;
-                    software:hasTextValue "Clustering"^^xsd:string .
+    <!-- http://ontosoft.org/software#hasFunctionality -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasFunctionality">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Functionality"/>
+    </owl:ObjectProperty>
+    
+
 
-###  http://ontosoft.org/software#Converter
-software:Converter rdf:type owl:NamedIndividual ,
-                            software:Functionality .
+    <!-- http://ontosoft.org/software#hasFundingSources -->
 
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasFundingSources">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <uiConfig>{position: 8}</uiConfig>
+        <dc:description>What are the funding sources for this software?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasImplementationLanguage -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasImplementationLanguage">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Install"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:2}</uiConfig>
+        <dc:description xml:lang="en">What language(s) is the software written in ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasInput -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasInput">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Input"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Experiment"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">What input files does the software require ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasInputParameter -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasInputParameter">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdfs:range rdf:resource="http://purl.org/dc/terms/Parameter"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Experiment"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position: 2}</uiConfig>
+        <dc:description>What are the input parameters used for this software?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasInstallationInstructions -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasInstallationInstructions">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Install"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:4}</uiConfig>
+        <dc:description xml:lang="en">How can one install the software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasInteroperableSoftware -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasInteroperableSoftware">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwareDescription"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Compose"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position: 1}</uiConfig>
+        <dc:description>What other software can interoperate with this one?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasKnownIssue -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasKnownIssue">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#KnownIssue"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasLatestSoftwareVersion -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasLatestSoftwareVersion">
+        <rdfs:subPropertyOf rdf:resource="http://ontosoft.org/software#hasSoftwareVersion"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasLicense -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasLicense">
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/license"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#License"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Access"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position: 3}</uiConfig>
+        <dc:description xml:lang="en">What license is the code released under ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasMajorContributor -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasMajorContributor">
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/contributor"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:2}</uiConfig>
+        <dc:description xml:lang="en">Are there any major contributors of note for this software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasName -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasName">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Locate"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position: 1}</uiConfig>
+        <dc:description xml:lang="en">What is the software called ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasOtherImplementationDetails -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasOtherImplementationDetails">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#ImplementationDetails"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Install"/>
+        <uiConfig>{position:3}</uiConfig>
+        <dc:description xml:lang="en">Are there any other important details about the implementation of this code (parallelization, special hardware, etc) ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasOutput -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasOutput">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Output"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Experiment"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:3}</uiConfig>
+        <dc:description xml:lang="en">What output files does the software produce ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasPersonIdentifier -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasPersonIdentifier">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Person"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Identifier"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Identify"/>
+        <isRequired>true</isRequired>
+        <dc:description xml:lang="en">Provide a Twitter handle, ORCID Id, email address, github URL, home page, or any other unique identifier for this person</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasPreferredCitation -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasPreferredCitation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Citation"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Cite"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">Is there a preferred publication or citation for this software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasProjectWebsite -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasProjectWebsite">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Location"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Locate"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position: 4}</uiConfig>
+        <dc:description xml:lang="en">Is there a project website for the software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasPublisher -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasPublisher">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <uiConfig>{position: 1}</uiConfig>
+        <dc:description>Who is the publisher of this software?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasRating -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasRating">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Rating"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <uiConfig>{position: -1}</uiConfig>
+        <dc:description>What are the ratings for this software?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasRelevantDataSources -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasRelevantDataSources">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Experiment"/>
+        <uiConfig>{position: 1}</uiConfig>
+        <dc:description xml:lang="en">Are there any relevant data catalogs that can be used with this software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasSalientQualities -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasSalientQualities">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:3}</uiConfig>
+        <dc:description xml:lang="en">What other useful features of this software are worth highlighting ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasShortDescription -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasShortDescription">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Change"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Input"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#KnownIssue"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Output"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Locate"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position: 2}</uiConfig>
+        <dc:description xml:lang="en">Would you like to provide a short description for this software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasSoftwareCategory -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasSoftwareCategory">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwareCategory"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Locate"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position: 2}</uiConfig>
+        <dc:description xml:lang="en">What are the general categories (keywords, labels) associated with the software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasSoftwareCommunity -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasSoftwareCommunity">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#CommunityInformation"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Contribute"/>
+        <uiConfig>{position:2}</uiConfig>
+        <dc:description xml:lang="en">Is there any on-line resource for accessing the software community ? (eg. Mailing-list, discussion board, wiki, etc)</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasSoftwareCreatedDate -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasSoftwareCreatedDate">
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/date"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#DateEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Locate"/>
+        <dc:description xml:lang="en">When was the software created?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasSoftwareSupport -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasSoftwareSupport">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Discuss"/>
+        <uiConfig>{position: 1}</uiConfig>
+        <dc:description>What is the support offered for this software?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasSoftwareVersion -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasSoftwareVersion">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Track"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <dc:description xml:lang="en">What versions does the software have ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasSoftwareVersionLimitDateOfSupport -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasSoftwareVersionLimitDateOfSupport">
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/date"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#DateEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Track"/>
+        <dc:description xml:lang="en">When is the limit date of support for this version?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasTestData -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasTestData">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TestData"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Run"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">Do you have any test data for the software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasTestDataDescription -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasTestDataDescription">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#TestData"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TestDataDescription"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Run"/>
+        <uiConfig>{position:2}</uiConfig>
+        <dc:description xml:lang="en">Can you describe the test data ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasTestDataLocation -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasTestDataLocation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#TestData"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Location"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Run"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">What is the URL for test data ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasTestInstructions -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasTestInstructions">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#TestInstructions"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Run"/>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">Are there any specific instructions for testing the software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasTextValue -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasTextValue">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#TextEntity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasUniqueId -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasUniqueId">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Identifier"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Locate"/>
+        <uiConfig>{position:3}</uiConfig>
+        <dc:description xml:lang="en">What is the DOI or any other unique identifier for this software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasUsageInformation -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasUsageInformation">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#UsageInformation"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <uiConfig>{position:4}</uiConfig>
+        <dc:description xml:lang="en">Is there any information about uses of this software (paper dois, research labs, etc) ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasUseLimitations -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasUseLimitations">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#UseLimitations"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Relate"/>
+        <uiConfig>{position:3}</uiConfig>
+        <dc:description xml:lang="en">Are there any constraints on use, situations it is not designed for, simplifications ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasUseStatistics -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasUseStatistics">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#UsageStatistics"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <uiConfig>{position:5}</uiConfig>
+        <dc:description xml:lang="en">Are there any statistics ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasUsesAndAssumptions -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasUsesAndAssumptions">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#UsesAndAssumptions"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Relate"/>
+        <uiConfig>{position:2}</uiConfig>
+        <dc:description xml:lang="en">What are the recommended uses and assumptions for the software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasVersionId -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasVersionId">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Identifier"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Locate"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">What is the software version id ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasVersionReleaseDate -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasVersionReleaseDate">
+        <rdfs:subPropertyOf rdf:resource="http://purl.org/dc/terms/date"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#DateEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Locate"/>
+        <uiConfig>{position:2}</uiConfig>
+        <dc:description xml:lang="en">When was this version released ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#hasWorkflowDescription -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasWorkflowDescription">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Composition"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#WorkflowDescription"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Compose"/>
+        <dc:description xml:lang="en">Describe the workflow ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#modifiedSoftwarePart -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#modifiedSoftwarePart">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Change"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#removedSoftwarePart -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#removedSoftwarePart">
+        <rdfs:subPropertyOf rdf:resource="http://ontosoft.org/software#modifiedSoftwarePart"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Removal"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#requiresAverageMemory -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#requiresAverageMemory">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#MeasurementEntity"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Install"/>
+        <uiConfig>{position:2}</uiConfig>
+        <dc:description xml:lang="en">Are there any memory requirements for this software ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#similarSoftware -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#similarSoftware">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Software"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Relate"/>
+        <uiConfig>{position:1}</uiConfig>
+        <dc:description xml:lang="en">Is there any other similar software that you know of ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#supersededBy -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#supersededBy">
+        <owl:inverseOf rdf:resource="http://ontosoft.org/software#supersedes"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Track"/>
+        <dc:description>Which versions replace  the current version?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#supersededByMajorVersion -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#supersededByMajorVersion">
+        <rdfs:subPropertyOf rdf:resource="http://ontosoft.org/software#supersededBy"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#MajorSoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#MajorSoftwareVersion"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#supersedes -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#supersedes">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Track"/>
+        <dc:description xml:lang="en">What version does this software version supersede ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#supportsOperatingSystem -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#supportsOperatingSystem">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#OperatingSystem"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Install"/>
+        <isRequired rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</isRequired>
+        <uiConfig>{position:3}</uiConfig>
+        <dc:description xml:lang="en">What Operating Systems can the software run on ?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#usedInPublication -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#usedInPublication">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Citation"/>
+        <category rdf:resource="http://ontosoft.org/softwareCategories#Trust"/>
+        <uiConfig>{position: 6}</uiConfig>
+        <rdfs:description xml:lang="en">Are there any publications where the software is used ?</rdfs:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://ontosoft.org/software#usesAlgorithm -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#usesAlgorithm">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdfs:range rdf:resource="http://ontosoft.org/software#Algorithm"/>
+        <dc:description xml:lang="en">What is the algorithm used in this function?</dc:description>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/contributor -->
 
-###  http://ontosoft.org/software#Cplusplus
-software:Cplusplus rdf:type owl:NamedIndividual ,
-                            software:ProgrammingLanguage ;
-                   rdfs:label "C++"@en .
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/contributor">
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/creator -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/creator">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/date -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/date">
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://purl.org/dc/terms/license -->
+
+    <owl:ObjectProperty rdf:about="http://purl.org/dc/terms/license">
+        <rdfs:isDefinedBy rdf:resource="http://purl.org/dc/terms/"/>
+    </owl:ObjectProperty>
+    
+
 
+    <!-- http://www.w3.org/ns/prov#wasRevisionOf -->
 
-###  http://ontosoft.org/software#CreativeCommons
-software:CreativeCommons rdf:type owl:NamedIndividual ,
-                                  software:License ;
-                         rdfs:label "Creative Commons"@en .
+    <owl:ObjectProperty rdf:about="http://www.w3.org/ns/prov#wasRevisionOf">
+        <dc:description xml:lang="en">A revision is a derivation for which the resulting entity is a revised version of some original. The implication here is that the resulting entity contains substantial content from the original. Revision is a particular case of derivation.</dc:description>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/prov#"/>
+    </owl:ObjectProperty>
+    
 
 
-###  http://ontosoft.org/software#EPL
-software:EPL rdf:type owl:NamedIndividual ,
-                      software:License ;
-             rdfs:label "EPL"@en .
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
 
+    
 
-###  http://ontosoft.org/software#Fortran
-software:Fortran rdf:type owl:NamedIndividual ,
-                          software:ProgrammingLanguage .
 
+    <!-- http://ontosoft.org/software#hasDateValue -->
 
-###  http://ontosoft.org/software#GFDL
-software:GFDL rdf:type owl:NamedIndividual ,
-                       software:License ;
-              rdfs:label "GFDL"@en .
+    <owl:DatatypeProperty rdf:about="http://ontosoft.org/software#hasDateValue">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#DateEntity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#dateTime"/>
+        <rdfs:label>has Date Value</rdfs:label>
+    </owl:DatatypeProperty>
+    
 
 
-###  http://ontosoft.org/software#GPLv2
-software:GPLv2 rdf:type owl:NamedIndividual ,
-                        software:License ;
-               rdfs:label "GPLv2"@en .
+    <!-- http://ontosoft.org/software#hasDefaultValue -->
 
+    <owl:DatatypeProperty rdf:about="http://ontosoft.org/software#hasDefaultValue"/>
+    
 
-###  http://ontosoft.org/software#GPLv3
-software:GPLv3 rdf:type owl:NamedIndividual ,
-                        software:License ;
-               rdfs:label "GPLv3"@en .
 
+    <!-- http://ontosoft.org/software#hasInputOrder -->
 
-###  http://ontosoft.org/software#HTML
-software:HTML rdf:type owl:NamedIndividual ,
-                       software:ProgrammingLanguage ;
-              rdfs:label "HTML"@en .
+    <owl:DatatypeProperty rdf:about="http://ontosoft.org/software#hasInputOrder">
+        <rdfs:subPropertyOf rdf:resource="http://ontosoft.org/software#hasNumericValue"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Input"/>
+    </owl:DatatypeProperty>
+    
 
 
-###  http://ontosoft.org/software#J48
-software:J48 rdf:type owl:NamedIndividual ,
-                      software:Algorithm .
+    <!-- http://ontosoft.org/software#hasNumericValue -->
 
+    <owl:DatatypeProperty rdf:about="http://ontosoft.org/software#hasNumericValue">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#NumericEntity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+        <rdfs:label>has Numeric Value</rdfs:label>
+    </owl:DatatypeProperty>
+    
 
-###  http://ontosoft.org/software#Java
-software:Java rdf:type owl:NamedIndividual ,
-                       software:ProgrammingLanguage ;
-              rdfs:label "Java"@en .
 
+    <!-- http://ontosoft.org/software#hasTextValue -->
 
-###  http://ontosoft.org/software#Javascript
-software:Javascript rdf:type owl:NamedIndividual ,
-                             software:ProgrammingLanguage .
+    <owl:DatatypeProperty rdf:about="http://ontosoft.org/software#hasTextValue">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
 
 
-###  http://ontosoft.org/software#LGPL
-software:LGPL rdf:type owl:NamedIndividual ,
-                       software:License ;
-              rdfs:label "LGPL"@en .
+    <!-- http://ontosoft.org/software#hasURI -->
 
+    <owl:DatatypeProperty rdf:about="http://ontosoft.org/software#hasURI">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#Location"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+        <rdfs:label xml:lang="en">has URI</rdfs:label>
+    </owl:DatatypeProperty>
+    
 
-###  http://ontosoft.org/software#Linux
-software:Linux rdf:type owl:NamedIndividual ,
-                        software:OperatingSystem ;
-               rdfs:label "Linux"@en .
 
+    <!-- http://ontosoft.org/software#hasUnits -->
 
-###  http://ontosoft.org/software#MIT
-software:MIT rdf:type owl:NamedIndividual ,
-                      software:License ;
-             rdfs:label "MIT"@en .
+    <owl:DatatypeProperty rdf:about="http://ontosoft.org/software#hasUnits">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#MeasurementEntity"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+        <rdfs:label>has Units</rdfs:label>
+    </owl:DatatypeProperty>
+    
 
 
-###  http://ontosoft.org/software#MPL
-software:MPL rdf:type owl:NamedIndividual ,
-                      software:License ;
-             rdfs:label "MPL"@en .
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
 
+    
 
-###  http://ontosoft.org/software#MachineLearning
-software:MachineLearning rdf:type owl:NamedIndividual ,
-                                  software:EnumerationEntity ,
-                                  software:SoftwareCategory ;
-                         rdfs:label "Machine Learning"@en .
 
+    <!-- http://ontosoft.org/software#Addition -->
 
-###  http://ontosoft.org/software#Matlab
-software:Matlab rdf:type owl:NamedIndividual ,
-                         software:ProgrammingLanguage .
+    <owl:Class rdf:about="http://ontosoft.org/software#Addition">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#Change"/>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#MsRL
-software:MsRL rdf:type owl:NamedIndividual ,
-                       software:License ;
-              rdfs:label "MsRL"@en .
+    <!-- http://ontosoft.org/software#Algorithm -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#Algorithm">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#Perl
-software:Perl rdf:type owl:NamedIndividual ,
-                       software:ProgrammingLanguage .
 
+    <!-- http://ontosoft.org/software#BenchmarkInformation -->
 
-###  http://ontosoft.org/software#Python
-software:Python rdf:type owl:NamedIndividual ,
-                         software:ProgrammingLanguage .
+    <owl:Class rdf:about="http://ontosoft.org/software#BenchmarkInformation">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Software benchmarking information</rdfs:comment>
+        <rdfs:label xml:lang="en">Benchmark Information</rdfs:label>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#Rscript
-software:Rscript rdf:type owl:NamedIndividual ,
-                          software:ProgrammingLanguage .
+    <!-- http://ontosoft.org/software#BugFix -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#BugFix">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#Change"/>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#Scikit-Learn
-software:Scikit-Learn rdf:type owl:NamedIndividual ,
-                               software:Software ;
-                      software:hasSoftwareVersion software:scikit-learn-version-0.19.1 .
 
+    <!-- http://ontosoft.org/software#Change -->
 
-###  http://ontosoft.org/software#TextFile
-software:TextFile rdf:type owl:NamedIndividual ,
-                           software:DataType .
+    <owl:Class rdf:about="http://ontosoft.org/software#Change">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#ComplexEntity"/>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#UniversityOfWaikato
-software:UniversityOfWaikato rdf:type owl:NamedIndividual ,
-                                      software:Person ;
-                             rdfs:label "University of Waikato"@en .
+    <!-- http://ontosoft.org/software#Citation -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#Citation">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#ComplexEntity"/>
+        <rdfs:comment xml:lang="en">Used for citing publications with citation next and a citation location</rdfs:comment>
+        <rdfs:label xml:lang="en">Citation</rdfs:label>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#Weka
-software:Weka rdf:type owl:NamedIndividual ,
-                       software:Software ;
-              software:hasActiveDevelopment software:weka-active-development ;
-              software:hasCompatibleSoftware software:weka-compatible-software ;
-              software:hasCreator software:UniversityOfWaikato ;
-              software:hasImplementationLanguage software:Java ;
-              software:hasLatestSoftwareVersion software:WekaVersion3.9.2 ;
-              software:hasLicense software:GPLv3 ;
-              software:hasMajorContributor software:UniversityOfWaikato ;
-              software:hasName software:weka-name ;
-              software:hasShortDescription software:WekaDescription ;
-              software:hasSoftwareCategory software:MachineLearning ;
-              software:hasSoftwareCreatedDate software:weka-created-date ;
-              software:hasSoftwareVersion software:WekaVersion3.9.1 ,
-                                          software:WekaVersion3.9.2 ,
-                                          software:wekaVersion3.0 ;
-              software:hasUniqueId software:weka-identifier ;
-              software:similarSoftware software:Scikit-Learn ;
-              software:supportsOperatingSystem software:Linux ;
-              rdfs:label "Weka" .
 
+    <!-- http://ontosoft.org/software#CitationText -->
 
-###  http://ontosoft.org/software#WekaDescription
-software:WekaDescription rdf:type owl:NamedIndividual ,
-                                  software:SoftwareDescription ;
-                         software:hasTextValue "Weka is a collection of machine learning algorithms for data mining tasks."^^xsd:string .
+    <owl:Class rdf:about="http://ontosoft.org/software#CitationText">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Text associated with a citation</rdfs:comment>
+        <rdfs:label xml:lang="en">Citation Text</rdfs:label>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#WekaVersion3.9.1
-software:WekaVersion3.9.1 rdf:type owl:NamedIndividual ,
-                                   software:SoftwareVersion ;
-                          software:hasDependency software:scikit-learn-version-0.19.1 ;
-                          software:hasDomainKeywords software:Clustering ;
-                          software:hasFunction software:weka.classifier.trees.j48 ,
-                                               software:weka.core.converter.CSVLoader ;
-                          software:hasKnownIssue software:weka-version-3.9.1-knownissue ;
-                          software:hasSoftwareCategory software:MachineLearning ;
-                          software:supersededBy software:WekaVersion3.9.2 ;
-                          software:supportsOperatingSystem software:Linux .
+    <!-- http://ontosoft.org/software#CommunityInformation -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#CommunityInformation">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Information about any on-line resource for accessing the software community (Mailing-list, discussion board, wiki, etc)</rdfs:comment>
+        <rdfs:label>Community Information</rdfs:label>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#WekaVersion3.9.2
-software:WekaVersion3.9.2 rdf:type owl:NamedIndividual ,
-                                   software:DevelopmentSoftwareVersion ,
-                                   software:MinorSoftwareVersion ,
-                                   software:SoftwareVersion ;
-                          software:hasChange software:weka-version-3.9.2-change1 ,
-                                             software:weka.core.converter.CSVLoader-change1 ;
-                          software:hasCodeLocation software:weka-version-3.9.2-url-code ;
-                          software:hasDomainKeywords software:Clustering ;
-                          software:hasFunction software:weka.classifier.trees.j48 ,
-                                               software:weka.core.converter.CSVLoader-revision1 ;
-                          software:hasImplementationLanguage software:Java ;
-                          software:hasSoftwareCategory software:MachineLearning ;
-                          software:hasVersionId software:weka-version-3.9.2-id ;
-                          software:hasVersionReleaseDate software:weka-version-3.9.2-release-date ;
-                          software:supersedes software:WekaVersion3.9.1 .
 
+    <!-- http://ontosoft.org/software#ComplexEntity -->
 
-###  http://ontosoft.org/software#scikit-learn-version-0.19.1
-software:scikit-learn-version-0.19.1 rdf:type owl:NamedIndividual ,
-                                              software:MinorSoftwareVersion ,
-                                              software:SoftwareVersion .
+    <owl:Class rdf:about="http://ontosoft.org/software#ComplexEntity">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <rdfs:comment xml:lang="en">An entity composed of multiple entities</rdfs:comment>
+        <rdfs:label xml:lang="en">Complex Entity</rdfs:label>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#weka-active-development
-software:weka-active-development rdf:type owl:NamedIndividual ,
-                                          software:DevelopmentInformation ,
-                                          software:TextEntity ;
-                                 software:hasTextValue "Active"^^xsd:string .
+    <!-- http://ontosoft.org/software#Composition -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#Composition">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#ComplexEntity"/>
+        <rdfs:comment xml:lang="en">Describes composition of a software with others in a workflow</rdfs:comment>
+        <rdfs:label xml:lang="en">Composition</rdfs:label>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#weka-compatible-software
-software:weka-compatible-software rdf:type owl:NamedIndividual ,
-                                           software:SoftwareDescription ;
-                                  software:hasTextValue "Scikit-learn 0.19.1" .
 
+    <!-- http://ontosoft.org/software#DataFormat -->
 
-###  http://ontosoft.org/software#weka-created-date
-software:weka-created-date rdf:type owl:NamedIndividual ,
-                                    software:DateEntity ;
-                           software:hasDateValue "2015-03-12T00:00:00"^^xsd:dateTime .
+    <owl:Class rdf:about="http://ontosoft.org/software#DataFormat">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#weka-identifier
-software:weka-identifier rdf:type owl:NamedIndividual ,
-                                  software:Identifier ,
-                                  software:TextEntity ;
-                         software:hasTextValue "doi.org/10.1145/1656274.1656278" .
+    <!-- http://ontosoft.org/software#DataType -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#DataType">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#weka-name
-software:weka-name rdf:type owl:NamedIndividual ,
-                            software:TextEntity ;
-                   software:hasTextValue "Weka"^^xsd:string .
 
+    <!-- http://ontosoft.org/software#DateEntity -->
 
-###  http://ontosoft.org/software#weka-version-3.9.1-knownissue
-software:weka-version-3.9.1-knownissue rdf:type owl:NamedIndividual ,
-                                                software:KnownIssue ;
-                                       software:affectsSoftwarePart software:weka.classifier.trees.j48 ;
-                                       dc:description "Still need to fix calculation of information retrieval statistics when results for some classes are missing in the evaluation of classifiers."@en .
+    <owl:Class rdf:about="http://ontosoft.org/software#DateEntity">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <dc:description xml:lang="en">A date entity</dc:description>
+        <rdfs:label xml:lang="en">Date Entity</rdfs:label>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#weka-version-3.9.2-change1
-software:weka-version-3.9.2-change1 rdf:type owl:NamedIndividual ,
-                                             software:BugFix ,
-                                             software:Change ;
-                                    software:fixedKnownIssue software:weka-version-3.9.1-knownissue ;
-                                    software:modifiedSoftwarePart software:weka.classifier.trees.j48 .
+    <!-- http://ontosoft.org/software#DevelopmentInformation -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#DevelopmentInformation">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Software development/maintenance description</rdfs:comment>
+        <rdfs:label xml:lang="en">Development Information</rdfs:label>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#weka-version-3.9.2-id
-software:weka-version-3.9.2-id rdf:type owl:NamedIndividual ,
-                                        software:Identifier ,
-                                        software:TextEntity ;
-                               software:hasTextValue "3.9.2"^^xsd:string .
 
+    <!-- http://ontosoft.org/software#DevelopmentSoftwareVersion -->
 
-###  http://ontosoft.org/software#weka-version-3.9.2-release-date
-software:weka-version-3.9.2-release-date rdf:type owl:NamedIndividual ,
-                                                  software:DateEntity ;
-                                         software:hasDateValue "2012-12-22T00:00:00"^^xsd:dateTime .
+    <owl:Class rdf:about="http://ontosoft.org/software#DevelopmentSoftwareVersion">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#weka-version-3.9.2-url-code
-software:weka-version-3.9.2-url-code rdf:type owl:NamedIndividual ,
-                                              software:Location ;
-                                     software:hasURI "https://sourceforge.net/projects/weka/files/weka-3-9/3.9.2/weka-3-9-2.zip/download"^^xsd:anyURI .
+    <!-- http://ontosoft.org/software#EnumerationEntity -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#EnumerationEntity">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <rdfs:comment xml:lang="en">An entity that provides enumeration instances</rdfs:comment>
+        <rdfs:label xml:lang="en">Enumeration Entity</rdfs:label>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#weka.classifier.trees.j48
-software:weka.classifier.trees.j48 rdf:type owl:NamedIndividual ,
-                                            software:Function ,
-                                            software:SoftwarePart ;
-                                   software:hasFunctionality software:Classification ;
-                                   software:hasInput software:weka.classifier.trees.j48-Input-c ,
-                                                     software:weka.classifier.trees.j48-Input-t ;
-                                   software:hasName software:weka.classifier.trees.j48-name ;
-                                   software:hasOutput software:weka.classifier.trees.j48-output-1 ;
-                                   software:usesAlgorithm software:J48 ;
-                                   dc:description "Class for generating a pruned or unpruned C4.5 decision tree"@en .
 
+    <!-- http://ontosoft.org/software#File -->
 
-###  http://ontosoft.org/software#weka.classifier.trees.j48-Input-c
-software:weka.classifier.trees.j48-Input-c rdf:type owl:NamedIndividual ,
-                                                    software:Input ,
-                                                    software:SoftwarePart ;
-                                           software:hasName software:weka.classifier.trees.j48-Input-c ;
-                                           software:hasDefaultValue "last" ;
-                                           dc:description "class index"@en .
+    <owl:Class rdf:about="http://ontosoft.org/software#File">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#ComplexEntity"/>
+        <rdfs:comment xml:lang="en">Indicates a file based input to, or file based output from a software</rdfs:comment>
+        <rdfs:label xml:lang="en">File I/O</rdfs:label>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#weka.classifier.trees.j48-Input-t
-software:weka.classifier.trees.j48-Input-t rdf:type owl:NamedIndividual ,
-                                                    software:Input ,
-                                                    software:SoftwarePart ;
-                                           dc:description "name of training file"@en .
+    <!-- http://ontosoft.org/software#Function -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#Function">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#weka.classifier.trees.j48-input-c-name
-software:weka.classifier.trees.j48-input-c-name rdf:type owl:NamedIndividual ,
-                                                         software:TextEntity ;
-                                                software:hasTextValue "c"^^xsd:string .
 
+    <!-- http://ontosoft.org/software#Functionality -->
 
-###  http://ontosoft.org/software#weka.classifier.trees.j48-name
-software:weka.classifier.trees.j48-name rdf:type owl:NamedIndividual ,
-                                                 software:TextEntity ;
-                                        software:hasTextValue "weka.classifier.trees.J48"^^xsd:string .
+    <owl:Class rdf:about="http://ontosoft.org/software#Functionality">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#weka.classifier.trees.j48-output-1
-software:weka.classifier.trees.j48-output-1 rdf:type owl:NamedIndividual ,
-                                                     software:Output ,
-                                                     software:SoftwarePart .
+    <!-- http://ontosoft.org/software#Identifier -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#Identifier">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">A text based identifier</rdfs:comment>
+        <rdfs:label xml:lang="en">Identifier</rdfs:label>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#weka.core.converter.CSVLoader
-software:weka.core.converter.CSVLoader rdf:type owl:NamedIndividual ,
-                                                software:Function ,
-                                                software:SoftwarePart ;
-                                       software:hasFunctionality software:Converter ;
-                                       software:hasInput software:weka.core.converter.CSVLoader-input-m ,
-                                                         software:weka.core.converters.CSVLoader-input-unamed ;
-                                       dc:description "Reads a source that is in comma separated format"^^xsd:string .
 
+    <!-- http://ontosoft.org/software#ImplementationDetails -->
 
-###  http://ontosoft.org/software#weka.core.converter.CSVLoader-change1
-software:weka.core.converter.CSVLoader-change1 rdf:type owl:NamedIndividual ,
-                                                        software:Addition ,
-                                                        software:Change ;
-                                               software:addedSoftwarePart software:weka.core.converter.CSVLoader-input-format ;
-                                               software:modifiedSoftwarePart software:weka.core.converter.CSVLoader-revision1 ;
-                                               dc:description "now always include the -format option, and not only in the case where a date attribute range has been specified"@en .
+    <owl:Class rdf:about="http://ontosoft.org/software#ImplementationDetails">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Details about implementation of the code (parallelization, etc)</rdfs:comment>
+        <rdfs:label xml:lang="en">Implementation Details</rdfs:label>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#weka.core.converter.CSVLoader-input-format
-software:weka.core.converter.CSVLoader-input-format rdf:type owl:NamedIndividual ,
-                                                             software:Input ,
-                                                             software:InputParameter ,
-                                                             software:OptionalInput ,
-                                                             software:SoftwarePart ;
-                                                    software:hasDefaultValue "yyyy-MM-dd'T'HH:mm:ss"^^xsd:string ;
-                                                    dc:description "The date formatting string to use to parse date values."@en .
+    <!-- http://ontosoft.org/software#Input -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#Input">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#weka.core.converter.CSVLoader-input-m
-software:weka.core.converter.CSVLoader-input-m rdf:type owl:NamedIndividual ,
-                                                        software:Input ,
-                                                        software:InputParameter ,
-                                                        software:OptionalInput ,
-                                                        software:SoftwarePart ;
-                                               software:hasDefaultValue "?"^^xsd:string ;
-                                               dc:description "The string representing a missing value."@en .
 
+    <!-- http://ontosoft.org/software#InputFlag -->
 
-###  http://ontosoft.org/software#weka.core.converter.CSVLoader-revision1
-software:weka.core.converter.CSVLoader-revision1 rdf:type owl:NamedIndividual ,
-                                                          software:Function ,
-                                                          software:SoftwarePart ;
-                                                 software:hasFunctionality software:Converter ;
-                                                 software:hasInput software:weka.core.converter.CSVLoader-input-format ,
-                                                                   software:weka.core.converter.CSVLoader-input-m ,
-                                                                   software:weka.core.converters.CSVLoader-input-unamed ;
-                                                 prov:wasRevisionOf software:weka.core.converter.CSVLoader ;
-                                                 dc:description "Reads a source that is in comma separated format."^^xsd:string .
+    <owl:Class rdf:about="http://ontosoft.org/software#InputFlag">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#Input"/>
+    </owl:Class>
+    
 
 
-###  http://ontosoft.org/software#weka.core.converters.CSVLoader-input-unamed
-software:weka.core.converters.CSVLoader-input-unamed rdf:type owl:NamedIndividual ,
-                                                              software:File ,
-                                                              software:Input ,
-                                                              software:RequiredInput ,
-                                                              software:SoftwarePart ;
-                                                     software:hasDataFormat software:CSV ;
-                                                     software:hasInputOrder "1.0"^^xsd:float .
+    <!-- http://ontosoft.org/software#InputParameter -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#InputParameter">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#Input"/>
+    </owl:Class>
+    
 
-###  http://ontosoft.org/software#weka.core.converters.CSVLoader-output-1
-software:weka.core.converters.CSVLoader-output-1 rdf:type owl:NamedIndividual ,
-                                                          software:Output ,
-                                                          software:SoftwarePart ,
-                                                          software:Stdout .
 
+    <!-- http://ontosoft.org/software#Keywords -->
 
-###  http://ontosoft.org/software#wekaVersion3.0
-software:wekaVersion3.0 rdf:type owl:NamedIndividual ,
-                                 software:MajorSoftwareVersion ,
-                                 software:SoftwareVersion ,
-                                 software:StableSoftwareVersion ;
-                        software:hasKnownIssue software:weka-version-3.9.1-knownissue .
+    <owl:Class rdf:about="http://ontosoft.org/software#Keywords">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Comma separated keywords associated with the software</rdfs:comment>
+        <rdfs:label xml:lang="en">Keywords</rdfs:label>
+    </owl:Class>
+    
 
 
-###  http://purl.org/dc/terms/
-terms: rdf:type owl:NamedIndividual ,
-                owl:Thing ;
-       rdfs:comment "The Dublin Core terms are commonly used by the community to describe basic attribution metadata" .
+    <!-- http://ontosoft.org/software#KnownIssue -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#KnownIssue">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#ComplexEntity"/>
+        <rdfs:label>Known Issue</rdfs:label>
+    </owl:Class>
+    
 
-###  http://www.isi.edu/~gil/
-<http://www.isi.edu/~gil/> rdf:type owl:NamedIndividual .
 
+    <!-- http://ontosoft.org/software#License -->
 
-###  http://www.isi.edu/~varunr/
-<http://www.isi.edu/~varunr/> rdf:type owl:NamedIndividual .
+    <owl:Class rdf:about="http://ontosoft.org/software#License">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+        <rdfs:comment xml:lang="en">A class of licenses that the software is released under</rdfs:comment>
+        <rdfs:label xml:lang="en">License</rdfs:label>
+    </owl:Class>
+    
 
 
-###  http://www.w3.org/ns/prov#
-prov: rdf:type owl:NamedIndividual ,
-               owl:Thing ;
-      rdfs:comment "PROV is the W3C standard for provenance." .
+    <!-- http://ontosoft.org/software#Location -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#Location">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <rdfs:comment xml:lang="en">A Location URL</rdfs:comment>
+        <rdfs:label xml:lang="en">Location</rdfs:label>
+    </owl:Class>
+    
 
-#################################################################
-#    Annotations
-#################################################################
 
-software:hasTextValue rdfs:label "has Text Value" .
+    <!-- http://ontosoft.org/software#LongTermRelease -->
 
+    <owl:Class rdf:about="http://ontosoft.org/software#LongTermRelease">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+    </owl:Class>
+    
 
-###  Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi
+
+    <!-- http://ontosoft.org/software#MajorSoftwareVersion -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#MajorSoftwareVersion">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#MeasurementEntity -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#MeasurementEntity">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#NumericEntity"/>
+        <rdfs:comment xml:lang="en">A numeric value with units</rdfs:comment>
+        <rdfs:label xml:lang="en">Measurement Entity</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#MinorSoftwareVersion -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#MinorSoftwareVersion">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#NumericEntity -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#NumericEntity">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <rdfs:comment xml:lang="en">A numeric entity</rdfs:comment>
+        <rdfs:label xml:lang="en">Numeric Entity</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#OperatingSystem -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#OperatingSystem">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+        <rdfs:comment xml:lang="en">Operating Systems that the software runs on</rdfs:comment>
+        <rdfs:label xml:lang="en">Operating System</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#OptionalInput -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#OptionalInput">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#Input"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#Output -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#Output">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#Person -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#Person">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Agent"/>
+        <rdfs:comment xml:lang="en">A Person identifier class</rdfs:comment>
+        <rdfs:label xml:lang="en">Person</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#ProgrammingLanguage -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#ProgrammingLanguage">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+        <rdfs:comment xml:lang="en">The class of programming languages</rdfs:comment>
+        <rdfs:label xml:lang="en">Programming Language</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#Rating -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#Rating">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment>Rating of a software</rdfs:comment>
+        <rdfs:label>Rating</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#Removal -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#Removal">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#Change"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#RequiredInput -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#RequiredInput">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#Input"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#RevisionSoftwareVersion -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#RevisionSoftwareVersion">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#ShortTermRelease -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#ShortTermRelease">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#Software -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#Software">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+        <rdfs:comment xml:lang="en">A Software is any piece of code that is described in Ontosoft. This could some visualisation software, software package, library, componentised scripts, etc. This can be subclassed if software categories with extra properties are required, otherwise one should use SoftwareTag to categorise software.</rdfs:comment>
+        <rdfs:label xml:lang="en">Software</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#SoftwareCategory -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#SoftwareCategory">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+        <rdfs:comment xml:lang="en">A software can be tagged with multiple categories. Multiple instances can be created of this, and it can also be subclassed to have hierarchical categories</rdfs:comment>
+        <rdfs:label xml:lang="en">SoftwareCategory</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#SoftwareDescription -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#SoftwareDescription">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">An informal text-based description of software</rdfs:comment>
+        <rdfs:label xml:lang="en">Software Description</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#SoftwarePart -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#SoftwarePart">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#ComplexEntity"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#SoftwareVersion -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#SoftwareVersion">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+        <rdfs:comment xml:lang="en">A version of a piece of software described by ontosoft</rdfs:comment>
+        <rdfs:label xml:lang="en">Software Version</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#StableSoftwareVersion -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#StableSoftwareVersion">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#Stdout -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#Stdout">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#Output"/>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#TestData -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#TestData">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#ComplexEntity"/>
+        <rdfs:comment xml:lang="en">TestData is used to describe test datasets for the software</rdfs:comment>
+        <rdfs:label xml:lang="en">Test Data</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#TestDataDescription -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#TestDataDescription">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Description of the Test Data provided</rdfs:comment>
+        <rdfs:label xml:lang="en">TestData Description</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#TestInstructions -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#TestInstructions">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Instructions on how to run the test with the provided test data including test cases, setup instructions, etc.</rdfs:comment>
+        <rdfs:label xml:lang="en">Test Instructions</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#TextEntity -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#TextEntity">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <rdfs:comment xml:lang="en">A text entity</rdfs:comment>
+        <rdfs:label xml:lang="en">Text Entity</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#UsageInformation -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#UsageInformation">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Information about uses of this software (paper dois, research labs, etc)</rdfs:comment>
+        <rdfs:label xml:lang="en">Usage Information</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#UsageStatistics -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#UsageStatistics">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Statistics about software use (downloads, frequency of use, etc)</rdfs:comment>
+        <rdfs:label xml:lang="en">Usage Statistics</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#UseLimitations -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#UseLimitations">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Constraints on use of the software, any simplifications, situations it isn&apos;t designed for</rdfs:comment>
+        <rdfs:label xml:lang="en">Use Limitations</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#UsesAndAssumptions -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#UsesAndAssumptions">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Description of how the software is used, and any assumptions made for using the software</rdfs:comment>
+        <rdfs:label xml:lang="en">Uses and Assumptions</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#WorkflowDescription -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#WorkflowDescription">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment xml:lang="en">Describes use of the software with other software in a workflow</rdfs:comment>
+        <rdfs:label xml:lang="en">Workflow Description</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://purl.org/dc/terms/Parameter -->
+
+    <owl:Class rdf:about="http://purl.org/dc/terms/Parameter">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <rdfs:comment>Indicates a parameter used by a software</rdfs:comment>
+        <rdfs:label>Parameter</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Agent -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/prov#Agent">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/prov#"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Entity -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/prov#Entity">
+        <rdfs:isDefinedBy rdf:resource="http://www.w3.org/ns/prov#"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://creativecommons.org/licenses/by/4.0/ -->
+
+    <owl:NamedIndividual rdf:about="http://creativecommons.org/licenses/by/4.0/"/>
+    
+
+
+    <!-- http://delicias.dia.fi.upm.es/members/DGarijo#me -->
+
+    <owl:NamedIndividual rdf:about="http://delicias.dia.fi.upm.es/members/DGarijo#me"/>
+    
+
+
+    <!-- http://ontosoft.org/software -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software">
+        <terms:contributor rdf:resource="http://delicias.dia.fi.upm.es/members/DGarijo#me"/>
+        <terms:creator rdf:resource="http://www.isi.edu/~gil/"/>
+        <terms:creator rdf:resource="http://www.isi.edu/~varunr/"/>
+        <terms:license rdf:resource="http://creativecommons.org/licenses/by/4.0/"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software# -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#">
+        <rdf:type rdf:resource="http://ontosoft.org/software#DateEntity"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#Identifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#AGPL -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#AGPL">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">AGPL</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#ALv2 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#ALv2">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">Apache v2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#ARFF -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#ARFF">
+        <rdf:type rdf:resource="http://ontosoft.org/software#DataFormat"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#BSD -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#BSD">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">BSD</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#C -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#C">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+        <rdfs:label xml:lang="en">C</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#CDDL -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#CDDL">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">CDDL</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#CSS -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#CSS">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+        <rdfs:label xml:lang="en">CSS</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#CSV -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#CSV">
+        <rdf:type rdf:resource="http://ontosoft.org/software#DataFormat"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Classification -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Classification">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Functionality"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Clustering -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Clustering">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Keywords"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <hasTextValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Clustering</hasTextValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Converter -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Converter">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Functionality"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Cplusplus -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Cplusplus">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+        <rdfs:label xml:lang="en">C++</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#CreativeCommons -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#CreativeCommons">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">Creative Commons</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#EPL -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#EPL">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">EPL</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Fortran -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Fortran">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#GFDL -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#GFDL">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">GFDL</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#GPLv2 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#GPLv2">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">GPLv2</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#GPLv3 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#GPLv3">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">GPLv3</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#HTML -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#HTML">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+        <rdfs:label xml:lang="en">HTML</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#J48 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#J48">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Algorithm"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Java -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Java">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+        <rdfs:label xml:lang="en">Java</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Javascript -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Javascript">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#LGPL -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#LGPL">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">LGPL</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Linux -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Linux">
+        <rdf:type rdf:resource="http://ontosoft.org/software#OperatingSystem"/>
+        <rdfs:label xml:lang="en">Linux</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#MIT -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#MIT">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">MIT</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#MPL -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#MPL">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">MPL</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#MachineLearning -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#MachineLearning">
+        <rdf:type rdf:resource="http://ontosoft.org/software#EnumerationEntity"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwareCategory"/>
+        <rdfs:label xml:lang="en">Machine Learning</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Matlab -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Matlab">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#MsRL -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#MsRL">
+        <rdf:type rdf:resource="http://ontosoft.org/software#License"/>
+        <rdfs:label xml:lang="en">MsRL</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Perl -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Perl">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Python -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Python">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Rscript -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Rscript">
+        <rdf:type rdf:resource="http://ontosoft.org/software#ProgrammingLanguage"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Scikit-Learn -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Scikit-Learn">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Software"/>
+        <hasSoftwareVersion rdf:resource="http://ontosoft.org/software#scikit-learn-version-0.19.1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#TextFile -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#TextFile">
+        <rdf:type rdf:resource="http://ontosoft.org/software#DataType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#UniversityOfWaikato -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#UniversityOfWaikato">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Person"/>
+        <rdfs:label xml:lang="en">University of Waikato</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#Weka -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#Weka">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Software"/>
+        <hasActiveDevelopment rdf:resource="http://ontosoft.org/software#weka-active-development"/>
+        <hasCompatibleSoftware rdf:resource="http://ontosoft.org/software#weka-compatible-software"/>
+        <hasCreator rdf:resource="http://ontosoft.org/software#UniversityOfWaikato"/>
+        <hasImplementationLanguage rdf:resource="http://ontosoft.org/software#Java"/>
+        <hasLatestSoftwareVersion rdf:resource="http://ontosoft.org/software#WekaVersion3.9.2"/>
+        <hasLicense rdf:resource="http://ontosoft.org/software#GPLv3"/>
+        <hasMajorContributor rdf:resource="http://ontosoft.org/software#UniversityOfWaikato"/>
+        <hasName rdf:resource="http://ontosoft.org/software#weka-name"/>
+        <hasShortDescription rdf:resource="http://ontosoft.org/software#WekaDescription"/>
+        <hasSoftwareCategory rdf:resource="http://ontosoft.org/software#MachineLearning"/>
+        <hasSoftwareCreatedDate rdf:resource="http://ontosoft.org/software#weka-created-date"/>
+        <hasSoftwareVersion rdf:resource="http://ontosoft.org/software#WekaVersion3.9.1"/>
+        <hasSoftwareVersion rdf:resource="http://ontosoft.org/software#WekaVersion3.9.2"/>
+        <hasSoftwareVersion rdf:resource="http://ontosoft.org/software#wekaVersion3.0"/>
+        <hasUniqueId rdf:resource="http://ontosoft.org/software#weka-identifier"/>
+        <similarSoftware rdf:resource="http://ontosoft.org/software#Scikit-Learn"/>
+        <supportsOperatingSystem rdf:resource="http://ontosoft.org/software#Linux"/>
+        <rdfs:label>Weka</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#WekaDescription -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#WekaDescription">
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwareDescription"/>
+        <hasTextValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Weka is a collection of machine learning algorithms for data mining tasks.</hasTextValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#WekaVersion3.9.1 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#WekaVersion3.9.1">
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <hasDependency rdf:resource="http://ontosoft.org/software#scikit-learn-version-0.19.1"/>
+        <hasDomainKeywords rdf:resource="http://ontosoft.org/software#Clustering"/>
+        <hasFunction rdf:resource="http://ontosoft.org/software#weka.classifier.trees.j48"/>
+        <hasFunction rdf:resource="http://ontosoft.org/software#weka.core.converter.CSVLoader"/>
+        <hasKnownIssue rdf:resource="http://ontosoft.org/software#weka-version-3.9.1-knownissue"/>
+        <hasSoftwareCategory rdf:resource="http://ontosoft.org/software#MachineLearning"/>
+        <supersededBy rdf:resource="http://ontosoft.org/software#WekaVersion3.9.2"/>
+        <supportsOperatingSystem rdf:resource="http://ontosoft.org/software#Linux"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#WekaVersion3.9.2 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#WekaVersion3.9.2">
+        <rdf:type rdf:resource="http://ontosoft.org/software#DevelopmentSoftwareVersion"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#MinorSoftwareVersion"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <hasChange rdf:resource="http://ontosoft.org/software#weka-version-3.9.2-change1"/>
+        <hasChange rdf:resource="http://ontosoft.org/software#weka.core.converter.CSVLoader-change1"/>
+        <hasCodeLocation rdf:resource="http://ontosoft.org/software#weka-version-3.9.2-url-code"/>
+        <hasDomainKeywords rdf:resource="http://ontosoft.org/software#Clustering"/>
+        <hasFunction rdf:resource="http://ontosoft.org/software#weka.classifier.trees.j48"/>
+        <hasFunction rdf:resource="http://ontosoft.org/software#weka.core.converter.CSVLoader-revision1"/>
+        <hasImplementationLanguage rdf:resource="http://ontosoft.org/software#Java"/>
+        <hasSoftwareCategory rdf:resource="http://ontosoft.org/software#MachineLearning"/>
+        <hasVersionId rdf:resource="http://ontosoft.org/software#weka-version-3.9.2-id"/>
+        <hasVersionReleaseDate rdf:resource="http://ontosoft.org/software#weka-version-3.9.2-release-date"/>
+        <supersedes rdf:resource="http://ontosoft.org/software#WekaVersion3.9.1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#scikit-learn-version-0.19.1 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#scikit-learn-version-0.19.1">
+        <rdf:type rdf:resource="http://ontosoft.org/software#MinorSoftwareVersion"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-active-development -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-active-development">
+        <rdf:type rdf:resource="http://ontosoft.org/software#DevelopmentInformation"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <hasTextValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Active</hasTextValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-compatible-software -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-compatible-software">
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwareDescription"/>
+        <hasTextValue>Scikit-learn 0.19.1</hasTextValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-created-date -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-created-date">
+        <rdf:type rdf:resource="http://ontosoft.org/software#DateEntity"/>
+        <hasDateValue rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2015-03-12T00:00:00</hasDateValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-identifier -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-identifier">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Identifier"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <hasTextValue>doi.org/10.1145/1656274.1656278</hasTextValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-name -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-name">
+        <rdf:type rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <hasTextValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Weka</hasTextValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-version-3.9.1-knownissue -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-version-3.9.1-knownissue">
+        <rdf:type rdf:resource="http://ontosoft.org/software#KnownIssue"/>
+        <affectsSoftwarePart rdf:resource="http://ontosoft.org/software#weka.classifier.trees.j48"/>
+        <dc:description xml:lang="en">Still need to fix calculation of information retrieval statistics when results for some classes are missing in the evaluation of classifiers.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-version-3.9.2-change1 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-version-3.9.2-change1">
+        <rdf:type rdf:resource="http://ontosoft.org/software#BugFix"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#Change"/>
+        <fixedKnownIssue rdf:resource="http://ontosoft.org/software#weka-version-3.9.1-knownissue"/>
+        <modifiedSoftwarePart rdf:resource="http://ontosoft.org/software#weka.classifier.trees.j48"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-version-3.9.2-id -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-version-3.9.2-id">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Identifier"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <hasTextValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">3.9.2</hasTextValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-version-3.9.2-release-date -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-version-3.9.2-release-date">
+        <rdf:type rdf:resource="http://ontosoft.org/software#DateEntity"/>
+        <hasDateValue rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2012-12-22T00:00:00</hasDateValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka-version-3.9.2-url-code -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka-version-3.9.2-url-code">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Location"/>
+        <hasURI rdf:datatype="http://www.w3.org/2001/XMLSchema#anyURI">https://sourceforge.net/projects/weka/files/weka-3-9/3.9.2/weka-3-9-2.zip/download</hasURI>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.classifier.trees.j48 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.classifier.trees.j48">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <hasFunctionality rdf:resource="http://ontosoft.org/software#Classification"/>
+        <hasInput rdf:resource="http://ontosoft.org/software#weka.classifier.trees.j48-Input-c"/>
+        <hasInput rdf:resource="http://ontosoft.org/software#weka.classifier.trees.j48-Input-t"/>
+        <hasName rdf:resource="http://ontosoft.org/software#weka.classifier.trees.j48-name"/>
+        <hasOutput rdf:resource="http://ontosoft.org/software#weka.classifier.trees.j48-output-1"/>
+        <usesAlgorithm rdf:resource="http://ontosoft.org/software#J48"/>
+        <dc:description xml:lang="en">Class for generating a pruned or unpruned C4.5 decision tree</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.classifier.trees.j48-Input-c -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.classifier.trees.j48-Input-c">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Input"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <hasName rdf:resource="http://ontosoft.org/software#weka.classifier.trees.j48-Input-c"/>
+        <hasDefaultValue>last</hasDefaultValue>
+        <dc:description xml:lang="en">class index</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.classifier.trees.j48-Input-t -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.classifier.trees.j48-Input-t">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Input"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <dc:description xml:lang="en">name of training file</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.classifier.trees.j48-input-c-name -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.classifier.trees.j48-input-c-name">
+        <rdf:type rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <hasTextValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">c</hasTextValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.classifier.trees.j48-name -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.classifier.trees.j48-name">
+        <rdf:type rdf:resource="http://ontosoft.org/software#TextEntity"/>
+        <hasTextValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">weka.classifier.trees.J48</hasTextValue>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.classifier.trees.j48-output-1 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.classifier.trees.j48-output-1">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Output"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.core.converter.CSVLoader -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.core.converter.CSVLoader">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <hasFunctionality rdf:resource="http://ontosoft.org/software#Converter"/>
+        <hasInput rdf:resource="http://ontosoft.org/software#weka.core.converter.CSVLoader-input-m"/>
+        <hasInput rdf:resource="http://ontosoft.org/software#weka.core.converters.CSVLoader-input-unamed"/>
+        <dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reads a source that is in comma separated format</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.core.converter.CSVLoader-change1 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.core.converter.CSVLoader-change1">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Addition"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#Change"/>
+        <addedSoftwarePart rdf:resource="http://ontosoft.org/software#weka.core.converter.CSVLoader-input-format"/>
+        <modifiedSoftwarePart rdf:resource="http://ontosoft.org/software#weka.core.converter.CSVLoader-revision1"/>
+        <dc:description xml:lang="en">now always include the -format option, and not only in the case where a date attribute range has been specified</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.core.converter.CSVLoader-input-format -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.core.converter.CSVLoader-input-format">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Input"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#InputParameter"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#OptionalInput"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <hasDefaultValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">yyyy-MM-dd&apos;T&apos;HH:mm:ss</hasDefaultValue>
+        <dc:description xml:lang="en">The date formatting string to use to parse date values.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.core.converter.CSVLoader-input-m -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.core.converter.CSVLoader-input-m">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Input"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#InputParameter"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#OptionalInput"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <hasDefaultValue rdf:datatype="http://www.w3.org/2001/XMLSchema#string">?</hasDefaultValue>
+        <dc:description xml:lang="en">The string representing a missing value.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.core.converter.CSVLoader-revision1 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.core.converter.CSVLoader-revision1">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Function"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <hasFunctionality rdf:resource="http://ontosoft.org/software#Converter"/>
+        <hasInput rdf:resource="http://ontosoft.org/software#weka.core.converter.CSVLoader-input-format"/>
+        <hasInput rdf:resource="http://ontosoft.org/software#weka.core.converter.CSVLoader-input-m"/>
+        <hasInput rdf:resource="http://ontosoft.org/software#weka.core.converters.CSVLoader-input-unamed"/>
+        <prov:wasRevisionOf rdf:resource="http://ontosoft.org/software#weka.core.converter.CSVLoader"/>
+        <dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Reads a source that is in comma separated format.</dc:description>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.core.converters.CSVLoader-input-unamed -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.core.converters.CSVLoader-input-unamed">
+        <rdf:type rdf:resource="http://ontosoft.org/software#File"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#Input"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#RequiredInput"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <hasDataFormat rdf:resource="http://ontosoft.org/software#CSV"/>
+        <hasInputOrder rdf:datatype="http://www.w3.org/2001/XMLSchema#float">1.0</hasInputOrder>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#weka.core.converters.CSVLoader-output-1 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#weka.core.converters.CSVLoader-output-1">
+        <rdf:type rdf:resource="http://ontosoft.org/software#Output"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwarePart"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#Stdout"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontosoft.org/software#wekaVersion3.0 -->
+
+    <owl:NamedIndividual rdf:about="http://ontosoft.org/software#wekaVersion3.0">
+        <rdf:type rdf:resource="http://ontosoft.org/software#MajorSoftwareVersion"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#SoftwareVersion"/>
+        <rdf:type rdf:resource="http://ontosoft.org/software#StableSoftwareVersion"/>
+        <hasKnownIssue rdf:resource="http://ontosoft.org/software#weka-version-3.9.1-knownissue"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://purl.org/dc/terms/ -->
+
+    <owl:Thing rdf:about="http://purl.org/dc/terms/">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>The Dublin Core terms are commonly used by the community to describe basic attribution metadata</rdfs:comment>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.isi.edu/~gil/ -->
+
+    <owl:NamedIndividual rdf:about="http://www.isi.edu/~gil/"/>
+    
+
+
+    <!-- http://www.isi.edu/~varunr/ -->
+
+    <owl:NamedIndividual rdf:about="http://www.isi.edu/~varunr/"/>
+    
+
+
+    <!-- http://www.w3.org/ns/prov# -->
+
+    <owl:Thing rdf:about="http://www.w3.org/ns/prov#">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#NamedIndividual"/>
+        <rdfs:comment>PROV is the W3C standard for provenance.</rdfs:comment>
+    </owl:Thing>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://ontosoft.org/software#hasTextValue">
+        <rdfs:label>has Text Value</rdfs:label>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
+
