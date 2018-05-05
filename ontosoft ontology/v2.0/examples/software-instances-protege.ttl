@@ -1,0 +1,72 @@
+@prefix : <http://ontosoft.org/software#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix software: <http://ontosoft.org/software#> .
+@base <http://ontosoft.org/software> .
+
+
+###  http://ontosoft.org/software#Weka
+<http://localhost:8080/ontosoft-server/software/Software-y1IYRyYlnEFM> rdf:type owl:NamedIndividual ,
+                       software:Software ;
+              software:hasActiveDevelopment software:weka-active-development ;
+              software:hasCompatibleSoftware software:weka-compatible-software ;
+              software:hasCreator software:UniversityOfWaikato ;
+              software:hasImplementationLanguage software:Java ;
+              software:hasLatestSoftwareVersion software:WekaVersion3.9.2 ;
+              software:hasLicense software:GPLv3 ;
+              software:hasMajorContributor software:UniversityOfWaikato ;
+              software:hasSoftwareName software:weka-name ;
+              software:hasShortDescription software:WekaDescription ;
+              software:hasSoftwareCategory software:MachineLearning ;
+              software:hasSoftwareCreatedDate software:weka-created-date ;
+              software:hasSoftwareVersion <http://localhost:8080/ontosoft-server/software/Software-y1IYRyYlnEFM/version/SoftwareVersion-EQLKuBZqEYL9> ,
+                                          <http://localhost:8080/ontosoft-server/software/Software-y1IYRyYlnEFM/version/SoftwareVersion-oEr9BOpoVYZu> ;
+              software:hasUniqueId software:weka-identifier ;
+              software:similarSoftware software:Scikit-Learn ;
+              software:supportsOperatingSystem software:Linux ;
+              rdfs:label "Weka" .
+
+
+###  http://ontosoft.org/software#WekaDescription
+software:WekaDescription rdf:type owl:NamedIndividual ,
+                                  software:SoftwareDescription ;
+                         software:hasTextValue "Weka is a collection of machine learning algorithms for data mining tasks."^^xsd:string .
+
+
+###  http://ontosoft.org/software#weka-created-date
+software:weka-created-date rdf:type owl:NamedIndividual ,
+                                    software:DateEntity ;
+                           software:hasDateValue "2015-03-12T00:00:00"^^xsd:dateTime .
+
+
+###  http://ontosoft.org/software#weka-identifier
+software:weka-identifier rdf:type owl:NamedIndividual ,
+                                  software:Identifier ,
+                                  software:TextEntity ;
+                         software:hasTextValue "doi.org/10.1145/1656274.1656278" .
+
+
+###  http://ontosoft.org/software#weka-name
+software:weka-name rdf:type owl:NamedIndividual ,
+                            software:TextEntity ;
+                   software:hasTextValue "Weka"^^xsd:string .
+
+software:weka-active-development
+        a                      software:DevelopmentInformation , software:TextEntity , owl:NamedIndividual ;
+        software:hasTextValue  "Active" .
+
+software:weka-compatible-software
+        a                      software:SoftwareDescription , owl:NamedIndividual ;
+        software:hasTextValue  "Scikit-learn 0.19.1" .
+
+
+software:weka-created-date
+        a                      software:DateEntity , owl:NamedIndividual ;
+        software:hasDateValue  "2015-03-12T00:00:00"^^xsd:dateTime .

@@ -1,0 +1,139 @@
+@prefix : <http://ontosoft.org/software#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix software: <http://ontosoft.org/software#> .
+@base <http://ontosoft.org/software> .
+
+
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+
+###  http://ontosoft.org/software#WekaVersion3.9.1
+<http://localhost:8080/ontosoft-server/software/Software-y1IYRyYlnEFM/version/SoftwareVersion-EQLKuBZqEYL9> rdf:type owl:NamedIndividual ,
+                                   software:MajorSoftwareVersion ,
+                                   software:SoftwareVersion ,
+                                   software:StableSoftwareVersion ;
+                          rdfs:label "Weka v3.9.1" ;
+                          software:hasFunction software:weka.classifier.trees.j48 ,
+                                               software:weka.core.converter.CSVLoader ;
+                          software:hasKnownIssue software:weka-version-3.9.1-knownissue ;
+                          software:hasSoftwareVersionDescription software:weka-version-3.9.1-description ;
+                          software:supersededBy <http://localhost:8080/ontosoft-server/software/Software-y1IYRyYlnEFM/version/SoftwareVersion-oEr9BOpoVYZu> .
+
+
+
+software:weka-version-3.9.1-description rdf:type owl:NamedIndividual ,
+                                                software:TextEntity; 
+                                    software:hasTextValue "Version 3.9.2 is great!" .
+
+###  http://ontosoft.org/software#weka-version-3.9.1-knownissue
+software:weka-version-3.9.1-knownissue rdf:type owl:NamedIndividual ,
+                                                software:KnownIssue ;
+                                       software:affectsSoftwarePart software:weka.classifier.trees.j48 ;
+                                       software:hasKnownIssueDescription software:weka-version-3.9.1-knownissue-description .
+
+software:weka-version-3.9.1-knownissue-description rdf:type owl:NamedIndividual ,
+                                                software:TextEntity; 
+                                    software:hasTextValue "Still need to fix calculation of information retrieval statistics when results for some classes are missing in the evaluation of classifiers."@en .
+
+
+###  http://ontosoft.org/software#weka.classifier.trees.j48
+software:weka.classifier.trees.j48 rdf:type owl:NamedIndividual ,
+                                            software:Function ,
+                                            software:SoftwarePart ;
+                                   rdfs:label "software:weka.classifier.trees.j48" ;
+                                   software:hasFunctionality software:Classification ;
+                                   software:hasInput software:weka.classifier.trees.j48-Input-c ,
+                                                     software:weka.classifier.trees.j48-Input-t ;
+                                   software:hasFunctionName software:weka.classifier.trees.j48-name ;
+                                   software:hasOutput software:weka.classifier.trees.j48-output-1 ;
+                                   software:usesAlgorithm software:J48 ;
+                                   software:hasFunctionDescription software:weka.classifier.trees.j48-description . 
+
+software:weka.classifier.trees.j48-description rdf:type owl:NamedIndividual ,
+                                                software:TextEntity; 
+                                    software:hasTextValue "Class for generating a pruned or unpruned C4.5 decision tree"@en .
+
+###  http://ontosoft.org/software#weka.classifier.trees.j48-Input-c
+software:weka.classifier.trees.j48-Input-c rdf:type owl:NamedIndividual ,
+                                                    software:Input ,
+                                                    software:SoftwarePart ;
+                                           software:hasInputName software:weka.classifier.trees.j48-Input-c ;
+                                           software:hasDefaultValue "last" ;
+                                           dc:description "class index"@en .
+
+
+###  http://ontosoft.org/software#weka.classifier.trees.j48-Input-t
+software:weka.classifier.trees.j48-Input-t rdf:type owl:NamedIndividual ,
+                                                    software:Input ,
+                                                    software:SoftwarePart ;
+                                           dc:description "name of training file"@en .
+
+
+###  http://ontosoft.org/software#weka.classifier.trees.j48-input-c-name
+software:weka.classifier.trees.j48-input-c-name rdf:type owl:NamedIndividual ,
+                                                         software:TextEntity ;
+                                                software:hasTextValue "c"^^xsd:string .
+
+
+###  http://ontosoft.org/software#weka.classifier.trees.j48-name
+software:weka.classifier.trees.j48-name rdf:type owl:NamedIndividual ,
+                                                 software:TextEntity ;
+                                        software:hasTextValue "weka.classifier.trees.J48"^^xsd:string .
+
+
+###  http://ontosoft.org/software#weka.classifier.trees.j48-output-1
+software:weka.classifier.trees.j48-output-1 rdf:type owl:NamedIndividual ,
+                                                     software:Output ,
+                                                     software:SoftwarePart .
+
+
+###  http://ontosoft.org/software#weka.core.converter.CSVLoader
+software:weka.core.converter.CSVLoader rdf:type owl:NamedIndividual ,
+                                                software:Function ,
+                                                software:SoftwarePart ;
+                                       software:hasFunctionality software:Converter ;
+                                       software:hasInput software:weka.core.converter.CSVLoader-input-m ,
+                                                         software:weka.core.converters.CSVLoader-input-unamed ;
+                                       software:hasOutput software:weka.core.converters.CSVLoader-output-1 ;
+                                       dc:description "Reads a source that is in comma separated format"^^xsd:string .
+
+
+
+###  http://ontosoft.org/software#weka.core.converter.CSVLoader-input-m
+software:weka.core.converter.CSVLoader-input-m rdf:type owl:NamedIndividual ,
+                                                        software:Input ,
+                                                        software:InputParameter ,
+                                                        software:OptionalInput ,
+                                                        software:SoftwarePart ;
+                                               software:hasDefaultValue "?"^^xsd:string ;
+                                               dc:description "The string representing a missing value."@en .
+
+
+
+###  http://ontosoft.org/software#weka.core.converters.CSVLoader-input-unamed
+software:weka.core.converters.CSVLoader-input-unamed rdf:type owl:NamedIndividual ,
+                                                              software:File ,
+                                                              software:Input ,
+                                                              software:RequiredInput ,
+                                                              software:SoftwarePart ;
+                                                     software:hasDataFormat software:CSV ;
+                                                     software:hasInputOrder "1.0"^^xsd:float .
+
+
+###  http://ontosoft.org/software#weka.core.converters.CSVLoader-output-1
+software:weka.core.converters.CSVLoader-output-1 rdf:type owl:NamedIndividual ,
+                                                          software:Output ,
+                                                          software:SoftwarePart ,
+                                                          software:Stdout .

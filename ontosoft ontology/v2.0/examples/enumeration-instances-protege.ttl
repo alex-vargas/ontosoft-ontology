@@ -1,0 +1,294 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+
+<http://localhost:8080/ontosoft-server/software/enumerations#Functionality-EN72SNBTm9aZ>
+        a           <http://ontosoft.org/software#Functionality> ;
+        rdfs:label  "Sorting" .
+
+<http://localhost:8080/ontosoft-server/software/enumerations#Algorithm-FqFuQno5beWQ>
+        a           <http://ontosoft.org/software#Algorithm> ;
+        rdfs:label  "QuickSort" .
+
+<http://localhost:8080/ontosoft-server/software/enumerations#DataFormat-EN72SNBTm9aZ>
+        a           <http://ontosoft.org/software#DataFormat> ;
+        rdfs:label  "CSV" .
+
+<http://localhost:8080/ontosoft-server/software/enumerations#Algorithm-dNhQ4UDC7mFj>
+        a           <http://ontosoft.org/software#Algorithm> ;
+        rdfs:label  "Linear Regression" .
+
+<http://localhost:8080/ontosoft-server/software/enumerations#DataFormat-wwF2xIpiV0yJ>
+        a           <http://ontosoft.org/software#DataFormat> ;
+        rdfs:label  "Image" .
+
+<http://localhost:8080/ontosoft-server/software/enumerations#Functionality-Hh920Yb8eCRv>
+        a           <http://ontosoft.org/software#Functionality> ;
+        rdfs:label  "Classification" .
+
+<http://localhost:8080/ontosoft-server/software/enumerations#Algorithm-57CKKyqlBxfR>
+        a           <http://ontosoft.org/software#Algorithm> ;
+        rdfs:label  "Algorithm 1" .
+
+
+
+@prefix : <http://ontosoft.org/software#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix software: <http://ontosoft.org/software#> .
+@base <http://ontosoft.org/software> .
+
+
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://creativecommons.org/licenses/by/4.0/
+<http://creativecommons.org/licenses/by/4.0/> rdf:type owl:NamedIndividual .
+
+
+###  http://delicias.dia.fi.upm.es/members/DGarijo#me
+<http://delicias.dia.fi.upm.es/members/DGarijo#me> rdf:type owl:NamedIndividual .
+
+
+###  http://ontosoft.org/software
+<http://ontosoft.org/software> rdf:type owl:NamedIndividual ;
+                               terms:contributor <http://delicias.dia.fi.upm.es/members/DGarijo#me> ;
+                               terms:creator <http://www.isi.edu/~gil/> ,
+                                             <http://www.isi.edu/~varunr/> ;
+                               terms:license <http://creativecommons.org/licenses/by/4.0/> .
+
+
+###  http://ontosoft.org/software#
+software: rdf:type owl:NamedIndividual ,
+                   software:DateEntity ,
+                   software:Identifier .
+
+
+###  http://ontosoft.org/software#AGPL
+software:AGPL rdf:type owl:NamedIndividual ,
+                       software:License ;
+              rdfs:label "AGPL"@en .
+
+
+###  http://ontosoft.org/software#ALv2
+software:ALv2 rdf:type owl:NamedIndividual ,
+                       software:License ;
+              rdfs:label "Apache v2"@en .
+
+
+###  http://ontosoft.org/software#ARFF
+software:ARFF rdf:type owl:NamedIndividual ,
+                       software:DataFormat .
+
+
+###  http://ontosoft.org/software#BSD
+software:BSD rdf:type owl:NamedIndividual ,
+                      software:License ;
+             rdfs:label "BSD"@en .
+
+
+###  http://ontosoft.org/software#C
+software:C rdf:type owl:NamedIndividual ,
+                    software:ProgrammingLanguage ;
+           rdfs:label "C"@en .
+
+
+###  http://ontosoft.org/software#CDDL
+software:CDDL rdf:type owl:NamedIndividual ,
+                       software:License ;
+              rdfs:label "CDDL"@en .
+
+
+###  http://ontosoft.org/software#CSS
+software:CSS rdf:type owl:NamedIndividual ,
+                      software:ProgrammingLanguage ;
+             rdfs:label "CSS"@en .
+
+
+###  http://ontosoft.org/software#CSV
+software:CSV rdf:type owl:NamedIndividual ,
+                      software:DataFormat .
+
+
+###  http://ontosoft.org/software#Classification
+software:Classification rdf:type owl:NamedIndividual ,
+                                 software:Functionality .
+
+
+###  http://ontosoft.org/software#Clustering
+software:Clustering rdf:type owl:NamedIndividual ,
+                             software:Keywords ,
+                             software:TextEntity ;
+                    software:hasTextValue "Clustering"^^xsd:string .
+
+
+###  http://ontosoft.org/software#Converter
+software:Converter rdf:type owl:NamedIndividual ,
+                            software:Functionality .
+
+
+###  http://ontosoft.org/software#Cplusplus
+software:Cplusplus rdf:type owl:NamedIndividual ,
+                            software:ProgrammingLanguage ;
+                   rdfs:label "C++"@en .
+
+
+###  http://ontosoft.org/software#CreativeCommons
+software:CreativeCommons rdf:type owl:NamedIndividual ,
+                                  software:License ;
+                         rdfs:label "Creative Commons"@en .
+
+
+###  http://ontosoft.org/software#EPL
+software:EPL rdf:type owl:NamedIndividual ,
+                      software:License ;
+             rdfs:label "EPL"@en .
+
+
+###  http://ontosoft.org/software#Fortran
+software:Fortran rdf:type owl:NamedIndividual ,
+                          software:ProgrammingLanguage .
+
+
+###  http://ontosoft.org/software#GFDL
+software:GFDL rdf:type owl:NamedIndividual ,
+                       software:License ;
+              rdfs:label "GFDL"@en .
+
+
+###  http://ontosoft.org/software#GPLv2
+software:GPLv2 rdf:type owl:NamedIndividual ,
+                        software:License ;
+               rdfs:label "GPLv2"@en .
+
+
+###  http://ontosoft.org/software#GPLv3
+software:GPLv3 rdf:type owl:NamedIndividual ,
+                        software:License ;
+               rdfs:label "GPLv3"@en .
+
+
+###  http://ontosoft.org/software#HTML
+software:HTML rdf:type owl:NamedIndividual ,
+                       software:ProgrammingLanguage ;
+              rdfs:label "HTML"@en .
+
+
+###  http://ontosoft.org/software#J48
+software:J48 rdf:type owl:NamedIndividual ,
+                      software:Algorithm .
+
+
+###  http://ontosoft.org/software#Java
+software:Java rdf:type owl:NamedIndividual ,
+                       software:ProgrammingLanguage ;
+              rdfs:label "Java"@en .
+
+
+###  http://ontosoft.org/software#Javascript
+software:Javascript rdf:type owl:NamedIndividual ,
+                             software:ProgrammingLanguage .
+
+
+###  http://ontosoft.org/software#LGPL
+software:LGPL rdf:type owl:NamedIndividual ,
+                       software:License ;
+              rdfs:label "LGPL"@en .
+
+
+###  http://ontosoft.org/software#Linux
+software:Linux rdf:type owl:NamedIndividual ,
+                        software:OperatingSystem ;
+               rdfs:label "Linux"@en .
+
+
+###  http://ontosoft.org/software#MIT
+software:MIT rdf:type owl:NamedIndividual ,
+                      software:License ;
+             rdfs:label "MIT"@en .
+
+
+###  http://ontosoft.org/software#MPL
+software:MPL rdf:type owl:NamedIndividual ,
+                      software:License ;
+             rdfs:label "MPL"@en .
+
+
+###  http://ontosoft.org/software#MachineLearning
+software:MachineLearning rdf:type owl:NamedIndividual ,
+                                  software:EnumerationEntity ,
+                                  software:SoftwareCategory ;
+                         rdfs:label "Machine Learning"@en .
+
+
+###  http://ontosoft.org/software#Matlab
+software:Matlab rdf:type owl:NamedIndividual ,
+                         software:ProgrammingLanguage .
+
+
+###  http://ontosoft.org/software#MsRL
+software:MsRL rdf:type owl:NamedIndividual ,
+                       software:License ;
+              rdfs:label "MsRL"@en .
+
+
+###  http://ontosoft.org/software#Perl
+software:Perl rdf:type owl:NamedIndividual ,
+                       software:ProgrammingLanguage .
+
+
+###  http://ontosoft.org/software#Python
+software:Python rdf:type owl:NamedIndividual ,
+                         software:ProgrammingLanguage .
+
+
+###  http://ontosoft.org/software#Rscript
+software:Rscript rdf:type owl:NamedIndividual ,
+                          software:ProgrammingLanguage .
+
+
+###  http://ontosoft.org/software#Scikit-Learn
+software:Scikit-Learn rdf:type owl:NamedIndividual ,
+                               software:Software ;
+                      software:hasSoftwareVersion software:scikit-learn-version-0.19.1 .
+
+
+###  http://ontosoft.org/software#TextFile
+software:TextFile rdf:type owl:NamedIndividual ,
+                           software:DataType .
+
+
+###  http://ontosoft.org/software#UniversityOfWaikato
+software:UniversityOfWaikato rdf:type owl:NamedIndividual ,
+                                      software:Person ;
+                             rdfs:label "University of Waikato"@en .
+
+###  http://purl.org/dc/terms/
+terms: rdf:type owl:NamedIndividual ,
+                owl:Thing ;
+       rdfs:comment "The Dublin Core terms are commonly used by the community to describe basic attribution metadata" .
+
+
+###  http://www.isi.edu/~gil/
+<http://www.isi.edu/~gil/> rdf:type owl:NamedIndividual .
+
+
+###  http://www.isi.edu/~varunr/
+<http://www.isi.edu/~varunr/> rdf:type owl:NamedIndividual .
+
+
+###  http://www.w3.org/ns/prov#
+prov: rdf:type owl:NamedIndividual ,
+               owl:Thing ;
+      rdfs:comment "PROV is the W3C standard for provenance." .

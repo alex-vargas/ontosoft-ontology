@@ -1,0 +1,110 @@
+@prefix : <http://ontosoft.org/software#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix terms: <http://purl.org/dc/terms/> .
+@prefix software: <http://ontosoft.org/software#> .
+@base <http://ontosoft.org/software> .
+
+
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+
+###  http://ontosoft.org/software#WekaVersion3.9.2
+<http://localhost:8080/ontosoft-server/software/Software-y1IYRyYlnEFM/version/SoftwareVersion-oEr9BOpoVYZu> rdf:type owl:NamedIndividual ,
+                                   software:DevelopmentSoftwareVersion ,
+                                   software:MinorSoftwareVersion ,
+                                   software:SoftwareVersion ;
+                          rdfs:label "Weka v3.9.2" ;
+                          software:hasChange software:weka-version-3.9.2-change1 ,
+                                             software:weka.core.converter.CSVLoader-change1 ;
+                          software:hasCodeLocation software:weka-version-3.9.2-url-code ;
+                          software:hasDomainKeywords software:Clustering ;
+                          software:hasFunction software:weka.classifier.trees.j48 ,
+                                               software:weka.core.converter.CSVLoader-revision1 ;
+                          software:hasImplementationLanguage software:Java ;
+                          software:hasSoftwareCategory software:MachineLearning ;
+                          software:hasVersionId software:weka-version-3.9.2-id ;
+                          software:hasVersionReleaseDate software:weka-version-3.9.2-release-date ;
+                          software:supersedes <http://localhost:8080/ontosoft-server/software/Software-y1IYRyYlnEFM/version/SoftwareVersion-EQLKuBZqEYL9> .
+
+
+
+###  http://ontosoft.org/software#weka-version-3.9.2-change1
+software:weka-version-3.9.2-change1 rdf:type owl:NamedIndividual ,
+                                             software:BugFix ,
+                                             software:Change ;
+                                    software:fixedKnownIssue software:weka-version-3.9.1-knownissue ;
+                                    software:modifiedSoftwarePart software:weka.classifier.trees.j48 .
+
+
+###  http://ontosoft.org/software#weka-version-3.9.2-id
+software:weka-version-3.9.2-id rdf:type owl:NamedIndividual ,
+                                        software:Identifier ,
+                                        software:TextEntity ;
+                               software:hasTextValue "3.9.2"^^xsd:string .
+
+
+###  http://ontosoft.org/software#weka-version-3.9.2-release-date
+software:weka-version-3.9.2-release-date rdf:type owl:NamedIndividual ,
+                                                  software:DateEntity ;
+                                         software:hasDateValue "2012-12-22T00:00:00"^^xsd:dateTime .
+
+
+###  http://ontosoft.org/software#weka-version-3.9.2-url-code
+software:weka-version-3.9.2-url-code rdf:type owl:NamedIndividual ,
+                                              software:Location ;
+                                     software:hasURI "https://sourceforge.net/projects/weka/files/weka-3-9/3.9.2/weka-3-9-2.zip/download"^^xsd:anyURI .
+
+
+
+
+
+###  http://ontosoft.org/software#weka.core.converter.CSVLoader-change1
+software:weka.core.converter.CSVLoader-change1 rdf:type owl:NamedIndividual ,
+                                                        software:AdditionChange ,
+                                                        software:Change ;
+                                               software:addedSoftwarePart software:weka.core.converter.CSVLoader-input-format ;
+                                               software:modifiedSoftwarePart software:weka.core.converter.CSVLoader-revision1 ;
+                                               software:hasChangeDescription software:weka.core.converter.CSVLoader-change1-description .
+
+software:weka.core.converter.CSVLoader-change1-description rdf:type owl:NamedIndividual ,
+                                                software:TextEntity; 
+                                    software:hasTextValue "now always include the -format option, and not only in the case where a date attribute range has been specified"@en .
+
+
+###  http://ontosoft.org/software#weka.core.converter.CSVLoader-input-format
+software:weka.core.converter.CSVLoader-input-format rdf:type owl:NamedIndividual ,
+                                                             software:Input ,
+                                                             software:InputParameter ,
+                                                             software:OptionalInput ,
+                                                             software:SoftwarePart ;
+                                                    software:hasDefaultValue "yyyy-MM-dd'T'HH:mm:ss"^^xsd:string ;
+                                                    dc:description "The date formatting string to use to parse date values."@en .
+
+
+###  http://ontosoft.org/software#weka.core.converter.CSVLoader-revision1
+software:weka.core.converter.CSVLoader-revision1 rdf:type owl:NamedIndividual ,
+                                                          software:Function ,
+                                                          software:SoftwarePart ;
+                                                 software:hasFunctionality software:Converter ;
+                                                 software:hasInput software:weka.core.converter.CSVLoader-input-format ,
+                                                                   software:weka.core.converter.CSVLoader-input-m ,
+                                                                   software:weka.core.converters.CSVLoader-input-unamed ;
+                                                 prov:wasRevisionOf software:weka.core.converter.CSVLoader ;
+                                                 software:hasFunctionDescription software:weka.core.converter.CSVLoader-revision1-description . 
+
+software:weka.core.converter.CSVLoader-revision1-description rdf:type owl:NamedIndividual ,
+                                                software:TextEntity; 
+                                    software:hasTextValue "Reads a source that is in comma separated format."^^xsd:string .
+
+ 
