@@ -19,11 +19,11 @@
               software:hasCompatibleSoftware software:weka-compatible-software ;
               software:hasCreator software:UniversityOfWaikato ;
               software:hasImplementationLanguage software:Java ;
-              software:hasLatestSoftwareVersion software:WekaVersion3.9.2 ;
+              software:hasLatestSoftwareVersion <http://localhost:8080/ontosoft-server/software/Software-y1IYRyYlnEFM/version/SoftwareVersion-oEr9BOpoVYZu> ;
               software:hasLicense software:GPLv3 ;
               software:hasMajorContributor software:UniversityOfWaikato ;
               software:hasSoftwareName software:weka-name ;
-              software:hasShortDescription software:WekaDescription ;
+              software:hasSoftwareDescription software:WekaDescription ;
               software:hasSoftwareCategory software:MachineLearning ;
               software:hasSoftwareCreatedDate software:weka-created-date ;
               software:hasSoftwareVersion <http://localhost:8080/ontosoft-server/software/Software-y1IYRyYlnEFM/version/SoftwareVersion-EQLKuBZqEYL9> ,

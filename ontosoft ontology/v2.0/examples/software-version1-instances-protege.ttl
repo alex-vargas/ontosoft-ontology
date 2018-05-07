@@ -49,9 +49,9 @@ software:weka-version-3.9.1-knownissue-description rdf:type owl:NamedIndividual 
 
 
 ###  http://ontosoft.org/software#weka.classifier.trees.j48
-software:weka.classifier.trees.j48 rdf:type owl:NamedIndividual ,
-                                            software:Function ,
-                                            software:SoftwarePart ;
+software:weka.classifier.trees.j48 rdf:type  	owl:NamedIndividual ,
+												software:SoftwarePart ,
+                                            	software:Function ;
                                    rdfs:label "software:weka.classifier.trees.j48" ;
                                    software:hasFunctionality software:Classification ;
                                    software:hasInput software:weka.classifier.trees.j48-Input-c ,
@@ -68,23 +68,39 @@ software:weka.classifier.trees.j48-description rdf:type owl:NamedIndividual ,
 ###  http://ontosoft.org/software#weka.classifier.trees.j48-Input-c
 software:weka.classifier.trees.j48-Input-c rdf:type owl:NamedIndividual ,
                                                     software:Input ,
-                                                    software:SoftwarePart ;
-                                           software:hasInputName software:weka.classifier.trees.j48-Input-c ;
-                                           software:hasDefaultValue "last" ;
-                                           dc:description "class index"@en .
+                                                    software:SoftwarePart ,
+                                                    software:File ;
+                                           software:hasInputName software:weka.classifier.trees.j48-Input-c-name ;
+                                           software:hasDefaultValue software:weka.classifier.trees.j48-Input-c-default-value  ;
+                                           software:hasDataFormat software:CSV ;
+                                           dc:description software:weka.classifier.trees.j48-Input-c-description . 
 
+software:weka.classifier.trees.j48-Input-c-default-value rdf:type software:TextEntity ;
+											software:hasTextValue "last"@en .
+
+software:weka.classifier.trees.j48-Input-c-description rdf:type software:TextEntity ;
+											software:hasTextValue "class index"@en .
 
 ###  http://ontosoft.org/software#weka.classifier.trees.j48-Input-t
 software:weka.classifier.trees.j48-Input-t rdf:type owl:NamedIndividual ,
                                                     software:Input ,
                                                     software:SoftwarePart ;
-                                           dc:description "name of training file"@en .
+                                           software:hasInputName software:weka.classifier.trees.j48-Input-t-name ;
+                                           software:hasInputDescription software:weka.classifier.trees.j48-Input-t-description .
+
+software:weka.classifier.trees.j48-Input-t-description rdf:type owl:NamedIndividual ,
+                                                         software:TextEntity ;
+                                            software:hasTextValue "name of training file"@en .
 
 
 ###  http://ontosoft.org/software#weka.classifier.trees.j48-input-c-name
-software:weka.classifier.trees.j48-input-c-name rdf:type owl:NamedIndividual ,
+software:weka.classifier.trees.j48-Input-c-name rdf:type owl:NamedIndividual ,
                                                          software:TextEntity ;
-                                                software:hasTextValue "c"^^xsd:string .
+                                            software:hasTextValue "c"^^xsd:string .
+
+software:weka.classifier.trees.j48-Input-t-name rdf:type owl:NamedIndividual ,
+                                                         software:TextEntity ;
+                                            software:hasTextValue "t"^^xsd:string .
 
 
 ###  http://ontosoft.org/software#weka.classifier.trees.j48-name
@@ -96,7 +112,15 @@ software:weka.classifier.trees.j48-name rdf:type owl:NamedIndividual ,
 ###  http://ontosoft.org/software#weka.classifier.trees.j48-output-1
 software:weka.classifier.trees.j48-output-1 rdf:type owl:NamedIndividual ,
                                                      software:Output ,
-                                                     software:SoftwarePart .
+                                                     software:SoftwarePart ,
+                                                     software:File ,
+                                                     software:TextFile ;
+         								software:hasDataFormat software:CSV ;
+         								software:hasOutputDescription software:weka.classifier.trees.j48-output-1-description .
+
+software:weka.classifier.trees.j48-output-1-description rdf:type owl:NamedIndividual ,
+                                                         software:TextEntity ;
+                                                software:hasTextValue "ARFF output format"^^xsd:string .
 
 
 ###  http://ontosoft.org/software#weka.core.converter.CSVLoader
@@ -107,9 +131,16 @@ software:weka.core.converter.CSVLoader rdf:type owl:NamedIndividual ,
                                        software:hasInput software:weka.core.converter.CSVLoader-input-m ,
                                                          software:weka.core.converters.CSVLoader-input-unamed ;
                                        software:hasOutput software:weka.core.converters.CSVLoader-output-1 ;
-                                       dc:description "Reads a source that is in comma separated format"^^xsd:string .
+                                       software:hasFunctionName software:weka.core.converter.CSVLoader-name ;
+                                       software:hasFunctionDescription software:weka.core.converter.CSVLoader-description .
 
+software:weka.core.converter.CSVLoader-description  rdf:type owl:NamedIndividual ,
+                                                         software:TextEntity ;
+                                                software:hasTextValue "Reads a source that is in comma separated format"^^xsd:string .
 
+software:weka.core.converter.CSVLoader-name  rdf:type owl:NamedIndividual ,
+                                                         software:TextEntity ;
+                                                software:hasTextValue "weka.core.converter.CSVLoader"^^xsd:string .
 
 ###  http://ontosoft.org/software#weka.core.converter.CSVLoader-input-m
 software:weka.core.converter.CSVLoader-input-m rdf:type owl:NamedIndividual ,
@@ -118,7 +149,15 @@ software:weka.core.converter.CSVLoader-input-m rdf:type owl:NamedIndividual ,
                                                         software:OptionalInput ,
                                                         software:SoftwarePart ;
                                                software:hasDefaultValue "?"^^xsd:string ;
-                                               dc:description "The string representing a missing value."@en .
+                                               software:hasInputName software:weka.core.converter.CSVLoader-input-m-name ;
+                                               software:hasInputDescription software:weka.core.converter.CSVLoader-input-m-description .
+
+software:weka.core.converter.CSVLoader-input-m-name rdf:type software:TextEntity ;
+												software:hasTextValue "m" .
+
+software:weka.core.converter.CSVLoader-input-m-description rdf:type owl:NamedIndividual ,
+                                                         software:TextEntity ;
+                                                software:hasTextValue "The string representing a missing value."@en .
 
 
 

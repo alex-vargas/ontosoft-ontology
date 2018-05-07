@@ -266,7 +266,8 @@ software:Scikit-Learn rdf:type owl:NamedIndividual ,
 
 ###  http://ontosoft.org/software#TextFile
 software:TextFile rdf:type owl:NamedIndividual ,
-                           software:DataType .
+                           software:DataType ;
+                           rdfs:label "Text File"@en .
 
 
 ###  http://ontosoft.org/software#UniversityOfWaikato

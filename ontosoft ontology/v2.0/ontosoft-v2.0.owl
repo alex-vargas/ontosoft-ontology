@@ -353,6 +353,14 @@
     
 
 
+    <!-- http://ontosoft.org/software#hasFileDescrliption -->
+
+    <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasFileDescrliption">
+        <rdfs:domain rdf:resource="http://ontosoft.org/software#File"/>
+    </owl:ObjectProperty>
+    
+
+
     <!-- http://ontosoft.org/software#hasFileId -->
 
     <owl:ObjectProperty rdf:about="http://ontosoft.org/software#hasFileId">
@@ -1428,7 +1436,14 @@
     <owl:Class rdf:about="http://ontosoft.org/software#File">
         <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#ComplexEntity"/>
         <rdfs:comment xml:lang="en">Indicates a file based input to, or file based output from a software</rdfs:comment>
-        <rdfs:label xml:lang="en">File I/O</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontosoft.org/software#FileDescription -->
+
+    <owl:Class rdf:about="http://ontosoft.org/software#FileDescription">
+        <rdfs:subClassOf rdf:resource="http://ontosoft.org/software#ComplexEntity"/>
     </owl:Class>
     
 
