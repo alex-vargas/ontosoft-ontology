@@ -77,12 +77,12 @@ software:hasActiveDevelopment rdf:type owl:ObjectProperty ,
                               rdfs:range software:DevelopmentInformation ;
                               software:category <http://ontosoft.org/softwareCategories#Contribute> ;
                               software:uiConfig "{\"position\":1}" ;
-                              dc:description "How is the software being developed or maintained ?"@en .
+                              dc:description "How is the software being developed or maintained?"@en .
 
 
 ###  http://ontosoft.org/software#hasAdopter
 software:hasAdopter rdf:type owl:ObjectProperty ;
-                    rdfs:domain software:SoftwareVersion ;
+                    rdfs:domain software:Software ;
                     rdfs:range software:Adopter ;
                     software:category <http://ontosoft.org/softwareCategories#Trust> ;
                     software:uiConfig "{\"position\": 3}" ;
@@ -96,7 +96,7 @@ software:hasAverageRunTime rdf:type owl:ObjectProperty ,
                            rdfs:range software:MeasurementEntity ;
                            software:category <http://ontosoft.org/softwareCategories#Install> ;
                            software:uiConfig "{\"position\":1}" ;
-                           dc:description "Do you know how long it takes to run this software on average ?"@en .
+                           dc:description "Do you know how long it takes to run this software version on average?"@en .
 
 
 ###  http://ontosoft.org/software#hasBenchmarkInformation
@@ -105,7 +105,7 @@ software:hasBenchmarkInformation rdf:type owl:ObjectProperty ;
                                  rdfs:range software:BenchmarkInformation ;
                                  software:category <http://ontosoft.org/softwareCategories#Trust> ;
                                  software:uiConfig "{\"position\":7}" ;
-                                 dc:description "Is there any benchmark information about the software ?"@en .
+                                 dc:description "Is there any benchmark information about the software?"@en .
 
 
 ###  http://ontosoft.org/software#hasChange
@@ -128,7 +128,7 @@ software:hasCitationLocation rdf:type owl:ObjectProperty ,
                              rdfs:domain software:Citation ;
                              rdfs:range software:Location ;
                              software:category <http://ontosoft.org/softwareCategories#Cite> ;
-                             dc:description "What is the URL for the citation ?"@en .
+                             dc:description "What is the URL for the citation?"@en .
 
 
 ###  http://ontosoft.org/software#hasCitationText
@@ -137,7 +137,7 @@ software:hasCitationText rdf:type owl:ObjectProperty ,
                          rdfs:domain software:Citation ;
                          rdfs:range software:CitationText ;
                          software:category <http://ontosoft.org/softwareCategories#Cite> ;
-                         dc:description "What is the text associated with the Citation ?"@en .
+                         dc:description "What is the text associated with the Citation?"@en .
 
 
 ###  http://ontosoft.org/software#hasCodeLocation
@@ -148,7 +148,7 @@ software:hasCodeLocation rdf:type owl:ObjectProperty ,
                          software:category <http://ontosoft.org/softwareCategories#Access> ;
                          software:isRequired "true"^^xsd:boolean ;
                          software:uiConfig "{\"position\": 1}" ;
-                         dc:description "What is the URL for the code ?"@en .
+                         dc:description "What is the URL for the code?"@en .
 
 
 ###  http://ontosoft.org/software#hasCommitmentOfSupport
@@ -158,7 +158,7 @@ software:hasCommitmentOfSupport rdf:type owl:ObjectProperty ,
                                 rdfs:range software:TextEntity ;
                                 software:category <http://ontosoft.org/softwareCategories#Trust> ;
                                 software:uiConfig "{\"position\":2}" ;
-                                dc:description "How can a user get support for the software ? (eg. Report bugs, request features and extensions, etc)"@en .
+                                dc:description "How can a user get support for the software? (eg. Report bugs, request features and extensions, etc)"@en .
 
 
 ###  http://ontosoft.org/software#hasCompatibleSoftware
@@ -167,17 +167,17 @@ software:hasCompatibleSoftware rdf:type owl:ObjectProperty ,
                                rdfs:domain software:Composition ;
                                rdfs:range software:SoftwareDescription ;
                                software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                               dc:description "What software can this software be composed with in a workflow ?"@en .
+                               dc:description "What software can this software be composed with in a workflow?"@en .
 
 
 ###  http://ontosoft.org/software#hasCompositionDescription
 software:hasCompositionDescription rdf:type owl:ObjectProperty ,
                                             owl:FunctionalProperty ;
-                                   rdfs:domain software:SoftwareVersion ;
+                                   rdfs:domain software:Software ;
                                    rdfs:range software:Composition ;
                                    software:category <http://ontosoft.org/softwareCategories#Compose> ;
                                    software:uiConfig "{\"position\":1}" ;
-                                   dc:description "Is this software typically used with other software in a workflow ? (eg: for visualization, preprocessing, postprocessing, etc)"@en .
+                                   dc:description "Is this software typically used with other software in a workflow? (eg: for visualization, preprocessing, postprocessing, etc)"@en .
 
 
 ###  http://ontosoft.org/software#hasCreator
@@ -188,6 +188,7 @@ software:hasCreator rdf:type owl:ObjectProperty ;
                     software:category <http://ontosoft.org/softwareCategories#Trust> ;
                     software:isRequired "true"^^xsd:boolean ;
                     software:uiConfig "{\"position\":1}" ;
+                    software:searchConfig "{\"facet\":\"Author\"}" ;
                     dc:description "Who created this software? (Project, Organization, Person, Initiative, etc.)"@en .
 
 
@@ -201,7 +202,7 @@ software:hasDependency rdf:type owl:ObjectProperty ;
                        software:category <http://ontosoft.org/softwareCategories#Install> ;
                        software:isRequired "true"^^xsd:boolean ;
                        software:uiConfig "{\"position\":5}" ;
-                       dc:description "What other software does the software require to be installed ?"@en .
+                       dc:description "What other software does the software version require to be installed?"@en .
 
 
 ###  http://ontosoft.org/software#hasDocumentation
@@ -212,7 +213,7 @@ software:hasDocumentation rdf:type owl:ObjectProperty ,
                           software:category <http://ontosoft.org/softwareCategories#Install> ;
                           software:isRequired "true"^^xsd:boolean ;
                           software:uiConfig "{\"position\": 1}" ;
-                          dc:description "Is there any on-line documentation about the software ?"@en .
+                          dc:description "Is there any on-line documentation about this software version?"@en .
 
 
 ###  http://ontosoft.org/software#hasDomainKeywords
@@ -242,7 +243,7 @@ software:hasExecutableLocation rdf:type owl:ObjectProperty ,
                                rdfs:range software:Location ;
                                software:category <http://ontosoft.org/softwareCategories#Access> ;
                                software:uiConfig "{\"position\": 1}" ;
-                               dc:description "What is the URL for the executable ?"@en .
+                               dc:description "What is the URL for the executable?"@en .
 
 
 
@@ -297,7 +298,7 @@ software:hasFunctionInvocation rdf:type owl:ObjectProperty ,
                      rdfs:range software:FunctionInvocation ;
                      software:category <http://ontosoft.org/softwareCategories#Run> ;
                      software:uiConfig "{\"position\":5}" ;
-                     dc:description "What is the invocation line for this function ?"@en .
+                     dc:description "What is the invocation line for this function?"@en .
 
 
 ###  http://ontosoft.org/software#hasInput
@@ -306,7 +307,7 @@ software:hasInputFile rdf:type owl:ObjectProperty ;
                   rdfs:range software:InputFile ;
                   software:category <http://ontosoft.org/softwareCategories#Run> ;
                   software:uiConfig "{\"position\":6}" ;
-                  dc:description "What input files does this function require ?"@en .
+                  dc:description "What input files does this function require?"@en .
 
 
 ###  http://ontosoft.org/software#hasInputFileName
@@ -341,7 +342,7 @@ software:hasInputFileDataType rdf:type owl:ObjectProperty ,
                      software:uiConfig "{\"position\":4}" ;
                      software:category <http://ontosoft.org/softwareCategories#Run> ;
                      software:searchConfig "{\"facet\":\"Input File Data Type\"}" ;
-                     dc:description "What is the input file type ?"@en .
+                     dc:description "What is the input file type?"@en .
 
 
 ###  http://ontosoft.org/software#hasInputFileDataFormat
@@ -403,7 +404,7 @@ software:hasInputParameterDataType rdf:type owl:ObjectProperty ,
                      software:uiConfig "{\"position\":4}" ;
                      software:searchConfig "{\"facet\":\"Input Parameter Data Type\"}" ;
                      software:category <http://ontosoft.org/softwareCategories#Run> ;
-                     dc:description "What is the parameter type ?"@en .
+                     dc:description "What is the parameter type?"@en .
 
 
 ###  http://ontosoft.org/software#hasInputParameterDefaultValue
@@ -453,7 +454,7 @@ software:hasOutputDataType rdf:type owl:ObjectProperty ,
                      software:uiConfig "{\"position\": 3}" ;
                      software:searchConfig "{\"facet\":\"Output Data Type\"}" ;
                      software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                     dc:description "What is the File I/O type ?"@en .
+                     dc:description "What is the File I/O type?"@en .
 
 
 ###  http://ontosoft.org/software#hasDataFormat
@@ -481,7 +482,8 @@ software:hasImplementationLanguage rdf:type owl:ObjectProperty ;
                                    software:category <http://ontosoft.org/softwareCategories#Install> ;
                                    software:isRequired "true"^^xsd:boolean ;
                                    software:uiConfig "{\"position\":2}" ;
-                                   dc:description "What language(s) is the software written in ?"@en .
+                                   software:searchConfig "{\"facet\":\"Programming Language\"}" ;
+                                   dc:description "What language(s) is this software version written in?"@en .
 
 
 ###  http://ontosoft.org/software#hasInstallationInstructions
@@ -492,12 +494,12 @@ software:hasInstallationInstructions rdf:type owl:ObjectProperty ,
                                      software:category <http://ontosoft.org/softwareCategories#Install> ;
                                      software:isRequired "true"^^xsd:boolean ;
                                      software:uiConfig "{\"position\":4}" ;
-                                     dc:description "How can one install the software ?"@en .
+                                     dc:description "How can one install this software version?"@en .
 
 
 ###  http://ontosoft.org/software#hasInteroperableSoftware
 software:hasInteroperableSoftware rdf:type owl:ObjectProperty ;
-                                  rdfs:domain software:SoftwareVersion ;
+                                  rdfs:domain software:Software ;
                                   rdfs:range software:SoftwareDescription ;
                                   software:category <http://ontosoft.org/softwareCategories#Compose> ;
                                   software:isRequired "true"^^xsd:boolean ;
@@ -510,7 +512,7 @@ software:hasKnownIssue rdf:type owl:ObjectProperty ;
                        rdfs:subPropertyOf owl:topObjectProperty ;
                        rdfs:domain software:SoftwareVersion ;
                        software:category <http://ontosoft.org/softwareCategories#Trust> ;
-                       dc:description "What known issues does this software version have ?" ;
+                       dc:description "What known issues does this software version have?" ;
                        rdfs:range software:KnownIssue .
 
 
@@ -518,7 +520,7 @@ software:hasKnownIssue rdf:type owl:ObjectProperty ;
 software:hasKnownIssueDescription rdf:type owl:ObjectProperty ,
                                   owl:FunctionalProperty ;
                                   rdfs:subPropertyOf software:hasShortDescription ;
-                                  dc:description "What description does this known issues have ?" ;
+                                  dc:description "What description does this known issues have?" ;
                                   rdfs:domain software:KnownIssue .
 
 
@@ -528,7 +530,7 @@ software:hasLatestSoftwareVersion rdf:type owl:ObjectProperty ,
                                   rdfs:subPropertyOf software:hasSoftwareVersion ;
                                   rdfs:domain software:Software ;
                                   software:category <http://ontosoft.org/softwareCategories#Track> ;
-                                  dc:description "What is the latest software version does this software have ?" ;
+                                  dc:description "What is the latest software version for this software?" ;
                                   rdfs:range software:SoftwareVersion .
 
 
@@ -541,7 +543,7 @@ software:hasLicense rdf:type owl:ObjectProperty ;
                     software:isRequired "true"^^xsd:boolean ;
                     software:uiConfig "{\"position\": 3}" ;
                     software:searchConfig "{\"facet\":\"License\"}" ;
-                    dc:description "What license is the code released under ?"@en .
+                    dc:description "What license is the code released under?"@en .
 
 
 ###  http://ontosoft.org/software#hasMajorContributor
@@ -552,7 +554,7 @@ software:hasMajorContributor rdf:type owl:ObjectProperty ;
                              software:category <http://ontosoft.org/softwareCategories#Trust> ;
                              software:isRequired "true"^^xsd:boolean ;
                              software:uiConfig "{\"position\":2}" ;
-                             dc:description "Are there any major contributors of note for this software ?"@en .
+                             dc:description "Are there any major contributors of note for this software version?"@en .
 
 
 ###  http://ontosoft.org/software#hasName
@@ -562,7 +564,7 @@ software:hasName rdf:type owl:ObjectProperty ,
                  software:category <http://ontosoft.org/softwareCategories#Locate> ;
                  software:isRequired "true"^^xsd:boolean ;
                  software:uiConfig "{\"position\": 1}" ;
-                 dc:description "What is the software called ?"@en .
+                 dc:description "What is the software called?"@en .
 
 
 ###  http://ontosoft.org/software#hasOtherImplementationDetails
@@ -572,10 +574,7 @@ software:hasOtherImplementationDetails rdf:type owl:ObjectProperty ,
                                        rdfs:range software:ImplementationDetails ;
                                        software:category <http://ontosoft.org/softwareCategories#Install> ;
                                        software:uiConfig "{\"position\":3}" ;
-                                       dc:description "Are there any other important details about the implementation of this code (parallelization, special hardware, etc) ?"@en .
-
-
-
+                                       dc:description "Are there any other important details about the implementation of this code (parallelization, special hardware, etc)?"@en .
 
 
 ###  http://ontosoft.org/software#hasPersonIdentifier
@@ -588,14 +587,24 @@ software:hasPersonIdentifier rdf:type owl:ObjectProperty ;
 
 
 ###  http://ontosoft.org/software#hasPreferredCitation
-software:hasPreferredCitation rdf:type owl:ObjectProperty ,
+software:hasPreferredSoftwareCitation rdf:type owl:ObjectProperty ,
+                                       owl:FunctionalProperty ;
+                              rdfs:domain software:Software ;
+                              rdfs:range software:Citation ;
+                              software:category <http://ontosoft.org/softwareCategories#Cite> ;
+                              software:isRequired "true"^^xsd:boolean ;
+                              software:uiConfig "{\"position\":1}" ;
+                              dc:description "Is there a preferred publication or citation for this software?"@en .
+
+###  http://ontosoft.org/software#hasPreferredCitation
+software:hasPreferredSoftwareVersionCitation rdf:type owl:ObjectProperty ,
                                        owl:FunctionalProperty ;
                               rdfs:domain software:SoftwareVersion ;
                               rdfs:range software:Citation ;
                               software:category <http://ontosoft.org/softwareCategories#Cite> ;
                               software:isRequired "true"^^xsd:boolean ;
                               software:uiConfig "{\"position\":1}" ;
-                              dc:description "Is there a preferred publication or citation for this software ?"@en .
+                              dc:description "Is there a preferred publication or citation for this software version?"@en .
 
 
 ###  http://ontosoft.org/software#hasProjectWebsite
@@ -606,7 +615,7 @@ software:hasProjectWebsite rdf:type owl:ObjectProperty ,
                            software:category <http://ontosoft.org/softwareCategories#Locate> ;
                            software:isRequired "true"^^xsd:boolean ;
                            software:uiConfig "{\"position\": 4}" ;
-                           dc:description "Is there a project website for the software ?"@en .
+                           dc:description "Is there a project website for the software?"@en .
 
 
 ###  http://ontosoft.org/software#hasPublisher
@@ -635,7 +644,7 @@ software:hasRelevantDataSources rdf:type owl:ObjectProperty ;
                                 rdfs:range software:TextEntity ;
                                 software:category <http://ontosoft.org/softwareCategories#Experiment> ;
                                 software:uiConfig "{\"position\": 1}" ;
-                                dc:description "Are there any relevant data catalogs that can be used with this software ?"@en .
+                                dc:description "Are there any relevant data catalogs that can be used with this software version?"@en .
 
 
 ###  http://ontosoft.org/software#hasSalientQualities
@@ -645,7 +654,7 @@ software:hasSalientQualities rdf:type owl:ObjectProperty ;
                              software:category <http://ontosoft.org/softwareCategories#Trust> ;
                              software:isRequired "true"^^xsd:boolean ;
                              software:uiConfig "{\"position\":3}" ;
-                             dc:description "What other useful features of this software are worth highlighting ?"@en .
+                             dc:description "What other useful features of this software version are worth highlighting?"@en .
 
 
 ###  http://ontosoft.org/software#hasShortDescription
@@ -653,24 +662,42 @@ software:hasShortDescription rdf:type owl:ObjectProperty ,
                                       owl:FunctionalProperty ;
                              rdfs:range software:TextEntity .
 
- ###  http://ontosoft.org/software#hasShortDescription
+ ###  http://ontosoft.org/software#hasSoftwareDescription 
 software:hasSoftwareDescription rdf:type owl:ObjectProperty ;
                                     rdfs:subPropertyOf software:hasShortDescription ;
                              rdfs:domain software:Software ;
                              software:category <http://ontosoft.org/softwareCategories#Locate> ;
                              software:isRequired "true"^^xsd:boolean ;
                              software:uiConfig "{\"position\": 2}" ;
-                             dc:description "Would you like to provide a short description for this software ?"@en .
+                             dc:description "What is the description for this software?"@en .
+
+ ###  http://ontosoft.org/software#hasSoftwareVersionDescription
+software:hasSoftwareVersionDescription rdf:type owl:ObjectProperty ;
+                                    rdfs:subPropertyOf software:hasShortDescription ;
+                             rdfs:domain software:SoftwareVersion ;
+                             software:category <http://ontosoft.org/softwareCategories#Locate> ;
+                             software:isRequired "true"^^xsd:boolean ;
+                             software:uiConfig "{\"position\": 2}" ;
+                             dc:description "What is the description for this software version?"@en .
+
+###  http://ontosoft.org/software#hasFunctionality
+software:hasSoftwareVersionType rdf:type owl:ObjectProperty ;
+                          rdfs:domain software:SoftwareVersion ;
+                          software:category <http://ontosoft.org/softwareCategories#Trust> ;
+                          software:searchConfig "{\"facet\":\"Software Version Type\"}" ;
+                          software:uiConfig "{\"position\": 3}" ;
+                          rdfs:range software:SoftwareVersionType .
 
 
 ###  http://ontosoft.org/software#hasSoftwareCategory
 software:hasSoftwareCategory rdf:type owl:ObjectProperty ;
-                             rdfs:domain software:SoftwareVersion ;
+                             rdfs:domain software:Software ;
                              rdfs:range software:SoftwareCategory ;
                              software:category <http://ontosoft.org/softwareCategories#Locate> ;
                              software:isRequired "true"^^xsd:boolean ;
                              software:uiConfig "{\"position\": 2}" ;
-                             dc:description "What are the general categories (keywords, labels) associated with the software ?"@en .
+                             software:searchConfig "{\"facet\":\"Keywords\"}" ;
+                             dc:description "What are the general categories (keywords, labels) associated with the software?"@en .
 
 
 ###  http://ontosoft.org/software#hasSoftwareCommunity
@@ -679,7 +706,7 @@ software:hasSoftwareCommunity rdf:type owl:ObjectProperty ;
                               rdfs:range software:CommunityInformation ;
                               software:category <http://ontosoft.org/softwareCategories#Contribute> ;
                               software:uiConfig "{\"position\":2}" ;
-                              dc:description "Is there any on-line resource for accessing the software community ? (eg. Mailing-list, discussion board, wiki, etc)"@en .
+                              dc:description "Is there any on-line resource for accessing the software community? (eg. Mailing-list, discussion board, wiki, etc)"@en .
 
 
 ###  http://ontosoft.org/software#hasSoftwareCreatedDate
@@ -716,14 +743,6 @@ software:hasSoftwareVersion rdf:type owl:ObjectProperty ;
                             dc:description "What versions does this software have?"@en .
 
 
-###  http://ontosoft.org/software#hasSoftwareVersionDescription
-software:hasSoftwareVersionDescription rdf:type owl:ObjectProperty ;
-                                       rdfs:subPropertyOf software:hasShortDescription ;
-                                       software:category <http://ontosoft.org/softwareCategories#Locale> ;
-                                        dc:description "What is the software version description?" ;
-                                       rdfs:domain software:SoftwareVersion .
-
-
 ###  http://ontosoft.org/software#hasSoftwareVersionLimitDateOfSupport
 software:hasSoftwareVersionLimitDateOfSupport rdf:type owl:ObjectProperty ;
                                               rdfs:subPropertyOf terms:date ;
@@ -750,7 +769,7 @@ software:hasTestDataDescription rdf:type owl:ObjectProperty ,
                                 rdfs:range software:TestDataDescription ;
                                 software:category <http://ontosoft.org/softwareCategories#Run> ;
                                 software:uiConfig "{\"position\":2}" ;
-                                dc:description "Can you describe the test data ?"@en .
+                                dc:description "Can you describe the test data?"@en .
 
 
 ###  http://ontosoft.org/software#hasTestDataLocation
@@ -761,7 +780,7 @@ software:hasTestDataLocation rdf:type owl:ObjectProperty ,
                              software:category <http://ontosoft.org/softwareCategories#Run> ;
                              software:isRequired "true"^^xsd:boolean ;
                              software:uiConfig "{\"position\":1}" ;
-                             dc:description "What is the URL for test data ?"@en .
+                             dc:description "What is the URL for test data?"@en .
 
 
 ###  http://ontosoft.org/software#hasTestInstructions
@@ -771,7 +790,7 @@ software:hasTestInstructions rdf:type owl:ObjectProperty ,
                              rdfs:range software:TestInstructions ;
                              software:category <http://ontosoft.org/softwareCategories#Run> ;
                              software:uiConfig "{\"position\":1}" ;
-                             dc:description "Are there any specific instructions for testing the software ?"@en .
+                             dc:description "Are there any specific instructions for testing this software version?"@en .
 
 
 ###  http://ontosoft.org/software#hasUniqueId
@@ -781,17 +800,17 @@ software:hasUniqueId rdf:type owl:ObjectProperty ,
                      rdfs:range software:Identifier ;
                      software:category <http://ontosoft.org/softwareCategories#Locate> ;
                      software:uiConfig "{\"position\":3}" ;
-                     dc:description "What is the DOI or any other unique identifier for this software ?"@en .
+                     dc:description "What is the DOI or any other unique identifier for this software?"@en .
 
 
 ###  http://ontosoft.org/software#hasUsageInformation
 software:hasUsageInformation rdf:type owl:ObjectProperty ,
                                       owl:FunctionalProperty ;
-                             rdfs:domain software:Software ;
+                             rdfs:domain software:SoftwareVersion ;
                              rdfs:range software:UsageInformation ;
                              software:category <http://ontosoft.org/softwareCategories#Trust> ;
                              software:uiConfig "{\"position\":4}" ;
-                             dc:description "Is there any information about uses of this software (paper dois, research labs, etc) ?"@en .
+                             dc:description "Is there any information about uses of this software version (paper DOIs, research labs, etc)?"@en .
 
 
 ###  http://ontosoft.org/software#hasUseLimitations
@@ -801,17 +820,17 @@ software:hasUseLimitations rdf:type owl:ObjectProperty ,
                            rdfs:range software:UseLimitations ;
                            software:category <http://ontosoft.org/softwareCategories#Relate> ;
                            software:uiConfig "{\"position\":3}" ;
-                           dc:description "Are there any constraints on use, situations it is not designed for, simplifications ?"@en .
+                           dc:description "Are there any constraints on use, situations it is not designed for, simplifications?"@en .
 
 
 ###  http://ontosoft.org/software#hasUseStatistics
 software:hasUseStatistics rdf:type owl:ObjectProperty ,
                                    owl:FunctionalProperty ;
-                          rdfs:domain software:SoftwareVersion ;
+                          rdfs:domain software:Software ;
                           rdfs:range software:UsageStatistics ;
                           software:category <http://ontosoft.org/softwareCategories#Trust> ;
                           software:uiConfig "{\"position\":5}" ;
-                          dc:description "Are there any statistics ?"@en .
+                          dc:description "Are there any usage statistics for this software?"@en .
 
 
 ###  http://ontosoft.org/software#hasUsesAndAssumptions
@@ -821,7 +840,7 @@ software:hasUsesAndAssumptions rdf:type owl:ObjectProperty ,
                                rdfs:range software:UsesAndAssumptions ;
                                software:category <http://ontosoft.org/softwareCategories#Relate> ;
                                software:uiConfig "{\"position\":2}" ;
-                               dc:description "What are the recommended uses and assumptions for the software ?"@en .
+                               dc:description "What are the recommended uses and assumptions for this software version?"@en .
 
 
 ###  http://ontosoft.org/software#hasVersionId
@@ -832,7 +851,7 @@ software:hasVersionId rdf:type owl:ObjectProperty ,
                       software:category <http://ontosoft.org/softwareCategories#Locate> ;
                       software:isRequired "true"^^xsd:boolean ;
                       software:uiConfig "{\"position\":1}" ;
-                      dc:description "What is the software version id ?"@en .
+                      dc:description "What is the software version id?"@en .
 
 
 ###  http://ontosoft.org/software#hasVersionReleaseDate
@@ -843,7 +862,7 @@ software:hasVersionReleaseDate rdf:type owl:ObjectProperty ;
                                rdfs:range software:DateEntity ;
                                software:category <http://ontosoft.org/softwareCategories#Locate> ;
                                software:uiConfig "{\"position\":2}" ;
-                               dc:description "When was this version released ?"@en .
+                               dc:description "When was this version released?"@en .
 
 
 ###  http://ontosoft.org/software#hasWorkflowDescription
@@ -852,7 +871,7 @@ software:hasWorkflowDescription rdf:type owl:ObjectProperty ,
                                 rdfs:domain software:Composition ;
                                 rdfs:range software:WorkflowDescription ;
                                 software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                                dc:description "Describe the workflow ?"@en .
+                                dc:description "Describe the workflow?"@en .
 
 
 ###  http://ontosoft.org/software#requiresAverageMemory
@@ -862,17 +881,17 @@ software:requiresAverageMemory rdf:type owl:ObjectProperty ,
                                rdfs:range software:MeasurementEntity ;
                                software:category <http://ontosoft.org/softwareCategories#Install> ;
                                software:uiConfig "{\"position\":2}" ;
-                               dc:description "Are there any memory requirements for this software ?"@en .
+                               dc:description "Are there any memory requirements for this software version?"@en .
 
 
 ###  http://ontosoft.org/software#similarSoftware
 software:similarSoftware rdf:type owl:ObjectProperty ,
                                   owl:SymmetricProperty ;
-                         rdfs:domain software:SoftwareVersion ;
-                         rdfs:range software:SoftwareVersion ;
+                         rdfs:domain software:Software ;
+                         rdfs:range software:Software ;
                          software:category <http://ontosoft.org/softwareCategories#Relate> ;
                          software:uiConfig "{\"position\":1}" ;
-                         dc:description "Is there any other similar software that you know of ?"@en .
+                         dc:description "Is there any other similar software that you know of?"@en .
 
 
 ###  http://ontosoft.org/software#supersededBy
@@ -885,20 +904,13 @@ software:supersededBy rdf:type owl:ObjectProperty ;
                       dc:description "Which versions replace  the current version?" .
 
 
-###  http://ontosoft.org/software#supersededByMajorVersion
-software:supersededByMajorVersion rdf:type owl:ObjectProperty ;
-                                  rdfs:subPropertyOf software:supersededBy ;
-                                  rdfs:domain software:MajorSoftwareVersion ;
-                                  rdfs:range software:MajorSoftwareVersion .
-
-
 ###  http://ontosoft.org/software#supersedes
 software:supersedes rdf:type owl:ObjectProperty ,
                              owl:FunctionalProperty ;
                     rdfs:domain software:SoftwareVersion ;
                     rdfs:range software:SoftwareVersion ;
                     software:category <http://ontosoft.org/softwareCategories#Track> ;
-                    dc:description "What version does this software version supersede ?"@en .
+                    dc:description "What version does this software version supersede?"@en .
 
 
 ###  http://ontosoft.org/software#supportsOperatingSystem
@@ -907,8 +919,9 @@ software:supportsOperatingSystem rdf:type owl:ObjectProperty ;
                                  rdfs:range software:OperatingSystem ;
                                  software:category <http://ontosoft.org/softwareCategories#Install> ;
                                  software:isRequired "true"^^xsd:boolean ;
+                                 software:searchConfig "{\"facet\":\"Operating System\"}" ;
                                  software:uiConfig "{\"position\":3}" ;
-                                 dc:description "What Operating Systems can the software run on ?"@en .
+                                 dc:description "What Operating Systems can this software version run on?"@en .
 
 
 ###  http://ontosoft.org/software#usedInPublication
@@ -917,7 +930,7 @@ software:usedInPublication rdf:type owl:ObjectProperty ;
                            rdfs:range software:Citation ;
                            software:category <http://ontosoft.org/softwareCategories#Trust> ;
                            software:uiConfig "{\"position\": 6}" ;
-                           rdfs:description "Are there any publications where the software is used ?"@en .
+                           rdfs:description "Are there any publications where this software version is used?"@en .
 
 
 
@@ -1107,6 +1120,10 @@ software:InputFile rdf:type owl:Class ;
 software:Function rdf:type owl:Class ;
                   rdfs:subClassOf software:ComplexEntity .
 
+
+###  http://ontosoft.org/software#SoftwareVersionType
+software:SoftwareVersionType rdf:type owl:Class ;
+                       rdfs:subClassOf software:EnumerationEntity .
 
 ###  http://ontosoft.org/software#Functionality
 software:Functionality rdf:type owl:Class ;
