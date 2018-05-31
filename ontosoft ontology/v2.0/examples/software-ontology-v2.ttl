@@ -228,7 +228,7 @@ software:hasDomainKeywords rdf:type owl:ObjectProperty ,
 
 ###  http://ontosoft.org/software#hasEmailContact
 software:hasEmailContact rdf:type owl:ObjectProperty ;
-                         rdfs:domain software:SoftwareVersion ;
+                         rdfs:domain software:Software ;
                          rdfs:range software:TextEntity ;
                          software:category <http://ontosoft.org/softwareCategories#Discuss> ;
                          software:uiConfig "{\"position\": 2}" ;
@@ -245,33 +245,7 @@ software:hasExecutableLocation rdf:type owl:ObjectProperty ,
                                dc:description "What is the URL for the executable ?"@en .
 
 
-###  http://ontosoft.org/software#hasFileType
-software:hasInputFileDataType rdf:type owl:ObjectProperty ,
-                              owl:FunctionalProperty ;
-                     rdfs:domain software:InputFile ;
-                     rdfs:range software:DataType ;
-                     software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                     software:searchConfig "{\"facet\":\"Input File Data Type\"}" ;
-                     dc:description "What is the File I/O type ?"@en .
 
-###  http://ontosoft.org/software#hasFileType
-software:hasOutputDataType rdf:type owl:ObjectProperty ,
-                              owl:FunctionalProperty ;
-                     rdfs:domain software:Output ;
-                     rdfs:range software:DataType ;
-                     software:uiConfig "{\"position\": 3}" ;
-                     software:searchConfig "{\"facet\":\"Output Data Type\"}" ;
-                     software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                     dc:description "What is the File I/O type ?"@en .
-
-###  http://ontosoft.org/software#hasFileType
-software:hasInputParameterDataType rdf:type owl:ObjectProperty ,
-                              owl:FunctionalProperty ;
-                     rdfs:domain software:InputParameter ;
-                     rdfs:range software:DataType ;
-                     software:searchConfig "{\"facet\":\"Input Parameter Data Type\"}" ;
-                     software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                     dc:description "What is the File I/O type ?"@en .
 
 
 ###  http://ontosoft.org/software#hasFunction
@@ -283,26 +257,27 @@ software:hasFunction rdf:type owl:ObjectProperty ;
                      dc:description "What functions does this software version have?" .
 
 
+###  http://ontosoft.org/software#hasFunctionName
+software:hasFunctionName rdf:type owl:ObjectProperty , 
+                                      owl:FunctionalProperty ;
+                         rdfs:subPropertyOf software:hasName ;
+                         software:isRequired "true"^^xsd:boolean ;
+                         software:uiConfig "{\"position\": 1}" ;
+                         rdfs:domain software:Function .
+
 ###  http://ontosoft.org/software#hasFunctionDescription
-software:hasFunctionDescription rdf:type owl:ObjectProperty ;
+software:hasFunctionDescription rdf:type owl:ObjectProperty ,
+                                        owl:FunctionalProperty ;
                                 rdfs:subPropertyOf software:hasShortDescription ;
                                 software:isRequired "true"^^xsd:boolean ;
                                 software:uiConfig "{\"position\": 2}" ;
                                 rdfs:domain software:Function .
 
 
-###  http://ontosoft.org/software#hasFunctionName
-software:hasFunctionName rdf:type owl:ObjectProperty ;
-                         rdfs:subPropertyOf software:hasName ;
-                         software:isRequired "true"^^xsd:boolean ;
-                         software:uiConfig "{\"position\": 1}" ;
-                         rdfs:domain software:Function .
-
-
 ###  http://ontosoft.org/software#hasFunctionality
 software:hasFunctionality rdf:type owl:ObjectProperty ;
                           rdfs:domain software:Function ;
-                          software:category <http://ontosoft.org/softwareCategories#Compose> ;
+                          software:category <http://ontosoft.org/softwareCategories#Run> ;
                           software:searchConfig "{\"facet\":\"Functionality\"}" ;
                           software:uiConfig "{\"position\": 3}" ;
                           rdfs:range software:Functionality .
@@ -311,13 +286,188 @@ software:hasFunctionality rdf:type owl:ObjectProperty ;
 software:usesAlgorithm rdf:type owl:ObjectProperty ;
                    rdfs:domain software:Function ;
                    rdfs:range software:Algorithm ;
+                   software:category <http://ontosoft.org/softwareCategories#Run> ;
                    software:uiConfig "{\"position\": 4}" ;
+                   software:searchConfig "{\"facet\":\"Algorithm\"}" ;
                    dc:description "What is the algorithm used in this function?"@en .
 
+software:hasFunctionInvocation rdf:type owl:ObjectProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain software:Function ;
+                     rdfs:range software:FunctionInvocation ;
+                     software:category <http://ontosoft.org/softwareCategories#Run> ;
+                     software:uiConfig "{\"position\":5}" ;
+                     dc:description "What is the invocation line for this function ?"@en .
+
+
+###  http://ontosoft.org/software#hasInput
+software:hasInputFile rdf:type owl:ObjectProperty ;
+                  rdfs:domain software:Function ;
+                  rdfs:range software:InputFile ;
+                  software:category <http://ontosoft.org/softwareCategories#Run> ;
+                  software:uiConfig "{\"position\":6}" ;
+                  dc:description "What input files does this function require ?"@en .
+
+
+###  http://ontosoft.org/software#hasInputFileName
+software:hasInputFileName rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
+                      rdfs:subPropertyOf software:hasName ;
+                      software:uiConfig "{\"position\":1}" ;
+                      dc:description "What is the input name?"@en ;
+                      rdfs:domain software:InputFile .
+
+
+###  http://ontosoft.org/software#hasInputFileDescription
+software:hasInputFileDescription rdf:type owl:ObjectProperty ;
+                             rdfs:subPropertyOf software:hasShortDescription ;
+                             software:uiConfig "{\"position\":2}" ;
+                             dc:description "What is the input description?"@en ;
+                             rdfs:domain software:InputFile .
+
+###  http://ontosoft.org/software#hasInputFileArgument
+software:hasInputFileArgument rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
+                         rdfs:domain software:InputFile ;
+                         software:uiConfig "{\"position\":3}" ;
+                         rdfs:range software:TextEntity ;
+                         dc:description "What is the argument for this input file?" .
+
+###  http://ontosoft.org/software#hasInputFileDataType
+software:hasInputFileDataType rdf:type owl:ObjectProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain software:InputFile ;
+                     rdfs:range software:DataType ;
+                     software:uiConfig "{\"position\":4}" ;
+                     software:category <http://ontosoft.org/softwareCategories#Run> ;
+                     software:searchConfig "{\"facet\":\"Input File Data Type\"}" ;
+                     dc:description "What is the input file type ?"@en .
+
+
+###  http://ontosoft.org/software#hasInputFileDataFormat
+software:hasInputFileDataFormat rdf:type owl:ObjectProperty ;
+                       rdfs:domain software:InputFile ;
+                       software:uiConfig "{\"position\":5}" ;
+                       software:searchConfig "{\"facet\":\"Input File Data Format\"}" ;
+                       software:category <http://ontosoft.org/softwareCategories#Run> ;
+                       dc:description "What is the data format for this input file?"@en ;
+                       rdfs:range software:DataFormat .
+
+
+###  http://ontosoft.org/software#hasInputFileDefaultValue
+software:hasInputFileDefaultValue rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
+                         rdfs:domain software:InputFile ;
+                         rdfs:range software:TextEntity ;
+                         software:uiConfig "{\"position\":6}" ;
+                         dc:description "What is the default value for this input?" .
+
+
+###  http://ontosoft.org/software#hasInputParameter
+software:hasInputParameter rdf:type owl:ObjectProperty ;
+                           rdfs:domain software:Function ;
+                           rdfs:range software:InputParameter ;
+                           software:category <http://ontosoft.org/softwareCategories#Run> ;
+                           software:uiConfig "{\"position\": 7}" ;
+                           dc:description "What are the input parameters used for this function?" .
+
+###  http://ontosoft.org/software#hasInputName
+software:hasInputParameterName rdf:type owl:ObjectProperty  ,
+                                  owl:FunctionalProperty ;
+                      rdfs:subPropertyOf software:hasName ;
+                      software:uiConfig "{\"position\":1}" ;
+                      dc:description "What is this parameter name?"@en ;
+                      rdfs:domain software:InputParameter .
+
+###  http://ontosoft.org/software#hasInputDescription
+software:hasInputParameterDescription rdf:type owl:ObjectProperty ;
+                             rdfs:subPropertyOf software:hasShortDescription ;
+                             software:uiConfig "{\"position\":2}" ;
+                             dc:description "What is the parameter description?"@en ;
+                             rdfs:domain software:InputParameter .
+
+
+###  http://ontosoft.org/software#hasInputParameterArgument
+software:hasInputParameterArgument rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
+                         rdfs:domain software:InputParameter ;
+                         rdfs:range software:TextEntity ;
+                         software:uiConfig "{\"position\":3}" ;
+                         dc:description "What is the argument for this input parameter?" .
+
+###  http://ontosoft.org/software#hasInputParameterDataType
+software:hasInputParameterDataType rdf:type owl:ObjectProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain software:InputParameter ;
+                     rdfs:range software:DataType ;
+                     software:uiConfig "{\"position\":4}" ;
+                     software:searchConfig "{\"facet\":\"Input Parameter Data Type\"}" ;
+                     software:category <http://ontosoft.org/softwareCategories#Run> ;
+                     dc:description "What is the parameter type ?"@en .
+
+
+###  http://ontosoft.org/software#hasInputParameterDefaultValue
+software:hasInputParameterDefaultValue rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
+                         rdfs:domain software:InputParameter ;
+                         software:uiConfig "{\"position\":5}" ;
+                         rdfs:range software:TextEntity ;
+                         dc:description "What is the default value for this input parameter?" .
+
+###  http://ontosoft.org/software#hasInputOrder
+software:hasInputOrder rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf software:hasNumericValue ;
+                       rdfs:domain software:InputFile .
+
+###  http://ontosoft.org/software#hasOutput
+software:hasOutput rdf:type owl:ObjectProperty ;
+                   rdfs:domain software:Function ;
+                   rdfs:range software:Output ;
+                   software:category <http://ontosoft.org/softwareCategories#Run> ;
+                   software:uiConfig "{\"position\":8}" ;
+                   dc:description "What outputs does this function produce?"@en .
+
+###  http://ontosoft.org/software#hasOutputName
+software:hasOutputName rdf:type owl:ObjectProperty  ,
+                                  owl:FunctionalProperty ;
+                       rdfs:subPropertyOf software:hasName ;
+                       software:uiConfig "{\"position\": 1}" ;
+                       dc:description "What is the output name?" ;
+                       rdfs:domain software:Output .
+
+
+###  http://ontosoft.org/software#hasOutputDescription
+software:hasOutputDescription rdf:type owl:ObjectProperty  ,
+                                  owl:FunctionalProperty ;
+                              rdfs:subPropertyOf software:hasShortDescription ;
+                              software:uiConfig "{\"position\": 2}" ;
+                              dc:description "What is the output description?" ;
+                              rdfs:domain software:Output .
+
+
+###  http://ontosoft.org/software#hasFileType
+software:hasOutputDataType rdf:type owl:ObjectProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain software:Output ;
+                     rdfs:range software:DataType ;
+                     software:uiConfig "{\"position\": 3}" ;
+                     software:searchConfig "{\"facet\":\"Output Data Type\"}" ;
+                     software:category <http://ontosoft.org/softwareCategories#Compose> ;
+                     dc:description "What is the File I/O type ?"@en .
+
+
+###  http://ontosoft.org/software#hasDataFormat
+software:hasOutputDataFormat rdf:type owl:ObjectProperty ;
+                       rdfs:domain software:Output ;
+                       software:uiConfig "{\"position\":4}" ;
+                       software:searchConfig "{\"facet\":\"Output Data Format\"}" ;
+                       software:category <http://ontosoft.org/softwareCategories#Run> ;
+                       dc:description "What is the data format for this output?" ;
+                       rdfs:range software:DataFormat .
 
 ###  http://ontosoft.org/software#hasFundingSources
 software:hasFundingSources rdf:type owl:ObjectProperty ;
-                           rdfs:domain software:SoftwareVersion ;
+                           rdfs:domain software:Software ;
                            rdfs:range software:TextEntity ;
                            software:category <http://ontosoft.org/softwareCategories#Trust> ;
                            software:uiConfig "{\"position\": 8}" ;
@@ -332,135 +482,6 @@ software:hasImplementationLanguage rdf:type owl:ObjectProperty ;
                                    software:isRequired "true"^^xsd:boolean ;
                                    software:uiConfig "{\"position\":2}" ;
                                    dc:description "What language(s) is the software written in ?"@en .
-
-
-###  http://ontosoft.org/software#hasInput
-software:hasInputFile rdf:type owl:ObjectProperty ;
-                  rdfs:domain software:Function ;
-                  rdfs:range software:InputFile ;
-                  software:category <http://ontosoft.org/softwareCategories#Experiment> ;
-                  software:uiConfig "{\"position\":5}" ;
-                  dc:description "What input files does the software require ?"@en .
-
-
-###  http://ontosoft.org/software#hasInputDescription
-software:hasInputFileDescription rdf:type owl:ObjectProperty ;
-                             rdfs:subPropertyOf software:hasShortDescription ;
-                             software:uiConfig "{\"position\":3}" ;
-                             rdfs:domain software:InputFile .
-
-###  http://ontosoft.org/software#hasInputDescription
-software:hasInputParameterDescription rdf:type owl:ObjectProperty ;
-                             rdfs:subPropertyOf software:hasShortDescription ;
-                             software:uiConfig "{\"position\":3}" ;
-                             rdfs:domain software:InputParameter .
-
-
-###  http://ontosoft.org/software#hasInputName
-software:hasInputFileName rdf:type owl:ObjectProperty ;
-                      rdfs:subPropertyOf software:hasName ;
-                      software:uiConfig "{\"position\":1}" ;
-                      rdfs:domain software:InputFile .
-
-###  http://ontosoft.org/software#hasInputName
-software:hasInputParameterName rdf:type owl:ObjectProperty ;
-                      rdfs:subPropertyOf software:hasName ;
-                      software:uiConfig "{\"position\":1}" ;
-                      rdfs:domain software:InputParameter .
-
-###  http://ontosoft.org/software#hasDataFormat
-software:hasInputFileDataFormat rdf:type owl:ObjectProperty ;
-                       rdfs:domain software:InputFile ;
-                       software:uiConfig "{\"position\":2}" ;
-                       software:searchConfig "{\"facet\":\"Input File Data Format\"}" ;
-                       software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                       rdfs:range software:DataFormat .
-
-###  http://ontosoft.org/software#hasDataFormat
-software:hasInputParameterDataFormat rdf:type owl:ObjectProperty ;
-                       rdfs:domain software:InputParameter ;
-                       software:uiConfig "{\"position\":2}" ;
-                       software:searchConfig "{\"facet\":\"Input Parameter Data Format\"}" ;
-                       software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                       rdfs:range software:DataFormat .
-
-###  http://ontosoft.org/software#hasInputOrder
-software:hasInputOrder rdf:type owl:DatatypeProperty ;
-                       rdfs:subPropertyOf software:hasNumericValue ;
-                       rdfs:domain software:InputFile .
-
-###  http://ontosoft.org/software#hasOutput
-software:hasOutput rdf:type owl:ObjectProperty ;
-                   rdfs:domain software:Function ;
-                   rdfs:range software:Output ;
-                   software:category <http://ontosoft.org/softwareCategories#Experiment> ;
-                   software:uiConfig "{\"position\":7}" ;
-                   dc:description "What output files does the software produce ?"@en .
-
-
-###  http://ontosoft.org/software#hasOutputDescription
-software:hasOutputDescription rdf:type owl:ObjectProperty ;
-                              rdfs:subPropertyOf software:hasShortDescription ;
-                              software:uiConfig "{\"position\": 2}" ;
-                              rdfs:domain software:Output .
-
-
-###  http://ontosoft.org/software#hasOutputName
-software:hasOutputName rdf:type owl:ObjectProperty ;
-                       rdfs:subPropertyOf software:hasName ;
-                       software:uiConfig "{\"position\": 1}" ;
-                       rdfs:domain software:Output .
-
-###  http://ontosoft.org/software#hasDataFormat
-software:hasOutputDataFormat rdf:type owl:ObjectProperty ;
-                       rdfs:domain software:Output ;
-                       software:uiConfig "{\"position\":4}" ;
-                       software:searchConfig "{\"facet\":\"Output Data Format\"}" ;
-                       software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                       rdfs:range software:DataFormat .
-
-
-###  http://ontosoft.org/software#hasInputParameter
-software:hasInputParameter rdf:type owl:ObjectProperty ;
-                           rdfs:domain software:Function ;
-                           rdfs:range software:InputParameter ;
-                           software:category <http://ontosoft.org/softwareCategories#Experiment> ;
-                           software:uiConfig "{\"position\": 6}" ;
-                           dc:description "What are the input parameters used for this software?" .
-
-
-
-###  http://ontosoft.org/software#hasDefaultValue
-software:hasInputParameterDefaultValue rdf:type owl:ObjectProperty ;
-                         rdfs:domain software:InputParameter ;
-                         rdfs:range software:TextEntity ;
-                         dc:description "What is the default value for this input parameter?" .
-
-###  http://ontosoft.org/software#hasDefaultValue
-software:hasInputParameterArgument rdf:type owl:ObjectProperty ;
-                         rdfs:domain software:InputParameter ;
-                         rdfs:range software:TextEntity ;
-                         dc:description "What is the argument for this input parameter?" .
-
-
-###  http://ontosoft.org/software#hasDefaultValue
-software:hasInputFileArgument rdf:type owl:ObjectProperty ;
-                         rdfs:domain software:Output ;
-                         rdfs:range software:TextEntity ;
-                         dc:description "What is the argument for this input file?" .
-
-
-###  http://ontosoft.org/software#hasDefaultValue
-software:hasOutputArgument rdf:type owl:ObjectProperty ;
-                         rdfs:domain software:Output ;
-                         rdfs:range software:TextEntity ;
-                         dc:description "What is the argument for this output?" .
-
-###  http://ontosoft.org/software#hasDefaultValue
-software:hasInputFileDefaultValue rdf:type owl:ObjectProperty ;
-                         rdfs:domain software:InputFile ;
-                         rdfs:range software:TextEntity ;
-                         dc:description "What is the default value for this input parameter?" .
 
 
 ###  http://ontosoft.org/software#hasInstallationInstructions
@@ -494,14 +515,16 @@ software:hasKnownIssue rdf:type owl:ObjectProperty ;
 
 
 ###  http://ontosoft.org/software#hasKnownIssueDescription
-software:hasKnownIssueDescription rdf:type owl:ObjectProperty ;
+software:hasKnownIssueDescription rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
                                   rdfs:subPropertyOf software:hasShortDescription ;
                                   dc:description "What description does this known issues have ?" ;
                                   rdfs:domain software:KnownIssue .
 
 
 ###  http://ontosoft.org/software#hasLatestSoftwareVersion
-software:hasLatestSoftwareVersion rdf:type owl:ObjectProperty ;
+software:hasLatestSoftwareVersion rdf:type owl:ObjectProperty ,
+                                  owl:FunctionalProperty ;
                                   rdfs:subPropertyOf software:hasSoftwareVersion ;
                                   rdfs:domain software:Software ;
                                   software:category <http://ontosoft.org/softwareCategories#Track> ;
@@ -599,7 +622,7 @@ software:hasPublisher rdf:type owl:ObjectProperty ,
 ###  http://ontosoft.org/software#hasRating
 software:hasRating rdf:type owl:ObjectProperty ,
                             owl:FunctionalProperty ;
-                   rdfs:domain software:SoftwareVersion ;
+                   rdfs:domain software:Software ;
                    rdfs:range software:Rating ;
                    software:category <http://ontosoft.org/softwareCategories#Trust> ;
                    software:uiConfig "{\"position\": -1}" ;
@@ -690,14 +713,14 @@ software:hasSoftwareVersion rdf:type owl:ObjectProperty ;
                             rdfs:range software:SoftwareVersion ;
                             software:category <http://ontosoft.org/softwareCategories#Track> ;
                             software:isRequired "true"^^xsd:boolean ;
-                            dc:description "What versions does the software have ?"@en .
+                            dc:description "What versions does this software have?"@en .
 
 
 ###  http://ontosoft.org/software#hasSoftwareVersionDescription
 software:hasSoftwareVersionDescription rdf:type owl:ObjectProperty ;
                                        rdfs:subPropertyOf software:hasShortDescription ;
                                        software:category <http://ontosoft.org/softwareCategories#Locale> ;
-                                        dc:description "What is the software version description ?" ;
+                                        dc:description "What is the software version description?" ;
                                        rdfs:domain software:SoftwareVersion .
 
 
@@ -717,7 +740,7 @@ software:hasTestData rdf:type owl:ObjectProperty ;
                      software:category <http://ontosoft.org/softwareCategories#Run> ;
                      software:isRequired "true"^^xsd:boolean ;
                      software:uiConfig "{\"position\":1}" ;
-                     dc:description "Do you have any test data for the software ?"@en .
+                     dc:description "Do you have any test data for this software version?"@en .
 
 
 ###  http://ontosoft.org/software#hasTestDataDescription
@@ -759,15 +782,6 @@ software:hasUniqueId rdf:type owl:ObjectProperty ,
                      software:category <http://ontosoft.org/softwareCategories#Locate> ;
                      software:uiConfig "{\"position\":3}" ;
                      dc:description "What is the DOI or any other unique identifier for this software ?"@en .
-
-
-software:hasFunctionInvocation rdf:type owl:ObjectProperty ,
-                              owl:FunctionalProperty ;
-                     rdfs:domain software:Software ;
-                     rdfs:range software:FunctionInvocation ;
-                     software:category <http://ontosoft.org/softwareCategories#Compose> ;
-                     software:uiConfig "{\"position\":3}" ;
-                     dc:description "What is invocation line for this function ?"@en .
 
 
 ###  http://ontosoft.org/software#hasUsageInformation
@@ -945,18 +959,6 @@ software:hasDateValue rdf:type owl:DatatypeProperty ,
                       rdfs:range xsd:dateTime ;
                       rdfs:label "has Date Value" .
 
-###  http://ontosoft.org/software#hasDateValue
-software:isRequiredInputFile rdf:type owl:DatatypeProperty ,
-                               owl:FunctionalProperty ;
-                      rdfs:domain software:InputFile ;
-                      rdfs:range xsd:boolean ;
-                      rdfs:label "is Required Input" .
-
-software:isRequiredInputParameter rdf:type owl:DatatypeProperty ,
-                               owl:FunctionalProperty ;
-                      rdfs:domain software:InputParameter ;
-                      rdfs:range xsd:boolean ;
-                      rdfs:label "is Required Input" .
 
 ###  http://ontosoft.org/software#hasNumericValue
 software:hasNumericValue rdf:type owl:DatatypeProperty ,
